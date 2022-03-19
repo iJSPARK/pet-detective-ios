@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392127E5F20F004B04FD /* AppDelegate.swift */; };
 		7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392327E5F20F004B04FD /* SceneDelegate.swift */; };
-		7948392627E5F20F004B04FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392527E5F20F004B04FD /* ViewController.swift */; };
 		7948392927E5F20F004B04FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948392727E5F20F004B04FD /* Main.storyboard */; };
 		7948392B27E5F210004B04FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7948392A27E5F210004B04FD /* Assets.xcassets */; };
 		7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948392C27E5F210004B04FD /* LaunchScreen.storyboard */; };
 		7948393927E5F211004B04FD /* PetDetectiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948393827E5F211004B04FD /* PetDetectiveTests.swift */; };
 		7948394327E5F211004B04FD /* PetDetectiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948394227E5F211004B04FD /* PetDetectiveUITests.swift */; };
 		7948394527E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */; };
+		7948396027E5F684004B04FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948395F27E5F684004B04FD /* ViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 		7948391E27E5F20F004B04FD /* PetDetective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDetective.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7948392127E5F20F004B04FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7948392327E5F20F004B04FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7948392527E5F20F004B04FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7948392827E5F20F004B04FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7948392A27E5F210004B04FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7948392D27E5F210004B04FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		7948393E27E5F211004B04FD /* PetDetectiveUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PetDetectiveUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7948394227E5F211004B04FD /* PetDetectiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetectiveUITests.swift; sourceTree = "<group>"; };
 		7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetectiveUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7948395F27E5F684004B04FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +99,10 @@
 		7948392027E5F20F004B04FD /* PetDetective */ = {
 			isa = PBXGroup;
 			children = (
+				7948396527E5FB51004B04FD /* Controller */,
+				7948396427E5FB34004B04FD /* Storyboard */,
 				7948392127E5F20F004B04FD /* AppDelegate.swift */,
 				7948392327E5F20F004B04FD /* SceneDelegate.swift */,
-				7948392527E5F20F004B04FD /* ViewController.swift */,
-				7948392727E5F20F004B04FD /* Main.storyboard */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
@@ -125,6 +125,22 @@
 				7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */,
 			);
 			path = PetDetectiveUITests;
+			sourceTree = "<group>";
+		};
+		7948396427E5FB34004B04FD /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				7948392727E5F20F004B04FD /* Main.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		7948396527E5FB51004B04FD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7948395F27E5F684004B04FD /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +274,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7948392627E5F20F004B04FD /* ViewController.swift in Sources */,
+				7948396027E5F684004B04FD /* ViewController.swift in Sources */,
 				7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */,
 				7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */,
 			);
