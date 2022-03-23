@@ -17,9 +17,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-73-sal">
-                                <rect key="frame" x="175" y="432.5" width="64" height="31"/>
+                                <rect key="frame" x="135" y="432.5" width="144" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="report"/>
+                                <buttonConfiguration key="configuration" style="filled" title="EmergencyRescue"/>
                                 <connections>
                                     <segue destination="AiP-sg-J3S" kind="show" id="tgi-Tb-G9O"/>
                                 </connections>
@@ -38,10 +38,10 @@
             </objects>
             <point key="canvasLocation" x="2749.275362318841" y="97.767857142857139"/>
         </scene>
-        <!--ReportViewController-->
+        <!--EmergencyRescueViewController-->
         <scene sceneID="Evq-bT-MxJ">
             <objects>
-                <viewControllerPlaceholder storyboardName="Report" referencedIdentifier="ReportViewController" id="AiP-sg-J3S" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="EmergencyRescue" referencedIdentifier="EmergencyRescueViewController" id="AiP-sg-J3S" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="KXm-y3-KGS"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4i-YQ-sbK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

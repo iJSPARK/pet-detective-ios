@@ -9,7 +9,7 @@ import UIKit
 import NMapsMap
 import CoreLocation
 
-class RescueViewController: UIViewController, CLLocationManagerDelegate {
+class EmergencyRescueViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()   // 위치 객체
     // var currentCoordinate = CLLocationCoordinate2D() //  좌표 객체
