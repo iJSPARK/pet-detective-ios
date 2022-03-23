@@ -21,6 +21,10 @@
 		7948396D27E5FD56004B04FD /* EmergencyRescue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */; };
 		7948396F27E5FD75004B04FD /* EmergencyRescueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */; };
 		7C4360087264C77A1DC4DFC2 /* Pods_PetDetective_PetDetectiveUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */; };
+		8E494A9E27EB13C100884379 /* ReportBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */; };
+		8E494AA027EB4E1300884379 /* ReportBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */; };
+		8E494AA227EB5A9100884379 /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E494AA127EB5A9100884379 /* Report.swift */; };
+		8E494AA427EB5B3C00884379 /* ReportDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E494AA327EB5B3C00884379 /* ReportDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +61,10 @@
 		7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmergencyRescue.storyboard; sourceTree = "<group>"; };
 		7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyRescueViewController.swift; sourceTree = "<group>"; };
 		8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetectiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBoardViewController.swift; sourceTree = "<group>"; };
+		8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBoardCell.swift; sourceTree = "<group>"; };
+		8E494AA127EB5A9100884379 /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Report.swift; path = ../../../../Documents/Report.swift; sourceTree = "<group>"; };
+		8E494AA327EB5B3C00884379 /* ReportDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDetailViewController.swift; sourceTree = "<group>"; };
 		A60A4008C564468F8E806C32 /* Pods-PetDetectiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetectiveTests.debug.xcconfig"; path = "Target Support Files/Pods-PetDetectiveTests/Pods-PetDetectiveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetective.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACA21F4C90308C5C1B06EB9F /* Pods-PetDetective.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetective.debug.xcconfig"; path = "Target Support Files/Pods-PetDetective/Pods-PetDetective.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,12 +133,16 @@
 				7948392127E5F20F004B04FD /* AppDelegate.swift */,
 				7948392327E5F20F004B04FD /* SceneDelegate.swift */,
 				7948395F27E5F684004B04FD /* ViewController.swift */,
+				8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */,
 				7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */,
+				8E494AA327EB5B3C00884379 /* ReportDetailViewController.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
 				7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
+				8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */,
+				8E494AA127EB5A9100884379 /* Report.swift */,
 			);
 			path = PetDetective;
 			sourceTree = "<group>";
@@ -431,8 +443,12 @@
 			files = (
 				7948396F27E5FD75004B04FD /* EmergencyRescueViewController.swift in Sources */,
 				7948396027E5F684004B04FD /* ViewController.swift in Sources */,
+				8E494AA427EB5B3C00884379 /* ReportDetailViewController.swift in Sources */,
+				8E494AA227EB5A9100884379 /* Report.swift in Sources */,
+				8E494AA027EB4E1300884379 /* ReportBoardCell.swift in Sources */,
 				7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */,
 				7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */,
+				8E494A9E27EB13C100884379 /* ReportBoardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
