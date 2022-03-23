@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cyf-Sd-iTe">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,23 +16,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLi-hE-Typ">
-                                <rect key="frame" x="188" y="432.5" width="38" height="31"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S4Z-73-sal">
+                                <rect key="frame" x="175" y="432.5" width="64" height="31"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="HI"/>
+                                <buttonConfiguration key="configuration" style="filled" title="report"/>
+                                <connections>
+                                    <segue destination="AiP-sg-J3S" kind="show" id="tgi-Tb-G9O"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="lLi-hE-Typ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bYy-qg-HdH"/>
-                            <constraint firstItem="lLi-hE-Typ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ipL-PS-AGL"/>
+                            <constraint firstItem="S4Z-73-sal" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="JRy-yk-40P"/>
+                            <constraint firstItem="S4Z-73-sal" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fUQ-a9-j0B"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="f5S-Xt-FYr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="98"/>
+            <point key="canvasLocation" x="2749.275362318841" y="97.767857142857139"/>
+        </scene>
+        <!--ReportViewController-->
+        <scene sceneID="Evq-bT-MxJ">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Report" referencedIdentifier="ReportViewController" id="AiP-sg-J3S" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="KXm-y3-KGS"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q4i-YQ-sbK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3407.971014492754" y="63.616071428571423"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="atI-Rs-Mra">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cyf-Sd-iTe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6HL-zR-wlX">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="87e-J5-cdy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Hv-Yi-PRU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1839.1304347826087" y="97.767857142857139"/>
         </scene>
     </scenes>
     <resources>

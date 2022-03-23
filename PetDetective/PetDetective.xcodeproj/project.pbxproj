@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1830DE57CCDA8AD9C6E34E79 /* Pods_PetDetective.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */; };
+		637D1F7DCEC077194A7631B8 /* Pods_PetDetectiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */; };
 		7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392127E5F20F004B04FD /* AppDelegate.swift */; };
 		7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392327E5F20F004B04FD /* SceneDelegate.swift */; };
 		7948392927E5F20F004B04FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948392727E5F20F004B04FD /* Main.storyboard */; };
@@ -16,6 +18,9 @@
 		7948394327E5F211004B04FD /* PetDetectiveUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948394227E5F211004B04FD /* PetDetectiveUITests.swift */; };
 		7948394527E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */; };
 		7948396027E5F684004B04FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948395F27E5F684004B04FD /* ViewController.swift */; };
+		7948396D27E5FD56004B04FD /* Report.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948396C27E5FD56004B04FD /* Report.storyboard */; };
+		7948396F27E5FD75004B04FD /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948396E27E5FD75004B04FD /* ReportViewController.swift */; };
+		7C4360087264C77A1DC4DFC2 /* Pods_PetDetective_PetDetectiveUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +54,17 @@
 		7948394227E5F211004B04FD /* PetDetectiveUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetectiveUITests.swift; sourceTree = "<group>"; };
 		7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetectiveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7948395F27E5F684004B04FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7948396C27E5FD56004B04FD /* Report.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Report.storyboard; sourceTree = "<group>"; };
+		7948396E27E5FD75004B04FD /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
+		8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetectiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A60A4008C564468F8E806C32 /* Pods-PetDetectiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetectiveTests.debug.xcconfig"; path = "Target Support Files/Pods-PetDetectiveTests/Pods-PetDetectiveTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetective.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACA21F4C90308C5C1B06EB9F /* Pods-PetDetective.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetective.debug.xcconfig"; path = "Target Support Files/Pods-PetDetective/Pods-PetDetective.debug.xcconfig"; sourceTree = "<group>"; };
+		AF99520B3995C4EF1097839E /* Pods-PetDetective-PetDetectiveUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetective-PetDetectiveUITests.release.xcconfig"; path = "Target Support Files/Pods-PetDetective-PetDetectiveUITests/Pods-PetDetective-PetDetectiveUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D052A06C6CA4F400322FDD79 /* Pods-PetDetectiveTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetectiveTests.release.xcconfig"; path = "Target Support Files/Pods-PetDetectiveTests/Pods-PetDetectiveTests.release.xcconfig"; sourceTree = "<group>"; };
+		EA426427F12CB102AF9A7E8F /* Pods-PetDetective-PetDetectiveUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetective-PetDetectiveUITests.debug.xcconfig"; path = "Target Support Files/Pods-PetDetective-PetDetectiveUITests/Pods-PetDetective-PetDetectiveUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetective_PetDetectiveUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F082C528EB6B927AD6FBC396 /* Pods-PetDetective.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetective.release.xcconfig"; path = "Target Support Files/Pods-PetDetective/Pods-PetDetective.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1830DE57CCDA8AD9C6E34E79 /* Pods_PetDetective.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637D1F7DCEC077194A7631B8 /* Pods_PetDetectiveTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C4360087264C77A1DC4DFC2 /* Pods_PetDetective_PetDetectiveUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +102,8 @@
 				7948393727E5F211004B04FD /* PetDetectiveTests */,
 				7948394127E5F211004B04FD /* PetDetectiveUITests */,
 				7948391F27E5F20F004B04FD /* Products */,
+				B34BD24501A99EC1BA0E0D5A /* Pods */,
+				EC48CF174A63618E2F4E2C5C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,8 +124,12 @@
 				7948396427E5FB34004B04FD /* Storyboard */,
 				7948392127E5F20F004B04FD /* AppDelegate.swift */,
 				7948392327E5F20F004B04FD /* SceneDelegate.swift */,
+				7948395F27E5F684004B04FD /* ViewController.swift */,
+				7948396E27E5FD75004B04FD /* ReportViewController.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
+				7948392727E5F20F004B04FD /* Main.storyboard */,
+				7948396C27E5FD56004B04FD /* Report.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
 			);
 			path = PetDetective;
@@ -130,7 +155,6 @@
 		7948396427E5FB34004B04FD /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
-				7948392727E5F20F004B04FD /* Main.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -138,9 +162,31 @@
 		7948396527E5FB51004B04FD /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7948395F27E5F684004B04FD /* ViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		B34BD24501A99EC1BA0E0D5A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ACA21F4C90308C5C1B06EB9F /* Pods-PetDetective.debug.xcconfig */,
+				F082C528EB6B927AD6FBC396 /* Pods-PetDetective.release.xcconfig */,
+				EA426427F12CB102AF9A7E8F /* Pods-PetDetective-PetDetectiveUITests.debug.xcconfig */,
+				AF99520B3995C4EF1097839E /* Pods-PetDetective-PetDetectiveUITests.release.xcconfig */,
+				A60A4008C564468F8E806C32 /* Pods-PetDetectiveTests.debug.xcconfig */,
+				D052A06C6CA4F400322FDD79 /* Pods-PetDetectiveTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EC48CF174A63618E2F4E2C5C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */,
+				EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */,
+				8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +196,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7948394827E5F211004B04FD /* Build configuration list for PBXNativeTarget "PetDetective" */;
 			buildPhases = (
+				32ACBA0758D125733202DBC1 /* [CP] Check Pods Manifest.lock */,
 				7948391A27E5F20F004B04FD /* Sources */,
 				7948391B27E5F20F004B04FD /* Frameworks */,
 				7948391C27E5F20F004B04FD /* Resources */,
+				B5CD355BE45FF8FB6DE0CA69 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,6 +215,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7948394B27E5F211004B04FD /* Build configuration list for PBXNativeTarget "PetDetectiveTests" */;
 			buildPhases = (
+				C09D10D658200E83F61C06F7 /* [CP] Check Pods Manifest.lock */,
 				7948393027E5F211004B04FD /* Sources */,
 				7948393127E5F211004B04FD /* Frameworks */,
 				7948393227E5F211004B04FD /* Resources */,
@@ -185,9 +234,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7948394E27E5F211004B04FD /* Build configuration list for PBXNativeTarget "PetDetectiveUITests" */;
 			buildPhases = (
+				5E278755283B702881CCAE2C /* [CP] Check Pods Manifest.lock */,
 				7948393A27E5F211004B04FD /* Sources */,
 				7948393B27E5F211004B04FD /* Frameworks */,
 				7948393C27E5F211004B04FD /* Resources */,
+				148B3EB6FCE6E2ED59D43552 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -247,6 +298,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7948396D27E5FD56004B04FD /* Report.storyboard in Resources */,
 				7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */,
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
 				7948392927E5F20F004B04FD /* Main.storyboard in Resources */,
@@ -269,11 +321,115 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		148B3EB6FCE6E2ED59D43552 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetDetective-PetDetectiveUITests/Pods-PetDetective-PetDetectiveUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetDetective-PetDetectiveUITests/Pods-PetDetective-PetDetectiveUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PetDetective-PetDetectiveUITests/Pods-PetDetective-PetDetectiveUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		32ACBA0758D125733202DBC1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PetDetective-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E278755283B702881CCAE2C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PetDetective-PetDetectiveUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5CD355BE45FF8FB6DE0CA69 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetDetective/Pods-PetDetective-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PetDetective/Pods-PetDetective-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PetDetective/Pods-PetDetective-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C09D10D658200E83F61C06F7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PetDetectiveTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7948391A27E5F20F004B04FD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7948396F27E5FD75004B04FD /* ReportViewController.swift in Sources */,
 				7948396027E5F684004B04FD /* ViewController.swift in Sources */,
 				7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */,
 				7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */,
@@ -450,12 +606,14 @@
 		};
 		7948394927E5F211004B04FD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACA21F4C90308C5C1B06EB9F /* Pods-PetDetective.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9487SKDZZB;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDetective/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -478,12 +636,14 @@
 		};
 		7948394A27E5F211004B04FD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F082C528EB6B927AD6FBC396 /* Pods-PetDetective.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9487SKDZZB;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDetective/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -496,6 +656,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.PetDetective.PetDetective;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -506,6 +667,7 @@
 		};
 		7948394C27E5F211004B04FD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A60A4008C564468F8E806C32 /* Pods-PetDetectiveTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -526,6 +688,7 @@
 		};
 		7948394D27E5F211004B04FD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D052A06C6CA4F400322FDD79 /* Pods-PetDetectiveTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -546,6 +709,7 @@
 		};
 		7948394F27E5F211004B04FD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA426427F12CB102AF9A7E8F /* Pods-PetDetective-PetDetectiveUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -564,6 +728,7 @@
 		};
 		7948395027E5F211004B04FD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AF99520B3995C4EF1097839E /* Pods-PetDetective-PetDetectiveUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
