@@ -21,23 +21,10 @@ class ReportBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
+    
     private func saveReportList() {
-        // userDefaults 사용하여 로컬저장소에 저장
-//        let date = self.diaryList.map {
-//            [
-//                "uuidString": $0.uuidString,
-//                "title": $0.title,
-//                "contents": $0.contents,
-//                "date": $0.date,
-//                "isStar": $0.isStar
-//            ]
-//        }
-//        let userDefaults = UserDefaults.standard
-//        // userDefaults에 접근하는 변수 지정
-//        userDefaults.set(date, forKey: "diaryList")
-//        // 로컬저장소에 저장
+        self.collectionView.reloadData()
     }
     
     private func configureCollectionView() {
@@ -59,7 +46,7 @@ extension ReportBoardViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportBoardCell", for: indexPath) as? ReportBoardCell else { return UICollectionViewCell() }
         // 재사용 가능한 셀을 찾고 재사용하여 메모리 사용량을 낮춤
         let report = self.reportList[indexPath.row]
-        cell.petInfo.text = report.title
+//        cell.petInfo.text = report.title
 //        cell.date.text = self.dateToString(date: report.date) // date->String
         return cell
     }
