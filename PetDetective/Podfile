@@ -17,5 +17,6 @@ target 'PetDetective' do
   end
 
   pod 'NMapsMap'
+  pod 'Alamofire', '~> 5.5'
 
 end

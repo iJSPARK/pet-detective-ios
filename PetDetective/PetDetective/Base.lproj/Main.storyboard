@@ -84,31 +84,28 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wlk-uo-Uw2">
-                                <rect key="frame" x="57" y="801" width="300" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="ce1-Be-xMP"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZcH-dN-WDQ">
+                                <rect key="frame" x="174" y="789" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Button"/>
                                 <connections>
-                                    <segue destination="6ol-vY-b1g" kind="push" id="fOk-38-Atq"/>
+                                    <segue destination="6ol-vY-b1g" kind="push" id="WHJ-FF-bJb"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QMf-aQ-fvY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="QMf-aQ-fvY" firstAttribute="bottom" secondItem="Wlk-uo-Uw2" secondAttribute="bottom" constant="30" id="1gf-tB-esK"/>
                             <constraint firstItem="5AZ-hw-guo" firstAttribute="leading" secondItem="QMf-aQ-fvY" secondAttribute="leading" id="IOf-dv-0TI"/>
                             <constraint firstItem="QMf-aQ-fvY" firstAttribute="trailing" secondItem="5AZ-hw-guo" secondAttribute="trailing" id="RTA-QW-0zf"/>
                             <constraint firstItem="QMf-aQ-fvY" firstAttribute="bottom" secondItem="5AZ-hw-guo" secondAttribute="bottom" id="pq0-DE-blj"/>
-                            <constraint firstItem="Wlk-uo-Uw2" firstAttribute="centerX" secondItem="5AZ-hw-guo" secondAttribute="centerX" id="xFE-I6-2o7"/>
                             <constraint firstItem="5AZ-hw-guo" firstAttribute="top" secondItem="QMf-aQ-fvY" secondAttribute="top" id="zf8-le-5PI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zn0-zq-UZ1"/>
                     <connections>
+                        <outlet property="addFloatBtn" destination="ZcH-dN-WDQ" id="AFb-a5-F18"/>
                         <outlet property="collectionView" destination="5AZ-hw-guo" id="AyM-9v-Fxl"/>
                     </connections>
                 </viewController>
@@ -116,10 +113,10 @@
             </objects>
             <point key="canvasLocation" x="2649" y="-632"/>
         </scene>
-        <!--Report Detail View Controller-->
+        <!--Report Write View Controller-->
         <scene sceneID="tjy-kq-BDy">
             <objects>
-                <viewController storyboardIdentifier="ReportDetailViewController" id="6ol-vY-b1g" customClass="ReportDetailViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportDetailViewController" id="6ol-vY-b1g" customClass="ReportWriteViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bSR-Ys-0Wa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,7 +125,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="1378"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ava-uV-D3g">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1529.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1429.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="사례금" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4oG-Bl-L7y">
                                                 <rect key="frame" x="57" y="784.5" width="300" height="21"/>
@@ -345,19 +342,11 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pJK-Eh-O3B">
-                                                <rect key="frame" x="57" y="1429.5" width="300" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="Ij0-MI-LDt"/>
-                                                    <constraint firstAttribute="width" constant="300" id="nTD-jR-KeX"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="filled" title="완료"/>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="vUb-Z6-ToQ" firstAttribute="centerX" secondItem="4oG-Bl-L7y" secondAttribute="centerX" id="0c8-4a-pMm"/>
+                                            <constraint firstAttribute="bottom" secondItem="9Dl-KQ-BHo" secondAttribute="bottom" constant="50" id="0cc-8Z-ooV"/>
                                             <constraint firstItem="8Fu-Jn-EZp" firstAttribute="top" secondItem="r70-L2-lBv" secondAttribute="bottom" constant="10" id="2nU-eA-hnr"/>
                                             <constraint firstItem="vUb-Z6-ToQ" firstAttribute="top" secondItem="4oG-Bl-L7y" secondAttribute="bottom" constant="10" id="4Jp-9z-kam"/>
                                             <constraint firstItem="eBg-fT-TEP" firstAttribute="top" secondItem="cBo-2l-jq7" secondAttribute="bottom" constant="10" id="4hJ-gE-9GO"/>
@@ -370,7 +359,6 @@
                                             <constraint firstItem="Oyq-vI-qXf" firstAttribute="centerX" secondItem="7kt-83-uMx" secondAttribute="centerX" id="9uK-9k-XyQ"/>
                                             <constraint firstItem="9Dl-KQ-BHo" firstAttribute="centerX" secondItem="vOR-bA-qEt" secondAttribute="centerX" id="Db1-fb-jXL"/>
                                             <constraint firstItem="9Dl-KQ-BHo" firstAttribute="top" secondItem="vOR-bA-qEt" secondAttribute="bottom" constant="10" id="Fxv-1U-XuN"/>
-                                            <constraint firstItem="pJK-Eh-O3B" firstAttribute="centerX" secondItem="9Dl-KQ-BHo" secondAttribute="centerX" id="G1p-2B-TFf"/>
                                             <constraint firstItem="LJO-Ih-aAh" firstAttribute="centerX" secondItem="daW-Kh-3Ib" secondAttribute="centerX" id="HeS-Yx-Onb"/>
                                             <constraint firstItem="xzj-3f-ZQd" firstAttribute="top" secondItem="C5h-4m-3hG" secondAttribute="bottom" constant="10" id="HfF-Vz-VsC"/>
                                             <constraint firstItem="bC5-uA-ois" firstAttribute="centerX" secondItem="xzj-3f-ZQd" secondAttribute="centerX" id="JHa-FZ-Egv"/>
@@ -383,7 +371,6 @@
                                             <constraint firstItem="Oyq-vI-qXf" firstAttribute="top" secondItem="7kt-83-uMx" secondAttribute="bottom" constant="10" id="TmC-dO-ZZu"/>
                                             <constraint firstItem="bC5-uA-ois" firstAttribute="top" secondItem="xzj-3f-ZQd" secondAttribute="bottom" constant="25" id="Vl1-gM-f9L"/>
                                             <constraint firstItem="4oG-Bl-L7y" firstAttribute="top" secondItem="nhs-vB-H6Y" secondAttribute="bottom" constant="25" id="Vt3-hA-3xM"/>
-                                            <constraint firstAttribute="bottom" secondItem="pJK-Eh-O3B" secondAttribute="bottom" constant="50" id="Wr7-9t-76r"/>
                                             <constraint firstItem="4oG-Bl-L7y" firstAttribute="centerX" secondItem="nhs-vB-H6Y" secondAttribute="centerX" id="X97-x1-UHc"/>
                                             <constraint firstItem="zAd-I8-I5y" firstAttribute="centerX" secondItem="eBg-fT-TEP" secondAttribute="centerX" id="XUM-8P-poB"/>
                                             <constraint firstItem="nhs-vB-H6Y" firstAttribute="top" secondItem="L5X-WR-wIP" secondAttribute="bottom" constant="10" id="cQE-2j-HS4"/>
@@ -404,7 +391,6 @@
                                             <constraint firstItem="ort-3n-Dxt" firstAttribute="centerX" secondItem="dSx-9O-jWS" secondAttribute="centerX" id="p8m-Q0-b9V"/>
                                             <constraint firstItem="7kt-83-uMx" firstAttribute="top" secondItem="8Fu-Jn-EZp" secondAttribute="bottom" constant="25" id="qMO-od-cbm"/>
                                             <constraint firstItem="eaN-kX-c0q" firstAttribute="top" secondItem="ort-3n-Dxt" secondAttribute="bottom" constant="10" id="tLF-Fx-bVF"/>
-                                            <constraint firstItem="pJK-Eh-O3B" firstAttribute="top" secondItem="9Dl-KQ-BHo" secondAttribute="bottom" constant="50" id="yLb-EF-RkH"/>
                                             <constraint firstItem="C5h-4m-3hG" firstAttribute="centerX" secondItem="vUb-Z6-ToQ" secondAttribute="centerX" id="yb9-KS-loe"/>
                                             <constraint firstItem="ALJ-K6-jtO" firstAttribute="top" secondItem="hbr-y5-z5w" secondAttribute="bottom" constant="10" id="yzu-XS-UCB"/>
                                         </constraints>
@@ -432,12 +418,27 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qYr-UN-C16">
-                        <barButtonItem key="rightBarButtonItem" title="등록" id="lqg-l6-81U"/>
+                        <barButtonItem key="rightBarButtonItem" title="등록" id="lqg-l6-81U">
+                            <connections>
+                                <action selector="tabConfirmBtn:" destination="6ol-vY-b1g" id="Zqm-uZ-fDz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="414" height="1500"/>
                     <connections>
+                        <outlet property="ageTextField" destination="eaN-kX-c0q" id="Ubw-KY-Fmc"/>
+                        <outlet property="breedTextField" destination="8Fu-Jn-EZp" id="GzW-7I-i6A"/>
+                        <outlet property="confirmBtn" destination="lqg-l6-81U" id="vGf-Ud-Y8h"/>
                         <outlet property="dateTextField" destination="eBg-fT-TEP" id="981-gI-qhl"/>
+                        <outlet property="diseaseTextField" destination="dSx-9O-jWS" id="xBb-kF-Gma"/>
+                        <outlet property="etcTextView" destination="9Dl-KQ-BHo" id="joa-f4-I4C"/>
+                        <outlet property="featureTextField" destination="nhs-vB-H6Y" id="F2q-bd-kp5"/>
+                        <outlet property="furColorTextField" destination="Oyq-vI-qXf" id="7bU-X5-SVI"/>
+                        <outlet property="locationTextField" destination="3zb-XB-vPV" id="ShL-sR-Fju"/>
+                        <outlet property="moneyTextField" destination="vUb-Z6-ToQ" id="mAG-Yw-pVO"/>
+                        <outlet property="neuteringSegControl" destination="daW-Kh-3Ib" id="Th4-5b-bZu"/>
                         <outlet property="petImageView" destination="hbr-y5-z5w" id="pVM-am-Guu"/>
+                        <outlet property="sexSegControl" destination="xzj-3f-ZQd" id="asH-U3-fpo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="64Y-Ww-kDR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
