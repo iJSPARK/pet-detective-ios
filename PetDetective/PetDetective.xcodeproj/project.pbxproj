@@ -20,6 +20,8 @@
 		7948396027E5F684004B04FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948395F27E5F684004B04FD /* ViewController.swift */; };
 		7948396D27E5FD56004B04FD /* EmergencyRescue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */; };
 		7948396F27E5FD75004B04FD /* EmergencyRescueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */; };
+		79C391CC27EDE04700BA74EE /* SelectionMssingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C391CB27EDE04700BA74EE /* SelectionMssingLocationViewController.swift */; };
+		79C391CE27EDE05800BA74EE /* SelectionMssingLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79C391CD27EDE05800BA74EE /* SelectionMssingLocation.storyboard */; };
 		7C4360087264C77A1DC4DFC2 /* Pods_PetDetective_PetDetectiveUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +58,8 @@
 		7948395F27E5F684004B04FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EmergencyRescue.storyboard; sourceTree = "<group>"; };
 		7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyRescueViewController.swift; sourceTree = "<group>"; };
+		79C391CB27EDE04700BA74EE /* SelectionMssingLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionMssingLocationViewController.swift; sourceTree = "<group>"; };
+		79C391CD27EDE05800BA74EE /* SelectionMssingLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectionMssingLocation.storyboard; sourceTree = "<group>"; };
 		8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetectiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A60A4008C564468F8E806C32 /* Pods-PetDetectiveTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetDetectiveTests.debug.xcconfig"; path = "Target Support Files/Pods-PetDetectiveTests/Pods-PetDetectiveTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetective.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,10 +130,12 @@
 				7948392327E5F20F004B04FD /* SceneDelegate.swift */,
 				7948395F27E5F684004B04FD /* ViewController.swift */,
 				7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */,
+				79C391CB27EDE04700BA74EE /* SelectionMssingLocationViewController.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
 				7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */,
+				79C391CD27EDE05800BA74EE /* SelectionMssingLocation.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
 			);
 			path = PetDetective;
@@ -299,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7948396D27E5FD56004B04FD /* EmergencyRescue.storyboard in Resources */,
+				79C391CE27EDE05800BA74EE /* SelectionMssingLocation.storyboard in Resources */,
 				7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */,
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
 				7948392927E5F20F004B04FD /* Main.storyboard in Resources */,
@@ -429,6 +436,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79C391CC27EDE04700BA74EE /* SelectionMssingLocationViewController.swift in Sources */,
 				7948396F27E5FD75004B04FD /* EmergencyRescueViewController.swift in Sources */,
 				7948396027E5F684004B04FD /* ViewController.swift in Sources */,
 				7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */,
