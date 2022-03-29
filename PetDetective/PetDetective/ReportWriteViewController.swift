@@ -75,7 +75,7 @@ class ReportWriteViewController: UIViewController {
             self.petId = report.petId
             self.dateTextField.text = self.formatDate(date: report.missingTime)
             self.locationTextField.text = report.missingLocation
-            self.moneyTextField.text = report.money
+//            self.moneyTextField.text = report.money
         }
     }
     
@@ -103,16 +103,21 @@ class ReportWriteViewController: UIViewController {
         //        print(ageStr)
         guard let etc = self.etcTextView.text else { return }
         //        print(etc)
+        postInfo(missingTime: dateTextField.text!, missingLocation: location)
     }
     
-    private func postInfo(missingDay: String, missingTime: String, missingLocation: String){
+    private func postInfo(missingTime: String, missingLocation: String){
         let url = "https://iospring.herokuapp.com/find"
         let param = [
-            "missingDay": missingDay,
             "missingTime": missingTime,
             "missingLocation": missingLocation
         ]
+        AF.request(url, parameters: param, encoding: JSONEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON{(json) in
+                print(json)
             }
+    }
     
     func formatDate(date: Date) -> String{
         let formatter = DateFormatter()
