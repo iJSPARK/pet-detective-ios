@@ -85,6 +85,7 @@
                         <outlet property="addressLabel" destination="Gd6-EC-Icg" id="16D-Ii-SK2"/>
                         <outlet property="missingPoint" destination="Q5S-lq-Cgi" id="Lkc-K1-fLI"/>
                         <outlet property="naverMapView" destination="0hF-Qq-E01" id="XZL-Xj-hI6"/>
+                        <outlet property="setMissingLocationButton" destination="6wN-BF-xO9" id="IEi-qx-jFf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
