@@ -38,13 +38,31 @@ class ReportWriteViewController: UIViewController {
     @IBOutlet weak var etcTextView: UITextView!
     @IBOutlet weak var confirmBtn: UIBarButtonItem!
     var reportEditMode: ReportEditorMode = .new
+    var fCurTextfieldBottom: CGFloat = 0.0
+    var keyHeight: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.breedTextField.isEnabled = false
         self.configureImg()
         self.configureDatePicker()
+        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         //        self.confirmBtn.isEnabled = false
     }
+    
+    
+    //    private func configureTextField(){
+    //        self.breedTextField.delegate = self
+    //        self.furColorTextField.delegate = self
+    //        self.locationTextField.delegate = self
+    //        self.dateTextField.delegate = self
+    //        self.ageTextField.delegate = self
+    //        self.featureTextField.delegate = self
+    //        self.moneyTextField.delegate = self
+    //        self.diseaseTextField.delegate = self
+    //        self.ageTextField.delegate = self
+    //    }
     
     private func configureImg(){
         self.imagePicker.sourceType = .photoLibrary // 앨범에서 가져옴
@@ -75,48 +93,64 @@ class ReportWriteViewController: UIViewController {
             self.petId = report.petId
             self.dateTextField.text = self.formatDate(date: report.missingTime)
             self.locationTextField.text = report.missingLocation
-//            self.moneyTextField.text = report.money
+            //            self.moneyTextField.text = report.money
         }
     }
     
     @IBAction func tabConfirmBtn(_ sender: UIBarButtonItem) {
-        //        print("hi")
         guard let breed = self.breedTextField.text else { return }
-        //        print(breed)
         guard let color = self.furColorTextField.text else { return }
-        //        print(color)
         guard let date = self.reportDate else { return }
-        //        print(date)
         guard let location = self.locationTextField.text else { return }
-        //        print(location)
         guard let money = self.moneyTextField.text else { return }
-        //        print(money)
         let sexArray = ["남", "여", "모름"]
         let sex = sexArray[self.sexSegControl.selectedSegmentIndex]
-        //        print(sex)
         let operationArray = ["유", "무", "모름"]
         let operation = operationArray[self.neuteringSegControl.selectedSegmentIndex]
-        //        print(operation)
         guard let disease = self.diseaseTextField.text else { return }
-        //        print(disease)
         guard let ageStr = self.ageTextField.text else { return }
-        //        print(ageStr)
+        guard let age = Int(ageStr) else { return }
         guard let etc = self.etcTextView.text else { return }
-        //        print(etc)
-        postInfo(missingTime: dateTextField.text!, missingLocation: location)
+        postInfo(breed: breed, color: color, date: formatDate(date: date), location: location, money: money, sex: sex, operationArray: operation, disease: disease, age: age, etc: etc, missingLongitude: "48.0", missingLatitude: "148.1")
+        self.navigationController?.popViewController(animated: true)
     }
     
-    private func postInfo(missingTime: String, missingLocation: String){
-        let url = "https://iospring.herokuapp.com/find"
-        let param = [
-            "missingTime": missingTime,
-            "missingLocation": missingLocation
-        ]
-        AF.request(url, parameters: param, encoding: JSONEncoding.default)
-            .validate(statusCode: 200..<300)
-            .responseJSON{(json) in
-                print(json)
+    private func postInfo(breed: String, color: String, date: String, location: String, money:String?, sex: String, operationArray: String, disease: String?, age: Int?, etc: String?, missingLongitude: String, missingLatitude: String){
+        let url = "https://iospring.herokuapp.com/detect"
+        AF.upload(multipartFormData: {multipartFormData in
+            let imageData: Data? = self.petImageView.image?.pngData()!
+            multipartFormData.append(imageData!, withName: "file", fileName: "testImage.png", mimeType: "image/png")
+            multipartFormData.append("\(breed)".data(using: String.Encoding.utf8)!, withName: "breed")
+            multipartFormData.append("\(color)".data(using: String.Encoding.utf8)!, withName: "color")
+            multipartFormData.append("\(date)".data(using: String.Encoding.utf8)!, withName: "missingDay")
+            multipartFormData.append("\(location)".data(using: String.Encoding.utf8)!, withName: "missingLocation")
+            if let unwrapFeture = etc {
+                multipartFormData.append("\(unwrapFeture)".data(using: String.Encoding.utf8)!, withName: "feature")
             }
+            if let unwrapMoney = money {
+                multipartFormData.append("\(unwrapMoney)".data(using: .utf8)!, withName: "money")
+            }
+            multipartFormData.append("\(sex)".data(using: String.Encoding.utf8)!, withName: "gender")
+            multipartFormData.append("true".data(using: .utf8)!, withName: "isOperation")
+            if let unwrapDisease = disease {
+                multipartFormData.append("\(unwrapDisease)".data(using: String.Encoding.utf8)!, withName: "disease")
+            }
+            if let unwrapAge = age {
+                multipartFormData.append("\(unwrapAge)".data(using: String.Encoding.utf8)!, withName: "age")
+            }
+            multipartFormData.append("\(missingLongitude)".data(using: String.Encoding.utf8)!, withName: "missingLongitude")
+            multipartFormData.append("\(missingLatitude)".data(using: String.Encoding.utf8)!, withName: "missingLatitude")
+            //            multipartFormData.append("true".data(using: String.Encoding.utf8)!, withName: "isCare")
+        }, to: url, method: .post)
+        .validate(statusCode: 200..<500)
+        .responseData { response in
+            switch response.result {
+            case .success:
+                debugPrint(response)
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
     
     func formatDate(date: Date) -> String{
@@ -160,9 +194,20 @@ class ReportWriteViewController: UIViewController {
         return newImage!
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    } // 유저가 빈 화면을 터치하면 키보드나 피커가 다시 내려감
+    //    // 키보드가 나타났다는 알림을 받으면 실행할 메서드
+    //    @objc func keyboardWillShow(_ sender: Notification) {
+    //        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
+    //        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+    //        let keyboardRectangle = keyboardFrame.cgRectValue
+    //        let keyboardHeight = keyboardRectangle.height
+    //        keyHeight = keyboardHeight
+    //
+    //        self.view.frame.size.height -= keyboardHeight
+    //    }
+    //    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
+    //    @objc func keyboardWillHide(_ sender: Notification) {
+    //        self.view.frame.size.height += keyHeight!
+    //    }
 }
 
 extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -180,6 +225,28 @@ extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigati
         self.petImageView.image = resizedImg // 받아온 이미지를 update
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
         
+        let url = "https://iospring-teachable.herokuapp.com/breed"
+        
+        AF.upload(multipartFormData: {multipartFormData in
+            let imageData: Data? = self.petImageView.image?.pngData()!
+            multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
+        }, to: url, method: .post)
+        .validate(statusCode: 200..<500)
+        .responseData { response in
+            switch response.result {
+            case .success:
+                guard let data = response.data else {return}
+                do {
+                    let decoder = JSONDecoder()
+                    let json = try decoder.decode([Prediction].self, from: data)
+                    self.breedTextField.text = json[0].prediction
+                }
+                catch {
+                    print("error!\(error)")
+                }
+            case let .failure(error):
+                print(error)
+            }
+        }
     }
 }
-
