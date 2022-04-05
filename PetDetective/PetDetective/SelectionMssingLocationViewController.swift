@@ -15,7 +15,24 @@ class SelectionMssingLocationViewController: UIViewController {
     
     var missingLatitude: Double?   // 위도
     var missingLongtitude: Double? // 경도
-    var missingAddress: String? // 주소
+    var missingAddress: String? {
+        didSet {
+            print("실종 (카메라 중앙) 좌표 \(missingLatitude), \(missingLongtitude), \(missingAddress)")
+            self.addressLabel.text = missingAddress
+        }
+    } // 주소
+    
+//    var isHiding: Bool = true {
+//        didSet {
+//            if isHiding {
+//                addressLabel.isHidden = isHiding
+//                setMissingLocationButton.isHidden = isHiding
+//            } else {
+//                addressLabel.isHidden = isHiding
+//                setMissingLocationButton.isHidden = isHiding
+//            }
+//        }
+//    }
     
     @IBOutlet weak var addressLabel: UILabel!
     
@@ -33,24 +50,46 @@ class SelectionMssingLocationViewController: UIViewController {
         
         // 델리게이트 설정
         locationManager.delegate = self
-        
+    
         // 거리 정확도 설정
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         // GPS 위치 정보 받아오기
         locationManager.startUpdatingLocation()
         
-        // 위치 추적이 활성화 모드
-        self.mapView.positionMode = .direction
-        
-        // 현재 위치 버튼 가져오기
-        naverMapView.showLocationButton = true
-        
         // 카메라 delegate 설정, 카메라 이동 시마다 호출되는 콜백함수 사용 (카메라 이동 이벤트 받기)
         mapView.addCameraDelegate(delegate: self)
+    }
+    
+    // 위치 추적 모드 유무
+    func trackingMode(_ isAuthorized: Bool) {
+        
+        // 네이버 지도 사용자 인터렉션
+        self.mapView.isUserInteractionEnabled = isAuthorized
+        
+        // 현재 위치 버튼 가져오기
+        naverMapView.showLocationButton = isAuthorized
+        
+        self.addressLabel.isEnabled = isAuthorized
+        
+        self.setMissingLocationButton.isEnabled = isAuthorized
+        
+        if isAuthorized {
+            print("Tracking")
+            
+            // 위치 추적이 활성화 모드
+            self.mapView.positionMode = .direction
 
-        // 앱 처음 실행시 카메라 이동
-        moveCameraFirstRun()
+            // 카메라 첫 움직임
+            moveCameraFirstRun()
+            
+        } else {
+            print("Not Tracking")
+            
+            self.mapView.positionMode = .disabled
+            
+        }
+        
     }
     
     // 권한 확인
@@ -71,8 +110,7 @@ class SelectionMssingLocationViewController: UIViewController {
     
     @IBAction func saveMissingLocationButtonTapped(_ sender: Any) {
         // 데이터 입력 폼 화면으로 unwind segue 연결
-        // 좌표 (위도, 경도) 저장
-        // 주소 저장
+        // 실종위치 (위도, 경도, 주소) 저장
     }
 
     /*
@@ -91,12 +129,14 @@ extension SelectionMssingLocationViewController: CLLocationManagerDelegate {
     // 위치 권한 변경시 권한 받아오기
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("Changed Authorization")
+        trackingMode(false)
         switch locationManager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             print("Authorized")
+            trackingMode(true)
         case .notDetermined, .restricted:
             print("Not Authorized")
-            locationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization() // 권한 받아오기
         case .denied:
             print("Not denied")
             setAuthAlertAction() // 위치 권한 거부: 설정 창으로 가서 권한을 변경하도록 유도해야 함
@@ -106,7 +146,7 @@ extension SelectionMssingLocationViewController: CLLocationManagerDelegate {
     }
     
     // 좌표 주소 반환
-    func findAddress(lat: CLLocationDegrees, long: CLLocationDegrees) -> String {
+    func findAddress(lat: CLLocationDegrees, long: CLLocationDegrees, completion: @escaping (String?) -> Void) {
         let findLocation = CLLocation(latitude: lat, longitude: long)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
@@ -121,34 +161,15 @@ extension SelectionMssingLocationViewController: CLLocationManagerDelegate {
             
             findAddress = locality + " " + name
             
-            print(findAddress)
-            
-            self.addressLabel.text = findAddress
+            completion(findAddress)
             
         })
-        
-        return findAddress
-        
     }
-    
-//    // 위치 정보 실시간 업데이트 -> 위도 경도 받아옴
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print("didUpdateLocations")
-//        if let location = locations.first {
-//
-//            let latitude = location.coordinate.latitude
-//            let longtitude = location.coordinate.longitude
-//            print("위도 \(latitude)")
-//            print("경도 \(longtitude)")
-//        }
-//    }
 }
 
 extension SelectionMssingLocationViewController: NMFMapViewCameraDelegate {
     
     func moveCameraFirstRun() {
-        self.addressLabel.isHidden = true
-        self.setMissingLocationButton.isHidden = true
         // 앱 처음 실행시 카메라 이동 현재 위치 비동기 처리 (1초후 카메라 이동)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             // self.setMissingLocationButton.isEnabled = false
@@ -158,8 +179,6 @@ extension SelectionMssingLocationViewController: NMFMapViewCameraDelegate {
                     print("카메라 이동 취소")
                 } else {
                     print("카메라 이동 완료")
-                    self.addressLabel.isHidden = false
-                    self.setMissingLocationButton.isHidden = false
                 }
             }
         }
@@ -181,9 +200,13 @@ extension SelectionMssingLocationViewController: NMFMapViewCameraDelegate {
         
         missingLatitude = centerLat
         missingLongtitude = centerLng
-        missingAddress = findAddress(lat: centerLat, long: centerLng) // 주소 찾기
         
-        print("실종 (카메라 중앙) 좌표 \(missingLatitude ?? 0), \(missingLongtitude ?? 0), \(missingAddress ?? "")")
+        // 좌표 주소 변환
+        findAddress(lat: centerLat, long: centerLng, completion: { (centerAddress) in
+            if let centerAddress = centerAddress {
+                self.missingAddress = centerAddress
+            }
+        })
     }
     
 //    // 카메라 이동 함수 cameraIsChangingByReason
