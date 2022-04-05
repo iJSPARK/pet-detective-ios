@@ -31,3 +31,19 @@ class APIDetectBoardResponse<T: Codable> : Codable {
     var detectBoardDTOList: T?
 }
 
+class APIDetectDetailResponse:Codable {
+    let breed: String
+    let color: String
+    let missingTime: String
+    let missingLocation: String
+    let age: Int?
+    let feature: String
+    let disease: String
+    let gender: String
+    let mainImageUrl: String
+    let id: Int
+    let money: Int?
+    let content: String
+    let operation: Bool
+}
+

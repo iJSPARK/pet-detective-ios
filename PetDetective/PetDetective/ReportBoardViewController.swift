@@ -9,7 +9,6 @@ import UIKit
 
 class ReportBoardViewController: UIViewController {
     
-    @IBOutlet weak var addFloatBtn: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     var totalPage = 3
     var currentPage = 1
@@ -18,9 +17,6 @@ class ReportBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.addFloatBtn.layer.borderWidth = 1
-        self.addFloatBtn.frame.size = CGSize(width: 300, height: 50)
-        self.addFloatBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.addFloatBtn.frame.width/2, y: self.view.frame.height - 100)
         configureCollectionView()
         fetchData(page: 1)
     }
@@ -97,6 +93,9 @@ extension ReportBoardViewController: UICollectionViewDelegateFlowLayout {
 
 extension ReportBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+        let reportId = self.boardList[indexPath.row].id
+        viewController.reportId = reportId
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
