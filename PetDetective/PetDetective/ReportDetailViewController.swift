@@ -26,7 +26,7 @@ class ReportDetailViewController: UIViewController {
     @IBOutlet weak var myPostStackBtn: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        myPostStackBtn.isHidden = true
+//        myPostStackBtn.isHidden = true
         getInfo(id: self.reportId!)
     }
     
@@ -77,4 +77,23 @@ class ReportDetailViewController: UIViewController {
         task.resume()
     }
     
+    @IBAction func removeReport() {
+        guard let url = URL(string: "https://iospring.herokuapp.com/detect/\(self.reportId!)") else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                if(error != nil){
+                    print(error.debugDescription)
+                    return
+                }
+                else if( data != nil ){
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        task.resume()
+    }
 }

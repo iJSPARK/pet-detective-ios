@@ -744,6 +744,9 @@
                                                         <buttonConfiguration key="configuration" style="plain" title="삭제">
                                                             <color key="baseForegroundColor" systemColor="systemRedColor"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="removeReport" destination="u0t-Ie-h19" eventType="touchUpInside" id="P7H-Sm-ndr"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNJ-rt-2EV">
                                                         <rect key="frame" x="125.5" y="0.0" width="48.5" height="31"/>
