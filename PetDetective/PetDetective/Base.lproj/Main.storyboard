@@ -54,7 +54,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="f5S-Xt-FYr"/>
                     <connections>
-                        <segue destination="4yT-TT-rDG" kind="unwind" unwindAction="unwindToMain:" id="5lg-3j-0QN"/>
+                        <segue destination="4yT-TT-rDG" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMain:" id="5lg-3j-0QN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

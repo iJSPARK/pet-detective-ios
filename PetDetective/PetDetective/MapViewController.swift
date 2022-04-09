@@ -40,7 +40,7 @@ class MapViewController: LocationController, NMFMapViewCameraDelegate {
             naverMapView.mapView.positionMode = .direction
 
             // 카메라 첫 움직임
-            moveCameraFirstRun(naverMapView)
+            // moveCameraFirstRun(naverMapView)
 
         } else {
             print("Not Tracking Mode")

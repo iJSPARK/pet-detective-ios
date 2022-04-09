@@ -8,7 +8,6 @@
 //import CoreLocation
 
 
-import UIKit
 import NMapsMap
 
 class FindLocationViewController: MapViewController {
@@ -19,10 +18,11 @@ class FindLocationViewController: MapViewController {
     var findingLongtitude: Double? // 경도
     var findingAddress: String? {
         didSet {
-            print("실종 (카메라 중앙) 좌표 \(findingLatitude), \(findingLongtitude), \(findingAddress)")
             customMapView.addressLabel.text = findingAddress
         }
     }
+    
+    @IBOutlet weak var findMapView: UIView!
     
     override var isAuthorized: Bool {
         didSet {
@@ -35,7 +35,7 @@ class FindLocationViewController: MapViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.view.addSubview(customMapView)
+        self.findMapView.addSubview(customMapView)
         
         customMapView.translatesAutoresizingMaskIntoConstraints = false
         customMapView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
@@ -44,6 +44,8 @@ class FindLocationViewController: MapViewController {
         customMapView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         
         setLocationManager()
+        
+        customMapView.setLocationButton.setTitle("탐색 위치 설정", for: .normal)
         
         customMapView.setLocationButton.backgroundColor = .systemBrown
         
@@ -55,7 +57,7 @@ class FindLocationViewController: MapViewController {
     
     @objc func buttonTapped(button: UIButton) {
         // 데이터 저장
-        self.performSegue(withIdentifier: "unwindToMain", sender: self)
+        self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
     }
 
     /*
@@ -73,18 +75,11 @@ class FindLocationViewController: MapViewController {
 extension FindLocationViewController {
     // 카메라 움직임 종료시 실행
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-//        let alert = UIAlertController(title: "카메라 움직임 종료",
-//                                      message: nil,
-//                                      preferredStyle: .alert)
-//        present(alert, animated: true, completion: {
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
-//                alert.dismiss(animated: true, completion: nil)
-//            })
-//        })
+
         let cameraPosition = mapView.cameraPosition // 카메라 현재 위치 (지도 중앙 좌표)
         let centerLat = cameraPosition.target.lat
         let centerLng = cameraPosition.target.lng
-        
+
         // 좌표 주소 변환
         // 위도 경도 주소 저장
         findAddress(lat: centerLat, long: centerLng, completion: { (centerAddress) in
@@ -92,6 +87,7 @@ extension FindLocationViewController {
                 self.findingLatitude = centerLat
                 self.findingLongtitude = centerLng
                 self.findingAddress = centerAddress
+                print("탐색 (카메라 중앙) 좌표 \(centerLat), \(centerLng), \(centerAddress)")
             }
         })
     }

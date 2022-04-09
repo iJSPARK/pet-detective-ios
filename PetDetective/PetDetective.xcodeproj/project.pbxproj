@@ -23,13 +23,13 @@
 		797F44DE27FED3EF00ADD49D /* EmergencyResquePetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44DD27FED3EF00ADD49D /* EmergencyResquePetInfo.swift */; };
 		797F44E027FED44000ADD49D /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44DF27FED44000ADD49D /* URL+Helpers.swift */; };
 		797F44E227FED58B00ADD49D /* EmergencyRecuePetInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44E127FED58B00ADD49D /* EmergencyRecuePetInfoController.swift */; };
-		797F44EE27FFD70000ADD49D /* FindLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797F44ED27FFD70000ADD49D /* FindLocation.storyboard */; };
 		797F44F027FFF0C800ADD49D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 797F44EF27FFF0C800ADD49D /* MapView.xib */; };
 		797F44F227FFF18000ADD49D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44F127FFF18000ADD49D /* MapView.swift */; };
 		797F44F427FFF9C500ADD49D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44F327FFF9C500ADD49D /* MapViewController.swift */; };
 		797F44F627FFFB1200ADD49D /* FindLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44F527FFFB1200ADD49D /* FindLocationViewController.swift */; };
 		797F44F827FFFF3A00ADD49D /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44F727FFFF3A00ADD49D /* LocationController.swift */; };
 		797F44FA28002C4000ADD49D /* MissingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 797F44F928002C4000ADD49D /* MissingLocation.swift */; };
+		797F45002801C27A00ADD49D /* FindLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797F44FF2801C27A00ADD49D /* FindLocation.storyboard */; };
 		79C391CC27EDE04700BA74EE /* SelectionMissingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C391CB27EDE04700BA74EE /* SelectionMissingLocationViewController.swift */; };
 		79C391CE27EDE05800BA74EE /* SelectionMissingLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79C391CD27EDE05800BA74EE /* SelectionMissingLocation.storyboard */; };
 		7C4360087264C77A1DC4DFC2 /* Pods_PetDetective_PetDetectiveUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB4DB47BFF03FDFF70AA9BD0 /* Pods_PetDetective_PetDetectiveUITests.framework */; };
@@ -71,13 +71,13 @@
 		797F44DD27FED3EF00ADD49D /* EmergencyResquePetInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyResquePetInfo.swift; sourceTree = "<group>"; };
 		797F44DF27FED44000ADD49D /* URL+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
 		797F44E127FED58B00ADD49D /* EmergencyRecuePetInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyRecuePetInfoController.swift; sourceTree = "<group>"; };
-		797F44ED27FFD70000ADD49D /* FindLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FindLocation.storyboard; sourceTree = "<group>"; };
 		797F44EF27FFF0C800ADD49D /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
 		797F44F127FFF18000ADD49D /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		797F44F327FFF9C500ADD49D /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		797F44F527FFFB1200ADD49D /* FindLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindLocationViewController.swift; sourceTree = "<group>"; };
 		797F44F727FFFF3A00ADD49D /* LocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		797F44F928002C4000ADD49D /* MissingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissingLocation.swift; sourceTree = "<group>"; };
+		797F44FF2801C27A00ADD49D /* FindLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FindLocation.storyboard; sourceTree = "<group>"; };
 		79C391CB27EDE04700BA74EE /* SelectionMissingLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionMissingLocationViewController.swift; sourceTree = "<group>"; };
 		79C391CD27EDE05800BA74EE /* SelectionMissingLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SelectionMissingLocation.storyboard; sourceTree = "<group>"; };
 		8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetectiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,12 +160,12 @@
 				797F44F127FFF18000ADD49D /* MapView.swift */,
 				797F44F928002C4000ADD49D /* MissingLocation.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
-				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
+				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				79C391CD27EDE05800BA74EE /* SelectionMissingLocation.storyboard */,
 				7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */,
-				797F44ED27FFD70000ADD49D /* FindLocation.storyboard */,
 				797F44EF27FFF0C800ADD49D /* MapView.xib */,
+				797F44FF2801C27A00ADD49D /* FindLocation.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
 			);
 			path = PetDetective;
@@ -334,12 +334,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797F45002801C27A00ADD49D /* FindLocation.storyboard in Resources */,
 				7948396D27E5FD56004B04FD /* EmergencyRescue.storyboard in Resources */,
 				79C391CE27EDE05800BA74EE /* SelectionMissingLocation.storyboard in Resources */,
 				7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */,
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
 				797F44F027FFF0C800ADD49D /* MapView.xib in Resources */,
-				797F44EE27FFD70000ADD49D /* FindLocation.storyboard in Resources */,
 				7948392927E5F20F004B04FD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

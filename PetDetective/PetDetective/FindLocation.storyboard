@@ -12,23 +12,46 @@
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="FindLocationViewController" id="Y6W-OH-hqX" customClass="FindLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc" customClass="MapView" customModule="PetDetective" customModuleProvider="target">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wPx-Fs-xwv">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FindPoint" translatesAutoresizingMaskIntoConstraints="NO" id="QcI-3c-L4m">
+                                <rect key="frame" x="163" y="295.5" width="88" height="88.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="88" id="ZQa-yA-7oW"/>
+                                    <constraint firstAttribute="height" constant="88.400000000000006" id="aqK-U4-qTP"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wPx-Fs-xwv" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="C8w-XJ-sCD"/>
+                            <constraint firstItem="wPx-Fs-xwv" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="ZGW-an-GkO"/>
+                            <constraint firstAttribute="bottom" secondItem="wPx-Fs-xwv" secondAttribute="bottom" id="jaT-aW-EF8"/>
+                            <constraint firstItem="wPx-Fs-xwv" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="oMZ-qR-Sl6"/>
+                            <constraint firstItem="QcI-3c-L4m" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" constant="-108.15000000000001" id="tgI-xt-ZsV"/>
+                            <constraint firstItem="QcI-3c-L4m" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="xS9-LS-QPB"/>
+                        </constraints>
                     </view>
                     <connections>
-                        <segue destination="jpZ-fB-DQo" kind="unwind" identifier="unwindToMain" unwindAction="unwindToMain:" id="Okr-Gj-Bxv"/>
+                        <outlet property="findMapView" destination="wPx-Fs-xwv" id="RhU-iK-XBv"/>
+                        <segue destination="hfd-YH-Ttd" kind="unwind" identifier="unwindToMainSetFindLocation" unwindAction="unwindToMain:" id="OqU-AY-sMJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="jpZ-fB-DQo" userLabel="Exit" sceneMemberID="exit"/>
+                <exit id="hfd-YH-Ttd" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-270" y="127"/>
+            <point key="canvasLocation" x="2.8985507246376816" y="58.928571428571423"/>
         </scene>
     </scenes>
     <resources>
+        <image name="FindPoint" width="880" height="884"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
