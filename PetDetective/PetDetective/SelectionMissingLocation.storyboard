@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Selection Mssing Location View Controller-->
+        <!--Selection Missing Location View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="SelectionMssingLocationViewController" id="Y6W-OH-hqX" customClass="SelectionMssingLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectionMissingLocationViewController" id="Y6W-OH-hqX" customClass="SelectionMissingLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,9 +32,9 @@
                                             <constraint firstAttribute="height" constant="44" id="pHx-bb-TBh"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="실종 위치로 설정">
+                                        <buttonConfiguration key="configuration" style="filled" title="탐색 위치로 설정">
                                             <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="17"/>
-                                            <color key="baseBackgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="baseBackgroundColor" systemColor="systemBrownColor"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="saveMissingLocationButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="kMl-ng-7E0"/>
@@ -66,11 +66,20 @@
                                     <constraint firstAttribute="width" constant="36" id="MMs-LK-e5D"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Find" translatesAutoresizingMaskIntoConstraints="NO" id="c8b-x4-gM9">
+                                <rect key="frame" x="57" y="223" width="300" height="300"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="EYf-WM-7Rk"/>
+                                    <constraint firstAttribute="height" constant="300" id="NWj-oa-UPz"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="yjd-KZ-uG4" secondAttribute="bottom" id="9OL-A4-NAg"/>
+                            <constraint firstItem="c8b-x4-gM9" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" constant="-75" id="ExC-OA-mRN"/>
+                            <constraint firstItem="c8b-x4-gM9" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="FKd-uo-3Lv"/>
                             <constraint firstItem="0hF-Qq-E01" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="Gj0-yj-eim"/>
                             <constraint firstItem="0hF-Qq-E01" firstAttribute="trailing" secondItem="5EZ-qb-Rvc" secondAttribute="trailing" id="UAz-cg-tKP"/>
                             <constraint firstItem="Q5S-lq-Cgi" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" constant="-104.25" id="bBv-AP-hcT"/>
@@ -95,9 +104,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Find" width="330" height="322"/>
         <image name="MissingPoint" width="360" height="583"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

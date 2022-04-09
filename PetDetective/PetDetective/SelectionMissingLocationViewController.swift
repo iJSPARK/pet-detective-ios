@@ -5,13 +5,13 @@
 //  Created by Junseo Park on 2022/03/25.
 //
 
-import UIKit
+//import UIKit
 import NMapsMap
-import CoreLocation
+//import CoreLocation
 
-class SelectionMssingLocationViewController: UIViewController {
-
-    let locationManager = CLLocationManager()   // 위치 객체
+class SelectionMissingLocationViewController: LocationController {
+    
+//    let locationManager = CLLocationManager()   // 위치 객체
     
     var missingLatitude: Double?   // 위도
     var missingLongtitude: Double? // 경도
@@ -20,21 +20,10 @@ class SelectionMssingLocationViewController: UIViewController {
             print("실종 (카메라 중앙) 좌표 \(missingLatitude), \(missingLongtitude), \(missingAddress)")
             self.addressLabel.text = missingAddress
         }
-    } // 주소
-    
-//    var isHiding: Bool = true {
-//        didSet {
-//            if isHiding {
-//                addressLabel.isHidden = isHiding
-//                setMissingLocationButton.isHidden = isHiding
-//            } else {
-//                addressLabel.isHidden = isHiding
-//                setMissingLocationButton.isHidden = isHiding
-//            }
-//        }
-//    }
+    }
     
     @IBOutlet weak var addressLabel: UILabel!
+
     
     @IBOutlet weak var setMissingLocationButton: UIButton!
     
@@ -48,17 +37,18 @@ class SelectionMssingLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 델리게이트 설정
-        locationManager.delegate = self
-    
-        // 거리 정확도 설정
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        
-        // GPS 위치 정보 받아오기
-        locationManager.startUpdatingLocation()
-        
+//        // 델리게이트 설정
+//        locationManager.delegate = self
+//
+//        // 거리 정확도 설정
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//
+//        // GPS 위치 정보 받아오기
+//        locationManager.startUpdatingLocation()
+//
         // 카메라 delegate 설정, 카메라 이동 시마다 호출되는 콜백함수 사용 (카메라 이동 이벤트 받기)
         mapView.addCameraDelegate(delegate: self)
+        
     }
     
     // 위치 추적 모드 유무
@@ -70,6 +60,7 @@ class SelectionMssingLocationViewController: UIViewController {
         // 현재 위치 버튼 가져오기
         naverMapView.showLocationButton = isAuthorized
         
+        // UIView 관련
         self.addressLabel.isEnabled = isAuthorized
         
         self.setMissingLocationButton.isEnabled = isAuthorized
@@ -89,24 +80,23 @@ class SelectionMssingLocationViewController: UIViewController {
             self.mapView.positionMode = .disabled
             
         }
-        
     }
     
     // 권한 확인
-    func setAuthAlertAction() {
-
-        let authAlertController = UIAlertController(title: "위치 사용 권한이 필요합니다.", message: "위치 권한을 허용해야만 앱을 사용하실 수 있습니다.", preferredStyle: .alert)
-
-        let getAuthAction = UIAlertAction(title: "설정", style: .default, handler: { (UIAlertAction) in
-            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSettings,options: [:],completionHandler: nil)
-            }
-        })
-    
-        authAlertController.addAction(getAuthAction)
-    
-        self.present(authAlertController, animated: true, completion: nil)
-    }
+//    func setAuthAlertAction() {
+//
+//        let authAlertController = UIAlertController(title: "위치 사용 권한이 필요합니다.", message: "위치 권한을 허용해야만 앱을 사용하실 수 있습니다.", preferredStyle: .alert)
+//
+//        let getAuthAction = UIAlertAction(title: "설정", style: .default, handler: { (UIAlertAction) in
+//            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
+//                UIApplication.shared.open(appSettings,options: [:],completionHandler: nil)
+//            }
+//        })
+//
+//        authAlertController.addAction(getAuthAction)
+//
+//        self.present(authAlertController, animated: true, completion: nil)
+//    }
     
     @IBAction func saveMissingLocationButtonTapped(_ sender: Any) {
         // 데이터 입력 폼 화면으로 unwind segue 연결
@@ -125,49 +115,51 @@ class SelectionMssingLocationViewController: UIViewController {
 
 }
 
-extension SelectionMssingLocationViewController: CLLocationManagerDelegate {
-    // 위치 권한 변경시 권한 받아오기
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        print("Changed Authorization")
-        trackingMode(false)
-        switch locationManager.authorizationStatus {
-        case .authorizedWhenInUse, .authorizedAlways:
-            print("Authorized")
-            trackingMode(true)
-        case .notDetermined, .restricted:
-            print("Not Authorized")
-            locationManager.requestWhenInUseAuthorization() // 권한 받아오기
-        case .denied:
-            print("Not denied")
-            setAuthAlertAction() // 위치 권한 거부: 설정 창으로 가서 권한을 변경하도록 유도해야 함
-        @unknown default:
-            break
-        }
-    }
-    
-    // 좌표 주소 반환
-    func findAddress(lat: CLLocationDegrees, long: CLLocationDegrees, completion: @escaping (String?) -> Void) {
-        let findLocation = CLLocation(latitude: lat, longitude: long)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        var findAddress: String = ""
-        
-        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: { (placemarks, error) in
-            
-            guard error == nil else { return print("ReverseGeocode error") }
-            guard let address: [CLPlacemark] = placemarks else { return print("ReverseGeocode address error") }
-            guard let locality: String = address.last?.locality else { return print("ReverseGeocode locality error") }
-            guard let name: String = address.last?.name else { return print("ReverseGeocode name error") }
-            
-            findAddress = locality + " " + name
-            
-            completion(findAddress)
-            
-        })
-    }
-}
+//extension SelectionMissingLocationViewController: CLLocationManagerDelegate {
+//
+//
+//    // 위치 권한 변경시 권한 받아오기
+////    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+////        print("Changed Authorization")
+////        trackingMode(false)
+////        switch locationManager.authorizationStatus {
+////        case .authorizedWhenInUse, .authorizedAlways:
+////            print("Authorized")
+////            trackingMode(true)
+////        case .notDetermined, .restricted:
+////            print("Not Authorized")
+////            locationManager.requestWhenInUseAuthorization() // 권한 받아오기
+////        case .denied:
+////            print("Not denied")
+////            setAuthAlertAction() // 위치 권한 거부: 설정 창으로 가서 권한을 변경하도록 유도해야 함
+////        @unknown default:
+////            break
+////        }
+////    }
+//
+////    // 좌표 주소 반환
+////    func findAddress(lat: CLLocationDegrees, long: CLLocationDegrees, completion: @escaping (String?) -> Void) {
+////        let findLocation = CLLocation(latitude: lat, longitude: long)
+////        let geocoder = CLGeocoder()
+////        let locale = Locale(identifier: "Ko-kr")
+////        var findAddress: String = ""
+////
+////        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: { (placemarks, error) in
+////
+////            guard error == nil else { return print("ReverseGeocode error") }
+////            guard let address: [CLPlacemark] = placemarks else { return print("ReverseGeocode address error") }
+////            guard let locality: String = address.last?.locality else { return print("ReverseGeocode locality error") }
+////            guard let name: String = address.last?.name else { return print("ReverseGeocode name error") }
+////
+////            findAddress = locality + " " + name
+////
+////            completion(findAddress)
+////
+////        })
+////    }
+//}
 
-extension SelectionMssingLocationViewController: NMFMapViewCameraDelegate {
+extension SelectionMissingLocationViewController: NMFMapViewCameraDelegate {
     
     func moveCameraFirstRun() {
         // 앱 처음 실행시 카메라 이동 현재 위치 비동기 처리 (1초후 카메라 이동)
