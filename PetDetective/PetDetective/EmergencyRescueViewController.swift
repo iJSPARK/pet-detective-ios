@@ -129,10 +129,11 @@ class EmergencyRescueViewController: MapViewController, NMFOverlayImageDataSourc
 //                    let title = "dsddddddddddddddddddd\nddddddddd"
 //                    print(title)
 //                    dataSource.title = title
+                    
                     markers[i].userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
                    
                     
-                    
+                   
                     // 마커를 탭하면
                     let handler = { (overlay: NMFOverlay) -> Bool in
                         if let marker = overlay as? NMFMarker {
@@ -140,7 +141,6 @@ class EmergencyRescueViewController: MapViewController, NMFOverlayImageDataSourc
                                 // 현재 마커에 정보 창이 열려있지 않을 경우
                                 infoWindow.dataSource.view(with: markers[i])
                                 
-                               
 //                                infoWindow.dataSource = dataSource
                                 infoWindow.open(with:markers[i])
 //                                markers[i].captionText = "잃어버린 위치"
@@ -170,8 +170,11 @@ class EmergencyRescueViewController: MapViewController, NMFOverlayImageDataSourc
     func view(with overlay: NMFOverlay) -> UIView {
         let markInfoView = MarkerInfoView()
         let markerInfo = overlay.userInfo["MarkerInfo"] as! MarkerInfo
-        markInfoView.goldenTimeLabel.text = "ㅇㄹㅇㄹ"
-        markInfoView.moneyLabel.text = "ㅇㄹㅇㄹ"
+        markInfoView.goldenTimeLabel.text = markerInfo.missingTime
+        markInfoView.moneyLabel.text = "\(markerInfo.money)"
+        
+        print(markerInfo.missingTime)
+        print(markerInfo.money)
         return markInfoView
     }
     
