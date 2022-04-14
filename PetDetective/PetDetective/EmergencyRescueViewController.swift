@@ -80,7 +80,7 @@ class EmergencyRescueViewController: MapViewController {
                 
 //                print(missingPets[i].image)
         
-                let imageString = "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
+                let imageString: String? =  "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
                 
                 let petImage = self.reSize(imageString: imageString)
                     
@@ -120,34 +120,17 @@ class EmergencyRescueViewController: MapViewController {
         let image = UIImage(data: data!)
         let newWidth = 36
         let newHeight = 36
-//        let circle = UIBezierPath(ovalIn: CGRect(x: newWidth/2 - newHeight/2,
-//                                                y: 0,
-//                                                width: newWidth,
-//                                                height: newHeight))
         let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
 //        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
         
-        UIGraphicsBeginImageContextWithOptions(CGSize(width: newWidth, height: newHeight), false, 1.0)
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: newWidth, height: newHeight), false, 0.0)
+
+        UIBezierPath(roundedRect: newImageRect, cornerRadius: 50).addClip()
+        
         image?.draw(in: newImageRect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
         UIGraphicsEndImageContext()
         return newImage!
-//        DispatchQueue.global().async {
-//            guard let url = URL(string: imageString!) else { return }
-//            guard let data = try? Data(contentsOf: url) else { return }
-//            DispatchQueue.main.async {
-//                guard let image = UIImage(data: data) else { return }
-//                let customImage = change?.toImage()
-//                let newWidth = 30
-//                let newHeight = 30
-//                let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-//                UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-//                customImage?.draw(in: newImageRect)
-//                let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
-//                UIGraphicsEndImageContext()
-//                return newImage!
-//            }
-//        }
     }
     
 //    func makeRounded() {
