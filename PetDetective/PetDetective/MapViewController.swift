@@ -24,15 +24,18 @@ class MapViewController: LocationController, NMFMapViewCameraDelegate {
     }
     
     
-    // 위치 추적 모드 유무 // tracking mode = false면 uiView update
-    func updateMapViewFromMode(isAuthorized: Bool, naverMapView: NMFNaverMapView) {
+    // 위치 추적 모드에 따른 UIView update
+    func updateUIFromMode(isAuthorized: Bool, naverMapView: NMFNaverMapView, _ addressLabel: UILabel?, _ setLocationButton: UIButton?) {
 
         // 네이버 지도 사용자 인터렉션
         naverMapView.mapView.isUserInteractionEnabled = isAuthorized
 
         // 현재 위치 버튼 가져오기
         naverMapView.showLocationButton = isAuthorized
-
+        
+        addressLabel?.isEnabled = isAuthorized
+        setLocationButton?.isEnabled = isAuthorized
+        
         if isAuthorized {
             print("Tracking Mode")
 
@@ -48,11 +51,6 @@ class MapViewController: LocationController, NMFMapViewCameraDelegate {
             naverMapView.mapView.positionMode = .disabled
 
         }
-    }
-    
-    func updateUICustomMapViewFromMode(isAuthorized: Bool, _ addressLabel: UILabel, _ setLocationButton: UIButton) {
-        addressLabel.isEnabled = isAuthorized
-        setLocationButton.isEnabled = isAuthorized
     }
     
 }

@@ -31,7 +31,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="naverMapView" destination="Ohc-cX-nNE" id="Uag-T6-FCI"/>
+                        <outlet property="rescueMapView" destination="Ohc-cX-nNE" id="B1T-Xk-QrA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

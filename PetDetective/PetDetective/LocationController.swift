@@ -67,18 +67,19 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
         let findLocation = CLLocation(latitude: lat, longitude: long)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
-        var findAddress: String = ""
         
         geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: { (placemarks, error) in
+            
+            let resultAddress: String?
             
             guard error == nil else { return print("ReverseGeocode error") }
             guard let address: [CLPlacemark] = placemarks else { return print("ReverseGeocode address error") }
             guard let locality: String = address.last?.locality else { return print("ReverseGeocode locality error") }
             guard let name: String = address.last?.name else { return print("ReverseGeocode name error") }
             
-            findAddress = locality + " " + name
+            resultAddress = locality + " " + name
             
-            completion(findAddress)
+            completion(resultAddress)
             
         })
     }

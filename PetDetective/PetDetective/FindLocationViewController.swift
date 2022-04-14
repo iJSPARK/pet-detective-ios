@@ -26,8 +26,7 @@ class FindLocationViewController: MapViewController {
     
     override var isAuthorized: Bool {
         didSet {
-            updateMapViewFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView)
-            updateUICustomMapViewFromMode(isAuthorized: isAuthorized, customMapView.addressLabel, customMapView.setLocationButton)
+            updateUIFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView, customMapView.addressLabel, customMapView.setLocationButton)
         }
     }
 
@@ -59,7 +58,7 @@ class FindLocationViewController: MapViewController {
         // 데이터 저장
         self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
     }
-
+    
     /*
     // MARK: - Navigation
 
@@ -91,5 +90,8 @@ extension FindLocationViewController {
             }
         })
     }
+    
 }
+
+
 

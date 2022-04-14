@@ -23,8 +23,7 @@ class SelectionMissingLocationViewController: MapViewController {
     
     override var isAuthorized: Bool {
         didSet {
-            updateMapViewFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView)
-            updateUICustomMapViewFromMode(isAuthorized: isAuthorized, customMapView.addressLabel, customMapView.setLocationButton)
+            updateUIFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView, customMapView.addressLabel, customMapView.setLocationButton)
         }
     }
 
@@ -33,7 +32,6 @@ class SelectionMissingLocationViewController: MapViewController {
         super.viewDidLoad()
         
         self.missingMapView.addSubview(customMapView)
-//        self.view.addSubview(customMapView)
         
         customMapView.translatesAutoresizingMaskIntoConstraints = false
         customMapView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
@@ -58,10 +56,6 @@ class SelectionMissingLocationViewController: MapViewController {
         self.performSegue(withIdentifier: "unwinToMainFromSetMissingLocation", sender: self)
     }
     
-    @IBAction func saveMissingLocationButtonTapped(_ sender: Any) {
-        // 데이터 입력 폼 화면으로 unwind segue 연결
-        // 실종위치 (위도, 경도, 주소) 저장
-    }
 
     /*
     // MARK: - Navigation

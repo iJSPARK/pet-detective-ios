@@ -5,15 +5,13 @@
 //  Created by Junseo Park on 3/19/22.
 //
 
-import UIKit
 import NMapsMap
-import CoreLocation
 
-class EmergencyRescueViewController: UIViewController {
+class EmergencyRescueViewController: MapViewController {
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
     
-    
+    let naverMap = MapView().naverMapView!
     
     // 위치 권한 허용 (항상 허용, 앱사용시에만 허용)
     // 위치 추적 권한 부인시 앱 허용 상태 페이지로 가게함
@@ -34,52 +32,51 @@ class EmergencyRescueViewController: UIViewController {
     // 남은 골든 타임 = 3h - (현재시간 - 실종시간)
     // 제보하러 가기 버튼 (신고탭 - 제보 화면 연결)
     
-    let locationManager = CLLocationManager()   // 위치 객체
+    @IBOutlet weak var rescueMapView: UIView!
     
-    @IBOutlet weak var naverMapView: NMFNaverMapView!
-    var mapView: NMFMapView {
-        return naverMapView.mapView
+    override var isAuthorized: Bool {
+        didSet {
+            updateUIFromMode(isAuthorized: isAuthorized, naverMapView: naverMap, nil, nil)
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 델리게이트 설정
-        locationManager.delegate = self
-    
-        // 거리 정확도 설정
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.rescueMapView.addSubview(naverMap)
         
-        // GPS 위치 정보 받아오기
-        locationManager.startUpdatingLocation()
+        naverMap.translatesAutoresizingMaskIntoConstraints = false
+        naverMap.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
+        naverMap.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
+        naverMap.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        naverMap.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         
-        // 카메라 delegate 설정, 카메라 이동 시마다 호출되는 콜백함수 사용 (카메라 이동 이벤트 받기)
-        mapView.addCameraDelegate(delegate: self)
-
-//        var missingPets: [MissingPetInfo]?
+        setLocationManager()
+        
+        naverMap.mapView.addCameraDelegate(delegate: self)
         
         emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
             guard let missingPet = missingPet else { return }
             guard let missingPets = missingPet.missingPetInfos else { return }
-            
+
             self.updateUI(with: missingPets)
-            
-            
+
+
         }
-            
-    
+
+        
     }
     
     
     func updateUI(with missingPets: [MissingPetInfo]) {
         DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
+            // 백그라운드 스레드 (오버레이 객체 생성)
             var markers = [NMFMarker]()
             for i in 0..<missingPets.count {
                 print("Add Marker")
-                
+
                 let marker = NMFMarker(position: NMGLatLng(lat: missingPets[i].latitude ?? 37.33517959240947, lng: missingPets[i].longtitude ?? 127.11733318999303))
-                
+
 //                let image = missingPets[i].image?.toImage()! // 스트링으로 바꾸기
 
 
@@ -95,7 +92,7 @@ class EmergencyRescueViewController: UIViewController {
 //                    imageMainView.clipsToBounds = true
 //                    marker.iconImage = NMFOverlayImage(name: missingPets[i].image)
 //                    marker.iconImage = NMFOverlayImage(image: petImageView.image)
-                
+
 //
 //                }
                 markers.append(marker)
@@ -103,9 +100,10 @@ class EmergencyRescueViewController: UIViewController {
             }
 
             DispatchQueue.main.async { [weak self] in
-                // 메인 스레드
+                // 메인 스레드 (오버레이 객체 맵에 올림)
+
                 for marker in markers {
-                    marker.self.mapView = self?.mapView
+                    marker.mapView = self?.naverMap.mapView
                 }
             }
         }
@@ -119,51 +117,6 @@ class EmergencyRescueViewController: UIViewController {
 //        self.layer.cornerRadius = self.frame.height / 2
 //        self.clipsToBounds = true
 //    }
-    
-    // 위치 추적 모드 유무
-    func trackingMode(_ isAuthorized: Bool) {
-        
-        // 네이버 지도 사용자 인터렉션
-        self.mapView.isUserInteractionEnabled = isAuthorized
-        
-        // 현재 위치 버튼 가져오기
-        naverMapView.showLocationButton = isAuthorized
-        
-        if isAuthorized {
-            print("Tracking")
-            
-            // 위치 추적이 활성화 모드
-            self.mapView.positionMode = .direction
-
-            // 카메라 첫 움직임
-            moveCameraFirstRun()
-            
-        } else {
-            print("Not Tracking")
-            
-            self.mapView.positionMode = .disabled
-            
-        }
-        
-    }
-    
-//    // 권한 확인
-//    func setAuthAlertAction() {
-//
-//        let authAlertController = UIAlertController(title: "위치 사용 권한이 필요합니다.", message: "위치 권한을 허용해야만 앱을 사용하실 수 있습니다.", preferredStyle: .alert)
-//
-//        let getAuthAction = UIAlertAction(title: "설정", style: .default, handler: { (UIAlertAction) in
-//            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-//                UIApplication.shared.open(appSettings,options: [:],completionHandler: nil)
-//            }
-//        })
-//
-//        authAlertController.addAction(getAuthAction)
-//
-//        self.present(authAlertController, animated: true, completion: nil)
-//    }
-    
-    
         
 //    // 위치 정보 계속 업데이트 -> 위도 경도 받아옴
 //    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -185,126 +138,6 @@ class EmergencyRescueViewController: UIViewController {
 //
 //    }
     
-//    // 카메라 이동 함수
-//    func mapView(_ mapView: NMFMapView, cameraWillChangeByReason reason: Int, animated: Bool) {
-//
-//    }
-}
-
-
-extension EmergencyRescueViewController: CLLocationManagerDelegate {
-//    // 위치 권한 변경시 권한 받아오기
-//    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-//        print("Changed Authorization")
-//        trackingMode(false)
-//        switch locationManager.authorizationStatus {
-//        case .authorizedWhenInUse, .authorizedAlways:
-//            print("Authorized")
-//            trackingMode(true)
-//        case .notDetermined, .restricted:
-//            print("Not Authorized")
-//            locationManager.requestWhenInUseAuthorization() // 권한 받아오기
-//        case .denied:
-//            print("Not denied")
-//            setAuthAlertAction() // 위치 권한 거부: 설정 창으로 가서 권한을 변경하도록 유도해야 함
-//        @unknown default:
-//            break
-//        }
-//    }
-    
-    // 좌표 주소 반환
-    func findAddress(lat: CLLocationDegrees, long: CLLocationDegrees, completion: @escaping (String?) -> Void) {
-        let findLocation = CLLocation(latitude: lat, longitude: long)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        var findAddress: String = ""
-
-        geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: { (placemarks, error) in
-
-            guard error == nil else { return print("ReverseGeocode error") }
-            guard let address: [CLPlacemark] = placemarks else { return print("ReverseGeocode address error") }
-            guard let locality: String = address.last?.locality else { return print("ReverseGeocode locality error") }
-            guard let name: String = address.last?.name else { return print("ReverseGeocode name error") }
-
-            findAddress = locality + " " + name
-
-            completion(findAddress)
-
-        })
-    }
-}
-
-extension EmergencyRescueViewController: NMFMapViewCameraDelegate {
-    
-    func moveCameraFirstRun() {
-//        // 앱 처음 실행시 카메라 이동 현재 위치 비동기 처리 (1초후 카메라 이동)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            // self.setMissingLocationButton.isEnabled = false
-//            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.locationManager.location?.coordinate.latitude ?? 0, lng: self.locationManager.location?.coordinate.longitude ?? 0))
-//            self.mapView.moveCamera(cameraUpdate) { (isCancelled) in
-//                if isCancelled {
-//                    print("카메라 이동 취소")
-//                } else {
-//                    print("카메라 이동 완료")
-//                }
-//            }
-//        }
-    }
-    
-//    // 카메라 움직임 종료시 실행
-//    func mapViewCameraIdle(_ mapView: NMFMapView) {
-////        let alert = UIAlertController(title: "카메라 움직임 종료",
-////                                      message: nil,
-////                                      preferredStyle: .alert)
-////        present(alert, animated: true, completion: {
-////            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5, execute: {
-////                alert.dismiss(animated: true, completion: nil)
-////            })
-////        })
-//        let cameraPosition = mapView.cameraPosition // 카메라 현재 위치 (지도 중앙 좌표)
-//        let centerLat = cameraPosition.target.lat
-//        let centerLng = cameraPosition.target.lng
-//
-//        missingLatitude = centerLat
-//        missingLongtitude = centerLng
-//
-//        // 좌표 주소 변환
-//        findAddress(lat: centerLat, long: centerLng, completion: { (centerAddress) in
-//            if let centerAddress = centerAddress {
-//                self.missingAddress = centerAddress
-//            }
-//        })
-//    }
-    
-//    // 카메라 이동 함수 cameraIsChangingByReason
-//    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-//
-////        let cameraPosition = NMFCameraPosition() // 카메라 위치 객체 생성
-//        print("빠른 이동")
-//        let cameraPosition = mapView.cameraPosition // 카메라 현재위치
-//
-////        let x = self.mapView.frame.width / 2
-////        let y = self.mapView.frame.height / 2
-////
-////        let projection = mapView.projection // 카메라 투영
-////        let coord = projection.latlng(from: CGPoint(x: x, y: y)) // 0.5, 0.5
-//
-//    }
-    
-//    func mapViewRegionIsChanging(_ mapView: NMFMapView, byReason reason: Int) {
-//        print("카메라 변경 - reason: \(reason)")
-//
-//        let cameraPosition = NMFCameraPosition() // 카메라 위치 객체 생성
-//
-//        let centerLat = cameraPosition.target.lat
-//        let centerLng = cameraPosition.target.lng
-//
-//        let marker = NMFMarker()
-//        marker.position = NMGLatLng(lat: centerLat, lng: centerLng)
-//        marker.mapView = mapView
-//        print("중앙 좌표 \(centerLat), \(centerLng)")
-//    }
-
 }
 
 extension String {
@@ -315,3 +148,6 @@ extension String {
         return nil
     }
 }
+
+
+    
