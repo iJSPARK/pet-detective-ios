@@ -6,6 +6,7 @@
 //
 
 import NMapsMap
+import UIKit
 
 class EmergencyRescueViewController: MapViewController {
     
@@ -76,13 +77,35 @@ class EmergencyRescueViewController: MapViewController {
                 print("Add Marker")
 
                 let marker = NMFMarker(position: NMGLatLng(lat: missingPets[i].latitude ?? 37.33517959240947, lng: missingPets[i].longtitude ?? 127.11733318999303))
-
-//                let image = missingPets[i].image?.toImage()! // 스트링으로 바꾸기
+                
+                print(missingPets[i].image)
+                
+//                marker.iconImage = NMFOverlayImage(image: (missingPets[i].image?.toImage())!)
+//                let petImage = self.reSize(change: missingPets[i].image)
+//
+//                marker.iconImage = NMFOverlayImage(image: petImage)
+                
+                
+    
+//                let petImage = missingPets[i].image?.toImage()!
+//
+//                print(petImage)
+                let petImage = "![000402](https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg)"
+            
+                
+                let im = petImage.toImage()
+                
+                print(im)
+//                marker.iconImage = NMFOverlayImage(image: <#T##UIImage#>) // 스트링으로 바꾸기
+                
+                
+                
+                
 
 
 //                guard let url = URL(string: missingPets[i].image!) else { return }
-//                guard let data = try? Data(contentsOf: url) else { return }
-//                guard let petImage = UIImage(data: data) else { return }
+        
+            
 //                DispatchQueue.main.async {
 //                    let petImageView = UIImageView(image: image)
 //                    petImageView.layer.borderWidth = 1
@@ -92,7 +115,7 @@ class EmergencyRescueViewController: MapViewController {
 //                    imageMainView.clipsToBounds = true
 //                    marker.iconImage = NMFOverlayImage(name: missingPets[i].image)
 //                    marker.iconImage = NMFOverlayImage(image: petImageView.image)
-
+//
 //
 //                }
                 markers.append(marker)
@@ -107,6 +130,18 @@ class EmergencyRescueViewController: MapViewController {
                 }
             }
         }
+    }
+    
+    func reSize(change: String?) -> UIImage {
+        let customImage = change?.toImage()
+        let newWidth = 30
+        let newHeight = 30
+        let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        customImage?.draw(in: newImageRect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+        UIGraphicsEndImageContext()
+        return newImage!
     }
     
 //    func makeRounded() {
@@ -149,5 +184,3 @@ extension String {
     }
 }
 
-
-    
