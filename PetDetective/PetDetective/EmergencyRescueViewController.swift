@@ -70,7 +70,7 @@ class EmergencyRescueViewController: MapViewController {
     
     
     func updateUI(with missingPets: [MissingPetInfo]) {
-        DispatchQueue.global(qos: .default).async {
+        DispatchQueue.global(qos: .default).async { [self] in
             // 백그라운드 스레드 (오버레이 객체 생성)
             var markers = [NMFMarker]()
             for i in 0..<missingPets.count {
@@ -78,34 +78,16 @@ class EmergencyRescueViewController: MapViewController {
 
                 let marker = NMFMarker(position: NMGLatLng(lat: missingPets[i].latitude ?? 37.33517959240947, lng: missingPets[i].longtitude ?? 127.11733318999303))
                 
-                print(missingPets[i].image)
-                
-//                marker.iconImage = NMFOverlayImage(image: (missingPets[i].image?.toImage())!)
-//                let petImage = self.reSize(change: missingPets[i].image)
-//
-//                marker.iconImage = NMFOverlayImage(image: petImage)
-                
-                
-    
-//                let petImage = missingPets[i].image?.toImage()!
-//
-//                print(petImage)
-                let petImage = "![000402](https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg)"
-            
-                
-                let im = petImage.toImage()
-                
-                print(im)
-//                marker.iconImage = NMFOverlayImage(image: <#T##UIImage#>) // 스트링으로 바꾸기
-                
-                
-                
-                
-
-
-//                guard let url = URL(string: missingPets[i].image!) else { return }
+//                print(missingPets[i].image)
         
+                let imageString = "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
+                
+                let petImage = self.reSize(imageString: imageString)
+                    
+                
+                marker.iconImage = NMFOverlayImage(image: petImage)
             
+                
 //                DispatchQueue.main.async {
 //                    let petImageView = UIImageView(image: image)
 //                    petImageView.layer.borderWidth = 1
@@ -132,16 +114,40 @@ class EmergencyRescueViewController: MapViewController {
         }
     }
     
-    func reSize(change: String?) -> UIImage {
-        let customImage = change?.toImage()
-        let newWidth = 30
-        let newHeight = 30
+    func reSize(imageString: String?) -> UIImage {
+        let url = URL(string: imageString!)!
+        let data = try? Data(contentsOf: url)
+        let image = UIImage(data: data!)
+        let newWidth = 36
+        let newHeight = 36
+//        let circle = UIBezierPath(ovalIn: CGRect(x: newWidth/2 - newHeight/2,
+//                                                y: 0,
+//                                                width: newWidth,
+//                                                height: newHeight))
         let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-        customImage?.draw(in: newImageRect)
+//        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        
+        UIGraphicsBeginImageContextWithOptions(CGSize(width: newWidth, height: newHeight), false, 1.0)
+        image?.draw(in: newImageRect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
         UIGraphicsEndImageContext()
         return newImage!
+//        DispatchQueue.global().async {
+//            guard let url = URL(string: imageString!) else { return }
+//            guard let data = try? Data(contentsOf: url) else { return }
+//            DispatchQueue.main.async {
+//                guard let image = UIImage(data: data) else { return }
+//                let customImage = change?.toImage()
+//                let newWidth = 30
+//                let newHeight = 30
+//                let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
+//                UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+//                customImage?.draw(in: newImageRect)
+//                let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
+//                UIGraphicsEndImageContext()
+//                return newImage!
+//            }
+//        }
     }
     
 //    func makeRounded() {
@@ -181,6 +187,19 @@ extension String {
             return UIImage(data: data)
         }
         return nil
+    }
+}
+
+extension UIImage {
+    var roundedImage: UIImage {
+        let rect = CGRect(origin:CGPoint(x: 0, y: 0), size: self.size)
+        UIGraphicsBeginImageContextWithOptions(self.size, false, 1)
+        UIBezierPath(
+            roundedRect: rect,
+            cornerRadius: 50
+            ).addClip()
+        self.draw(in: rect)
+        return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }
 
