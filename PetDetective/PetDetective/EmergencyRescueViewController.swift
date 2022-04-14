@@ -8,7 +8,12 @@
 import NMapsMap
 import UIKit
 
-class EmergencyRescueViewController: MapViewController {
+struct MarkerInfo {
+    let missingTime: String
+    let money: Int
+}
+
+class EmergencyRescueViewController: MapViewController, NMFOverlayImageDataSource {
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
     
@@ -60,7 +65,7 @@ class EmergencyRescueViewController: MapViewController {
             guard let missingPet = missingPet else { return }
             guard let missingPets = missingPet.missingPetInfos else { return }
 
-            self.updateUI(with: missingPets)
+            self.updateMapUI(with: missingPets)
 
 
         }
@@ -68,17 +73,26 @@ class EmergencyRescueViewController: MapViewController {
         
     }
     
-    
-    func updateUI(with missingPets: [MissingPetInfo]) {
+    func updateMapUI(with missingPets: [MissingPetInfo]) {
         DispatchQueue.global(qos: .default).async { [self] in
             // 백그라운드 스레드 (오버레이 객체 생성)
             var markers = [NMFMarker]()
+//            var infoWindows = [NMFInfoWindow]()
+//            var dataSource = []
+            var add = 0.01
             for i in 0..<missingPets.count {
                 print("Add Marker")
-
-                let marker = NMFMarker(position: NMGLatLng(lat: missingPets[i].latitude ?? 37.33517959240947, lng: missingPets[i].longtitude ?? 127.11733318999303))
                 
-//                print(missingPets[i].image)
+                let marker = NMFMarker(position: NMGLatLng(lat: 37.33517959240947 + add, lng: 127.11733318999303 + add))
+                
+                if i % 2 == 0 {
+                    add -= 0.015
+                } else {
+                    add += 0.01
+                }
+                
+                
+//                let dataSource = NMFInfoWindowDefaultTextSource.data()
         
                 let imageString: String? =  "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
                 
@@ -87,31 +101,78 @@ class EmergencyRescueViewController: MapViewController {
                 
                 marker.iconImage = NMFOverlayImage(image: petImage)
             
+//                guard let time = missingPets[i].missingTime else { return }
+//
+//                guard let money = missingPets[i].money else { return }
+//
+//                dataSource.title = time + "\n" + "\(money)"
+//
+//                infoWindows[i].dataSource = dataSource
+//
                 
-//                DispatchQueue.main.async {
-//                    let petImageView = UIImageView(image: image)
-//                    petImageView.layer.borderWidth = 1
-//                    petImageView.layer.masksToBounds = false
-//                    petImageView.layer.cornerRadius = petImageView.layer.frame.height / 2
-//                    petImageView.layer.cornerRadius = petImageView.layer.frame.height / 2
-//                    imageMainView.clipsToBounds = true
-//                    marker.iconImage = NMFOverlayImage(name: missingPets[i].image)
-//                    marker.iconImage = NMFOverlayImage(image: petImageView.image)
-//
-//
-//                }
                 markers.append(marker)
                 print("\(missingPets[i].latitude), \(missingPets[i].longtitude)")
             }
 
             DispatchQueue.main.async { [weak self] in
                 // 메인 스레드 (오버레이 객체 맵에 올림)
+                var infoWindow = NMFInfoWindow()
+                var dataSource = NMFInfoWindowDefaultTextSource.data()
+                for i in 0..<markers.count {
+                    markers[i].mapView = self?.naverMap.mapView
+                    
+                    guard let time = missingPets[i].missingTime else { return }
+                    
+                    guard let money = missingPets[i].money else { return }
+//                    guard let location = missingPets[i].location else { return }
 
-                for marker in markers {
-                    marker.mapView = self?.naverMap.mapView
+//                    let title = "dsddddddddddddddddddd\nddddddddd"
+//                    print(title)
+//                    dataSource.title = title
+                    markers[i].userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+                   
+                    
+                    
+                    // 마커를 탭하면
+                    let handler = { (overlay: NMFOverlay) -> Bool in
+                        if let marker = overlay as? NMFMarker {
+                            if marker.infoWindow == nil {
+                                // 현재 마커에 정보 창이 열려있지 않을 경우
+                                infoWindow.dataSource.view(with: markers[i])
+                                
+                               
+//                                infoWindow.dataSource = dataSource
+                                infoWindow.open(with:markers[i])
+//                                markers[i].captionText = "잃어버린 위치"
+                            } else {
+                                // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+                                infoWindow.close()
+//                                markers[i].captionText = ""
+                            }
+                        }
+                        return true
+                    };
+                    
+                    markers[i].touchHandler = handler
+                    
+
+                    
+                    
+                   
+//                    infoWindows[i].open(with: markers[i])
+//                    marker.mapView = self?.naverMap.mapView
+//                    infoWindows[].open(with: marker)
                 }
             }
         }
+    }
+    
+    func view(with overlay: NMFOverlay) -> UIView {
+        let markInfoView = MarkerInfoView()
+        let markerInfo = overlay.userInfo["MarkerInfo"] as! MarkerInfo
+        markInfoView.goldenTimeLabel.text = "ㅇㄹㅇㄹ"
+        markInfoView.moneyLabel.text = "ㅇㄹㅇㄹ"
+        return markInfoView
     }
     
     func reSize(imageString: String?) -> UIImage {
@@ -185,4 +246,14 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }
+
+//extension UIView {
+//    func toMakerView(_ view: UIView) -> MarkerInfoView {
+//        view.addSubview(<#T##view: UIView##UIView#>)
+//        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
+//            return UIImage(data: data)
+//        }
+//        return nil
+//    }
+//}
 

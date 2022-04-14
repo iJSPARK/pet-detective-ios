@@ -17,17 +17,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-cX-nNE" customClass="NMFNaverMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="796"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCP-eO-7I2">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="근처의 신고된 애완동물" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yYa-Uz-2Y9">
+                                        <rect key="frame" x="116" y="60" width="182" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="4oN-AY-48R"/>
+                                    <constraint firstItem="yYa-Uz-2Y9" firstAttribute="top" secondItem="qCP-eO-7I2" secondAttribute="top" constant="60" id="HuZ-TZ-oYw"/>
+                                    <constraint firstItem="yYa-Uz-2Y9" firstAttribute="centerX" secondItem="qCP-eO-7I2" secondAttribute="centerX" id="caW-nq-fTi"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Ohc-cX-nNE" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="9aS-h1-l2g"/>
+                            <constraint firstItem="qCP-eO-7I2" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="FuN-ml-xd7"/>
+                            <constraint firstItem="qCP-eO-7I2" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="R5x-6M-Xzm"/>
                             <constraint firstItem="Ohc-cX-nNE" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="Y8b-KZ-FWm"/>
-                            <constraint firstItem="Ohc-cX-nNE" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="Yix-jn-W8q"/>
                             <constraint firstAttribute="bottom" secondItem="Ohc-cX-nNE" secondAttribute="bottom" id="dca-hU-z6G"/>
+                            <constraint firstItem="qCP-eO-7I2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="grf-xO-IdL"/>
+                            <constraint firstItem="Ohc-cX-nNE" firstAttribute="top" secondItem="qCP-eO-7I2" secondAttribute="bottom" id="oTx-P6-IPe"/>
                         </constraints>
                     </view>
                     <connections>
