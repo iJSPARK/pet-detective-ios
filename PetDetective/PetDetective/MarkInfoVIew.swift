@@ -17,7 +17,7 @@ class MarkerInfoView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.loadXib()
-        self.layer.cornerRadius = 6
+//        self.layer.cornerRadius = 6
 //        setLocationButton.layer.cornerRadius = 6
 //        setLocationButton.tintColor = .white
     }

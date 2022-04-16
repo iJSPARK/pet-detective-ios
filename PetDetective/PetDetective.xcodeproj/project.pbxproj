@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1830DE57CCDA8AD9C6E34E79 /* Pods_PetDetective.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */; };
 		637D1F7DCEC077194A7631B8 /* Pods_PetDetectiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */; };
+		79285AB7280AFA7C000B4EED /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79285AB6280AFA7C000B4EED /* CustomInfoWindowDataSource.swift */; };
 		7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392127E5F20F004B04FD /* AppDelegate.swift */; };
 		7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392327E5F20F004B04FD /* SceneDelegate.swift */; };
 		7948392927E5F20F004B04FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948392727E5F20F004B04FD /* Main.storyboard */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		79285AB6280AFA7C000B4EED /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
 		7948391E27E5F20F004B04FD /* PetDetective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDetective.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7948392127E5F20F004B04FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7948392327E5F20F004B04FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				797F45752808413900ADD49D /* MarkInfoVIew.swift */,
 				797F44F127FFF18000ADD49D /* MapView.swift */,
 				797F44F928002C4000ADD49D /* MissingLocation.swift */,
+				79285AB6280AFA7C000B4EED /* CustomInfoWindowDataSource.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
@@ -483,6 +486,7 @@
 				797F44F827FFFF3A00ADD49D /* LocationController.swift in Sources */,
 				7948396027E5F684004B04FD /* ViewController.swift in Sources */,
 				797F45762808413900ADD49D /* MarkInfoVIew.swift in Sources */,
+				79285AB7280AFA7C000B4EED /* CustomInfoWindowDataSource.swift in Sources */,
 				797F44E027FED44000ADD49D /* URL+Helpers.swift in Sources */,
 				797F44E227FED58B00ADD49D /* EmergencyRecuePetInfoController.swift in Sources */,
 				7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */,
