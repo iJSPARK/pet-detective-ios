@@ -68,7 +68,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" red="1" green="0.97715840880173277" blue="0.73712975298302896" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
                                             <constraints>
                                                 <constraint firstItem="wN5-cm-xKm" firstAttribute="centerX" secondItem="bRf-qT-Izl" secondAttribute="centerX" id="2CK-7z-3Z9"/>
                                                 <constraint firstAttribute="bottom" secondItem="bRf-qT-Izl" secondAttribute="bottom" constant="15" id="9cD-Zs-IMk"/>
@@ -108,6 +108,7 @@
                     <navigationItem key="navigationItem" id="zn0-zq-UZ1"/>
                     <connections>
                         <outlet property="collectionView" destination="5AZ-hw-guo" id="AyM-9v-Fxl"/>
+                        <outlet property="reportWriteBtn" destination="ZcH-dN-WDQ" id="KCg-Td-3Bu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qlt-Ks-zav" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -117,7 +118,7 @@
         <!--Report Write View Controller-->
         <scene sceneID="tjy-kq-BDy">
             <objects>
-                <viewController storyboardIdentifier="ReportWriteViewController" id="6ol-vY-b1g" customClass="ReportWriteViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="ReportWriteViewController" storyboardIdentifier="ReportWriteViewController" id="6ol-vY-b1g" customClass="ReportWriteViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="bSR-Ys-0Wa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -752,6 +753,9 @@
                                                         <rect key="frame" x="125.5" y="0.0" width="48.5" height="31"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="수정"/>
+                                                        <connections>
+                                                            <action selector="editReport:" destination="u0t-Ie-h19" eventType="touchUpInside" id="ine-Gq-Aab"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                             </stackView>
@@ -862,6 +866,9 @@
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

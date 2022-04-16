@@ -47,3 +47,17 @@ class APIDetectDetailResponse:Codable {
     let operation: Bool
 }
 
+struct PutWithoutImage:Encodable{
+    let breed: String
+    let color: String
+    let missingTime: String
+    let missingLocation: String
+    let feature: String
+    let money: Int
+    let gender: String
+    let isOperation: Bool
+    let disease: String
+    let age: Int
+    let missingLongitude: Double
+    let missingLatitude: Double
+}

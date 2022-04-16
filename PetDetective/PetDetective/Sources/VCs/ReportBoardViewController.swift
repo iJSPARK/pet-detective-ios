@@ -12,6 +12,8 @@ class ReportBoardViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var totalPage = 3
     var currentPage = 1
+    @IBOutlet weak var reportWriteBtn: UIButton!
+    private var refreshControl = UIRefreshControl()
     
     private var boardList = [ReportBoard]()
     
@@ -19,6 +21,25 @@ class ReportBoardViewController: UIViewController {
         super.viewDidLoad()
         configureCollectionView()
         fetchData(page: 1)
+        self.collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goToDetailNotification(_:)),
+            name: NSNotification.Name("newReport"),
+            object: nil
+        )
+    }
+    
+    @objc func goToDetailNotification(_ notification: Notification){
+        print("받기 완료")
+        guard let id = notification.object else { return }
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+        guard let reportId = id as? String else { return }
+        print("변환 완료")
+        print(reportId)
+        viewController.reportId = Int(reportId)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func configureCollectionView() {
@@ -26,6 +47,9 @@ class ReportBoardViewController: UIViewController {
         self.collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.collectionView.delegate = self  // 하단 extension 참조
         self.collectionView.dataSource = self // 하단 extension 참조
+        self.reportWriteBtn.layer.borderWidth = 1
+        self.reportWriteBtn.frame.size = CGSize(width: 300, height: 50)
+        self.reportWriteBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.reportWriteBtn.frame.width/2, y: self.view.frame.height - 100)
     }
     
     private func fetchData(page: Int){
@@ -45,7 +69,10 @@ class ReportBoardViewController: UIViewController {
                         let decodedData = try JSONDecoder().decode(APIDetectBoardResponse<[ReportBoard]>.self, from: data!)
                         self.totalPage = decodedData.totalPage ?? 1
                         self.boardList.append(contentsOf: decodedData.detectBoardDTOList!)
-                        print("report Board count = \(self.boardList.count)")
+//                        print("report Board count = \(self.boardList.count)")
+//                        for b in self.boardList{
+//                            print(b.id)
+//                        }
                         self.collectionView.reloadData()
                     }
                     catch{
@@ -56,7 +83,10 @@ class ReportBoardViewController: UIViewController {
         }
         task.resume()
     }
-    
+    @objc func refresh(){
+        self.boardList.removeAll()
+        self.collectionView.reloadData() // Reload하여 뷰를 비워줍니다.
+    }
 }
 extension ReportBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -66,9 +96,9 @@ extension ReportBoardViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportBoardCell", for: indexPath) as? ReportBoardCell else { return UICollectionViewCell() }
         let url = URL(string: boardList[indexPath.row].mainImageUrl!)
-        let data = try? Data(contentsOf: url!)
+//        let data = try? Data(contentsOf: url!)
         DispatchQueue.main.async {
-            cell.petImg.image = UIImage(data: data!)
+//            cell.petImg.image = UIImage(data: data!)
         }
         cell.petInfo.text = boardList[indexPath.row].missingLocation!
 //        cell.date.text = self.dateToString(date: report.date) // date->String
@@ -80,6 +110,14 @@ extension ReportBoardViewController: UICollectionViewDataSource {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 self.fetchData(page: self.currentPage)
             }
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if (refreshControl.isRefreshing) {
+            self.refreshControl.endRefreshing()
+            self.currentPage = 1
+            fetchData(page: self.currentPage)
         }
     }
 }
@@ -96,6 +134,7 @@ extension ReportBoardViewController: UICollectionViewDelegate {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
         let reportId = self.boardList[indexPath.row].id
         viewController.reportId = reportId
+        print(reportId)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

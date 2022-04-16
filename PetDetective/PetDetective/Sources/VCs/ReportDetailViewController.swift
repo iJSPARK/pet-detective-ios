@@ -10,6 +10,8 @@ import UIKit
 class ReportDetailViewController: UIViewController {
     
     var reportId: Int?
+    var indexPath: IndexPath?
+    var report: Report?
     
     @IBOutlet weak var petImageView: UIImageView!
     @IBOutlet weak var breedLabel: UILabel!
@@ -50,7 +52,7 @@ class ReportDetailViewController: UIViewController {
                         self.petImageView.image = UIImage(data: data!)
                         self.breedLabel.text = decodedData.breed
                         self.furColorLabel.text = decodedData.color
-                        self.missingDateLabel.text = decodedData.missingTime
+                        self.missingDateLabel.text = "오늘"
                         self.missingLocationLabel.text = decodedData.missingLocation
                         self.sexLabel.text = decodedData.gender
                         let operation = decodedData.operation
@@ -95,5 +97,11 @@ class ReportDetailViewController: UIViewController {
             }
         }
         task.resume()
+    }
+    @IBAction func editReport(_ sender: UIButton) {
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportWriteViewController") as? ReportWriteViewController else { return }
+        viewController.reportEditMode = .edit
+        viewController.reportId = self.reportId
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

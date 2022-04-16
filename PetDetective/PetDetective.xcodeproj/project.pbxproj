@@ -67,6 +67,7 @@
 		8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetDetectiveTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E13966827F2BE9D00DA2D4D /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		8E13966A27F318E100DA2D4D /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		8E2433452806A8AC00573F9E /* PetDetective.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PetDetective.entitlements; sourceTree = "<group>"; };
 		8E43395327FAB666008D611B /* APICodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICodable.swift; sourceTree = "<group>"; };
 		8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBoardViewController.swift; sourceTree = "<group>"; };
 		8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBoardCell.swift; sourceTree = "<group>"; };
@@ -136,25 +137,20 @@
 		7948392027E5F20F004B04FD /* PetDetective */ = {
 			isa = PBXGroup;
 			children = (
-				7948396527E5FB51004B04FD /* Controller */,
-				7948396427E5FB34004B04FD /* Storyboard */,
 				7948392127E5F20F004B04FD /* AppDelegate.swift */,
 				7948392327E5F20F004B04FD /* SceneDelegate.swift */,
+				8E243348280796A700573F9E /* Sources */,
+				8E2433452806A8AC00573F9E /* PetDetective.entitlements */,
+				7948396527E5FB51004B04FD /* Controller */,
+				7948396427E5FB34004B04FD /* Storyboard */,
 				7948395F27E5F684004B04FD /* ViewController.swift */,
 				8EFF6E1B27F5B19400E8A63F /* ResponsePrediction.swift */,
-				8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */,
-				8EFF6E1D27F6E76200E8A63F /* ReportDetailViewController.swift */,
-				8E494AA327EB5B3C00884379 /* ReportWriteViewController.swift */,
 				7948396E27E5FD75004B04FD /* EmergencyRescueViewController.swift */,
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
 				7948396C27E5FD56004B04FD /* EmergencyRescue.storyboard */,
 				7948392F27E5F210004B04FD /* Info.plist */,
-				8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */,
-				8E13966827F2BE9D00DA2D4D /* Pet.swift */,
-				8E13966A27F318E100DA2D4D /* Report.swift */,
-				8E43395327FAB666008D611B /* APICodable.swift */,
 			);
 			path = PetDetective;
 			sourceTree = "<group>";
@@ -188,6 +184,52 @@
 			children = (
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		8E243348280796A700573F9E /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				8E24334C280796FD00573F9E /* Models */,
+				8E24334B280796F600573F9E /* Cells */,
+				8E24334A280796ED00573F9E /* Classes */,
+				8E243349280796D400573F9E /* VCs */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8E243349280796D400573F9E /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */,
+				8EFF6E1D27F6E76200E8A63F /* ReportDetailViewController.swift */,
+				8E494AA327EB5B3C00884379 /* ReportWriteViewController.swift */,
+			);
+			path = VCs;
+			sourceTree = "<group>";
+		};
+		8E24334A280796ED00573F9E /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8E43395327FAB666008D611B /* APICodable.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		8E24334B280796F600573F9E /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8E494A9F27EB4E1300884379 /* ReportBoardCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		8E24334C280796FD00573F9E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8E13966827F2BE9D00DA2D4D /* Pet.swift */,
+				8E13966A27F318E100DA2D4D /* Report.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		B34BD24501A99EC1BA0E0D5A /* Pods */ = {
@@ -646,6 +688,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PetDetective/PetDetective.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -680,6 +723,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PetDetective/PetDetective.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
