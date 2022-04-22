@@ -17,6 +17,16 @@ class ReportBoard: Codable{
     let missingTime: String?
 }
 
+class FindBoard: Codable{
+    let mainImageUrl: String?
+    let missingLocation: String?
+    let id: Int?
+    let missingLatitude: Double?
+    let missingLongitude: Double?
+    let missingTime: String?
+    let care: Bool
+}
+
 //"mainImageUrl":"https://iospring.s3.ap-northeast-2.amazonaws.com/7c4cf621-1600-4043-8418-1826da262de2.png",
 //"missingLocation":"서울광진구",
 //"id":4,
@@ -25,6 +35,29 @@ class ReportBoard: Codable{
 //"missingLongitude":37.65504092130379,
 //"missingTime":"2022-03-31 05:21:46 +0000"
 
+
+class APIFinderBoardResponse<T: Codable> : Codable {
+    var totalPage: Int?
+    var finderBoardDTOS: T?
+}
+
+class APIFinderDetailResponse: Codable {
+    let breed: String
+    let color: String
+    let missingTime: String
+    let missingLocation: String
+    let missingLatitude: Double
+    let missingLongitude: Double
+    let age: Int?
+    let feature: String
+    let disease: String
+    let gender: String
+    let mainImageUrl: String
+    let id: Int
+    let content: String
+    let care: Bool
+    let operation: Bool
+}
 
 class APIDetectBoardResponse<T: Codable> : Codable {
     var totalPage: Int?

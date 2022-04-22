@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WebKit
 import Alamofire
 
 enum ReportEditorMode{
@@ -41,8 +40,8 @@ class ReportWriteViewController: UIViewController {
     @IBOutlet weak var etcTextView: UITextView!
     @IBOutlet weak var confirmBtn: UIBarButtonItem!
     var reportEditMode: ReportEditorMode = .new
-    var fCurTextfieldBottom: CGFloat = 0.0
-    var keyHeight: CGFloat?
+//    var fCurTextfieldBottom: CGFloat = 0.0
+//    var keyHeight: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -220,13 +219,13 @@ class ReportWriteViewController: UIViewController {
                 }
                 multipartFormData.append("\(missingLongitude)".data(using: String.Encoding.utf8)!, withName: "missingLongitude")
                 multipartFormData.append("\(missingLatitude)".data(using: String.Encoding.utf8)!, withName: "missingLatitude")
-                //            multipartFormData.append("true".data(using: String.Encoding.utf8)!, withName: "isCare")
             }, to: url, method: .put)
             .validate(statusCode: 200..<500)
             .responseData { response in
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
                 }
@@ -271,13 +270,13 @@ class ReportWriteViewController: UIViewController {
                 }
                 multipartFormData.append("\(missingLongitude)".data(using: String.Encoding.utf8)!, withName: "missingLongitude")
                 multipartFormData.append("\(missingLatitude)".data(using: String.Encoding.utf8)!, withName: "missingLatitude")
-                //            multipartFormData.append("true".data(using: String.Encoding.utf8)!, withName: "isCare")
             }, to: url, method: .put)
             .validate(statusCode: 200..<500)
             .responseData { response in
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
                 }
@@ -321,19 +320,20 @@ class ReportWriteViewController: UIViewController {
                 }
                 multipartFormData.append("\(missingLongitude)".data(using: String.Encoding.utf8)!, withName: "missingLongitude")
                 multipartFormData.append("\(missingLatitude)".data(using: String.Encoding.utf8)!, withName: "missingLatitude")
-                //            multipartFormData.append("true".data(using: String.Encoding.utf8)!, withName: "isCare")
             }, to: url, method: .post)
             .validate(statusCode: 200..<500)
             .responseData { response in
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
                 }
             }
         }
     }
+    
     
     func formatDate(date: Date) -> String{
         let formatter = DateFormatter()
