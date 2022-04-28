@@ -12,16 +12,27 @@ class DetectBoardViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     var totalPage = 3
     var currentPage = 1
+    
+    var searchCurrentPage = 1
+    var searchTotalPage = 1
+    var searchFlag = 0
+    var category = ""
+    var condition = ""
+    
     @IBOutlet weak var writeBtn: UIButton!
     private var refreshControl = UIRefreshControl()
     
     private var boardList = [FindBoard]()
     
+    let searchController = UISearchController(searchResultsController: nil)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let nibName = UINib(nibName: "FinderCell", bundle: nil)
         collectionView.register(nibName, forCellWithReuseIdentifier: "FinderCell")
+        
         configureCollectionView()
+        
         self.collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         fetchData(page: 1)
@@ -31,6 +42,18 @@ class DetectBoardViewController: UIViewController {
 //            name: NSNotification.Name("newReport"),
 //            object: nil
 //        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(searchPostNotification(_:)),
+            name: NSNotification.Name("searchFind"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(searchCancleNotification(_:)),
+            name: NSNotification.Name("searchFindCancle"),
+            object: nil
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,14 +71,63 @@ class DetectBoardViewController: UIViewController {
 //        self.navigationController?.pushViewController(viewController, animated: true)
 //    }
     
+    @objc func searchPostNotification(_ notification: Notification){
+        guard let objectdic = notification.object as? [String:String] else { return }
+        self.boardList.removeAll()
+        collectionView.reloadData()
+        self.searchFlag = 1
+        self.searchCurrentPage = 1
+        self.category = objectdic["scope"]!
+        self.condition = objectdic["search"]!
+        fetchSearchedData(category: self.category, condition: self.condition, page: self.searchCurrentPage)
+    }
+    
+    @objc func searchCancleNotification(_ notification: Notification){
+        self.searchFlag = 0
+        self.currentPage = 1
+        self.boardList.removeAll()
+        self.collectionView.reloadData()
+        fetchData(page: self.currentPage)
+    }
+    
+    private func fetchSearchedData(category: String, condition: String, page: Int){
+        let urlString = "https://iospring.herokuapp.com/finder/search?category=\(category)&condition=\(condition)&page=\(page)"
+        let encodedString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        guard let url = URL(string: encodedString) else {
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                if(error != nil){
+                    print(error.debugDescription)
+                    return
+                }
+                else if( data != nil ){
+                    do{
+                        let decodedData = try JSONDecoder().decode(APIFinderBoardResponse<[FindBoard]>.self, from: data!)
+                        self.searchTotalPage = decodedData.totalPage ?? 1
+                        self.boardList.append(contentsOf: decodedData.finderBoardDTOS!)
+                        self.collectionView.reloadData()
+                    }
+                    catch{
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        task.resume()
+    }
+    
     private func configureCollectionView() {
         self.collectionView.collectionViewLayout = UICollectionViewFlowLayout()
-        self.collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        self.collectionView.contentInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10)
         self.collectionView.delegate = self  // 하단 extension 참조
         self.collectionView.dataSource = self // 하단 extension 참조
         self.writeBtn.layer.borderWidth = 1
         self.writeBtn.frame.size = CGSize(width: 300, height: 50)
-        self.writeBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.writeBtn.frame.width/2, y: self.view.frame.height - 225)
+        self.writeBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.writeBtn.frame.width/2, y: self.view.frame.height - 250)
         self.writeBtn.layer.cornerRadius = 8
     }
     
@@ -120,10 +192,20 @@ extension DetectBoardViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if currentPage < totalPage && indexPath.row == self.boardList.count - 1 {
-            currentPage += 1
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.fetchData(page: self.currentPage)
+        if(self.searchFlag == 0){
+            if currentPage < totalPage && indexPath.row == self.boardList.count - 1 {
+                self.currentPage += 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.fetchData(page: self.currentPage)
+                }
+            }
+        }
+        else{
+            if searchCurrentPage < searchTotalPage && indexPath.row == self.boardList.count - 1 {
+                self.searchCurrentPage += 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.fetchSearchedData(category: self.category, condition: self.condition, page: self.searchCurrentPage)
+                }
             }
         }
     }
@@ -131,8 +213,16 @@ extension DetectBoardViewController: UICollectionViewDataSource {
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if (refreshControl.isRefreshing) {
             self.refreshControl.endRefreshing()
-            self.currentPage = 1
-            fetchData(page: self.currentPage)
+
+            if(self.searchFlag == 0){
+                self.currentPage = 1
+                fetchData(page: self.currentPage)
+            }
+            else{
+                self.searchCurrentPage = 1
+                fetchSearchedData(category: self.category, condition: self.condition, page: self.searchCurrentPage)
+            }
+            
         }
     }
 }

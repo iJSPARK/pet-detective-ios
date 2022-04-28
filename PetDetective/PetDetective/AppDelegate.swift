@@ -103,6 +103,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if let aps = response.notification.request.content.userInfo["aps"] as? NSDictionary {
+            print(aps)
             if let id = aps["target-content-id"] as? NSString {
                 NotificationCenter.default.post(name: NSNotification.Name("newReport"), object: id)
             }
