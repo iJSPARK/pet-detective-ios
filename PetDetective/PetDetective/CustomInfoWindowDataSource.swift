@@ -10,7 +10,8 @@ import NMapsMap
 
 class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
     var markerInfoView = MarkerInfoView()
-    
+    var mTimer: Timer?
+    var number = 60
     func view(with overlay: NMFOverlay) -> UIView {
         print("IN view")
 
@@ -37,9 +38,19 @@ class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
 
         print("markerInfo")
         
-
+        if let timer = mTimer {
+            //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
+            if !timer.isValid {
+                /** 1초마다 timerCallback함수를 호출하는 타이머 */
+                mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+            }
+        } else {
+            //timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
+            /** 1초마다 timerCallback함수를 호출하는 타이머 */
+            mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+        }
         
-        markerInfoView.goldenTimeLabel.text = markerInfo.missingTime
+//        markerInfoView.goldenTimeLabel.text = markerInfo.missingTime
         markerInfoView.moneyLabel.text = "\(markerInfo.money)"
         
         print(markerInfo.missingTime)
@@ -69,7 +80,32 @@ class CustomInfoWindowDataSource: NSObject, NMFOverlayImageDataSource {
 //    }
 //
  
-   
+    //타이머가 호출하는 콜백함수
+    @objc func timerCallback() {
+//        let markInfo = marker.userInfo["MarkerInfo"] as! MarkerInfo
+//        var number = Int(markInfo.missingTime)!
+        number -= 1
+        markerInfoView.goldenTimeLabel.text = String(number)
+        if number == 0 {
+            if let timer = mTimer {
+                if (timer.isValid) {
+                    timer.invalidate()
+                }
+            }
+        }
+//        marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: String(number), money: markInfo.money)]
+//        number -= 1
+//        if number == 0 {
+//            if let timer = mTimer {
+//                if (timer.isValid) {
+//                    timer.invalidate()
+//                }
+//            }
+//        }
+//        time = String(number)
+//        mark.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+    }
+
 }
 
 

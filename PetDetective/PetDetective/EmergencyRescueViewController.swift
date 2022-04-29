@@ -11,12 +11,22 @@ import UIKit
 struct MarkerInfo {
     var missingTime: String
     let money: Int
+//    let boadrId: Int
 }
+
+// 데이터 요청 후
+// 타이머 발동
+//
+// 모든 마커 객체 missingTime -1 씩 줄임
+// UI MakerInfo 정보 표시
 
 class EmergencyRescueViewController: MapViewController {
     
-    var mTimer : Timer?
-//    var number : Int = 60
+    var markers = [NMFMarker]()
+    var mTimer: Timer?
+    var remainTime = 0 // 남은시간
+    var count = 0   // 시간 카운트
+    var time = 1 // 넣는 시간
 //    var time = "뷁"
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
@@ -27,27 +37,12 @@ class EmergencyRescueViewController: MapViewController {
 //    var dataSource = NMFInfoWindowDefaultTextSource.data()
     
     var customInfoWindowDataSource = CustomInfoWindowDataSource()
-
-    // 위치 권한 허용 (항상 허용, 앱사용시에만 허용)
-    // 위치 추적 권한 부인시 앱 허용 상태 페이지로 가게함
-    // 실시간 위치 추적 및 오버레이 표시
-    
-    // 실종 게시글 업로드
-    // 실종 시간 3시간 미만
-    // 좌표값 전송 (로컬 > 서버)
-    // 서버에서 검색 (사용자 1km 내에 있는 좌표)
-    // 해당 유저와 가까운 순으로 정렬
-    // 좌표값 전송 (서버 > 로컬)
-    // 지도에 이미지로 좌표에 표시
-    // 지도 이미지 눌렀을때 클릭 기능 (테두리 표시), 잃어버린 위치 문구
-    // 지도 반경 표시 (700 ~ 1km)
-    // 지도 카메라 반경에 따라 위치 조정
-    // 사용자 현재 위치 실시간 추적 및 표시
-    // 골든 타임 정보 탭 (남은 골든 타임, 의뢰된 동물 이미지, 사레금, 의뢰글 정보 보기 버튼)
-    // 남은 골든 타임 = 3h - (현재시간 - 실종시간)
-    // 제보하러 가기 버튼 (신고탭 - 제보 화면 연결)
     
     @IBOutlet weak var rescueMapView: UIView!
+    
+    @IBOutlet weak var markerInfoView: UIView!
+    @IBOutlet weak var goldenTimeLabel: UILabel!
+    @IBOutlet weak var moneyLabel: UILabel!
     
     override var isAuthorized: Bool {
         didSet {
@@ -77,16 +72,12 @@ class EmergencyRescueViewController: MapViewController {
             self.updateMapUI(with: missingPets)
         }
 
-        
+        timerRun()
     }
-    
-    
-    
     
     func updateMapUI(with missingPets: [MissingPetInfo]) {
         DispatchQueue.global(qos: .default).async { [self] in
             // 백그라운드 스레드 (오버레이 객체 생성)
-            var markers = [NMFMarker]()
             var add = 0.01
             
             for i in 0..<missingPets.count {
@@ -109,14 +100,19 @@ class EmergencyRescueViewController: MapViewController {
                 marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
                 
                 
-                guard let time = missingPets[i].missingTime else { return }
+//                guard let time = missingPets[i].missingTime else { return }
+                
+                
+                time += 1000
 
                 guard let money = missingPets[i].money else { return }
                 
                 // marker userinfo의 missingtime 업데이트
                 // missingtime 접근하여 분 혹은 초마다 1씩 감소
 
-                marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+//                marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+                
+                marker.userInfo = ["MissingTime": time, "Money": money]
                 
                 markers.append(marker)
                 print("\(missingPets[i].latitude), \(missingPets[i].longtitude)")
@@ -124,48 +120,60 @@ class EmergencyRescueViewController: MapViewController {
 
             DispatchQueue.main.async { [weak self] in
                 // 메인 스레드 (오버레이 객체 맵에 올림)
-                var add2 = 1
                 
 
-                for marker in markers {
+                for marker in self!.markers {
                     
-
                     marker.mapView = self?.naverMap.mapView
                     
-        
-                    marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
-                        if let marker = overlay as? NMFMarker {
-                            if marker.infoWindow == nil {
-                                // 현재 마커에 정보 창이 열려있지 않을 경우
-                                
-                                print("Touch")
-                                
-//                                marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: "Dfdf", money: 100)]
-                                
-                                self?.infoWindow.dataSource = self!.customInfoWindowDataSource
-                                
-                    
-//                                self?.dataSource.title = "\(add2)"
-//                                add2 = add2 + 1
-//
-//                                print(add2)
-//                                self?.infoWindow.dataSource = self!.dataSource
-                                
-                                self?.infoWindow.offsetY = +10
-                                
-                                self?.infoWindow.open(with:marker)
-                                
-                            
-                            } else {
-                                // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
-        
-                                self?.infoWindow.close()
-                                
-    //
-                            }
+                    marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+                        print("마커 터치")
+                        // 터치시 실종시간 - count
+                        // 계속 1씩 감소
+                        if let time = marker.userInfo["MissingTime"] as? Int {
+                            self?.remainTime = time
                         }
-                        return true
-                    };
+                        if let money = marker.userInfo["Money"] {
+                            self?.moneyLabel.text = "사례금 \(money)"
+                        }
+                        self?.markerInfoView.isHidden = false
+                        return true // 이벤트 소비, -mapView:didTapMap:point 이벤트는 발생하지 않음
+                        
+                    }
+                    marker
+//                    marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
+//                        if let marker = overlay as? NMFMarker {
+//                            if marker.infoWindow == nil {
+//                                // 현재 마커에 정보 창이 열려있지 않을 경우
+//
+//                                print("Touch")
+//
+////                                marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: "Dfdf", money: 100)]
+//
+//                                self?.infoWindow.dataSource = self!.customInfoWindowDataSource
+//
+//
+////                                self?.dataSource.title = "\(add2)"
+////                                add2 = add2 + 1
+////
+////                                print(add2)
+////                                self?.infoWindow.dataSource = self!.dataSource
+//
+//                                self?.infoWindow.offsetY = +10
+//
+//                                self?.infoWindow.open(with:marker)
+//
+//
+//                            } else {
+//                                // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+//
+//                                self?.infoWindow.close()
+//
+//    //
+//                            }
+//                        }
+//                        return true
+//                    };
                 }
                 
 //                if let timer = self?.mTimer {
@@ -186,12 +194,49 @@ class EmergencyRescueViewController: MapViewController {
         
     }
     
+    @IBAction func viewRequestPostButtonTapped(_ sender: Any) {
+        
+    }
+    
+    func timerRun() {
+        print("timerRun")
+        if let timer = mTimer {
+            //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
+            if !timer.isValid {
+                /** 1초마다 timerCallback함수를 호출하는 타이머 */
+                mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+            }
 
-//    //타이머가 호출하는 콜백함수
-//    @objc func timerCallback() {
+        } else {
+            //timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
+            /** 1초마다 timerCallback함수를 호출하는 타이머 */
+            mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+        }
+    }
+    
+    // 뷰가 업데이트 할때마다 네트워크 요청
+    //타이머가 호출하는 콜백함수
+    @objc func timerCallback() {
 //        let markInfo = marker.userInfo["MarkerInfo"] as! MarkerInfo
 //        var number = Int(markInfo.missingTime)!
-//        number -= 1
+        print("timerCallback")
+//        for marker in markers {
+//            if let missingTime = marker.userInfo["MissingTime"] as? Int {
+//                if missingTime > 0 {
+//                    marker.userInfo["MissingTime"] = missingTime - count
+//                } else {
+//                    marker.userInfo["MissingTime"] = 0
+//                }
+//                goldenTimeLabel.text = "골든 타임 \(String(describing: marker.userInfo["MissingTime"]))"
+//            }
+//        }
+        
+        if remainTime - count > 0 {
+            goldenTimeLabel.text = "골든 타임 \(remainTime - count)"
+        } else {
+            goldenTimeLabel.text = "0"
+        }
+        count += 1
 //        if number == 0 {
 //            if let timer = mTimer {
 //                if (timer.isValid) {
@@ -200,17 +245,17 @@ class EmergencyRescueViewController: MapViewController {
 //            }
 //        }
 //        marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: String(number), money: markInfo.money)]
-////        number -= 1
-////        if number == 0 {
-////            if let timer = mTimer {
-////                if (timer.isValid) {
-////                    timer.invalidate()
-////                }
-////            }
-////        }
-////        time = String(number)
-////        mark.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
-//    }
+//        number -= 1
+//        if number == 0 {
+//            if let timer = mTimer {
+//                if (timer.isValid) {
+//                    timer.invalidate()
+//                }
+//            }
+//        }
+//        time = String(number)
+//        mark.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+    }
 
     
 //    func view(with overlay: NMFOverlay) -> UIView {

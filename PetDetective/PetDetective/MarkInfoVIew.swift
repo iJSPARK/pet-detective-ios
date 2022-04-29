@@ -43,6 +43,9 @@ class MarkerInfoView: UIView {
         self.addSubview(customView)
     }
     
+    @IBAction func viewRequestPostButtonTapped(_ sender: Any) {
+        print("viewRequestPostButtonTapped")
+    }
     
     /*
     // Only override draw() if you perform custom drawing.
