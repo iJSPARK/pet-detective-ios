@@ -11,7 +11,7 @@ import Foundation
 // 추후 alamofire로 변경 
 struct EmergencyRescuePetInfoController {
     func fetchedMissingPetInfo(completion: @escaping (MissingPet?) -> Void) {
-          
+        // http는 info.plist > app transport security setting > allow arbitray loads 
         let baseUrl = URL(string: "https://iospring.herokuapp.com/detect")!
         
         let query: [String: String] = [

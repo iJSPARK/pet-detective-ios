@@ -86,7 +86,7 @@ extension FindLocationViewController {
                 self.findingLatitude = centerLat
                 self.findingLongtitude = centerLng
                 self.findingAddress = centerAddress
-                print("탐색 (카메라 중앙) 좌표 \(centerLat), \(centerLng), \(centerAddress)")
+                print("\(centerLat) \n \(centerLng) \n \(centerAddress)")
             }
         })
     }

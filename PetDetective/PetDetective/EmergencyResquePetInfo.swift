@@ -15,7 +15,6 @@ struct MissingPet: Codable {
     enum Codingkeys: String, CodingKey {
         case missingPetInfos = "detectBoardDTOList"
         case totalPage
-
     }
 
     init(from decoder: Decoder) throws {
