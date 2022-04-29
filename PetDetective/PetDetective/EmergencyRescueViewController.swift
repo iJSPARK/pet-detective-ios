@@ -140,7 +140,6 @@ class EmergencyRescueViewController: MapViewController {
                         return true // 이벤트 소비, -mapView:didTapMap:point 이벤트는 발생하지 않음
                         
                     }
-                    marker
 //                    marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
 //                        if let marker = overlay as? NMFMarker {
 //                            if marker.infoWindow == nil {
