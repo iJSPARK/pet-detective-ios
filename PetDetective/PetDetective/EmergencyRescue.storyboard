@@ -23,43 +23,37 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="twM-aI-bSu">
                                 <rect key="frame" x="87" y="130" width="240" height="112"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MarkerInfoImage" translatesAutoresizingMaskIntoConstraints="NO" id="71P-pk-ZYe">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MarkerInfoImage" translatesAutoresizingMaskIntoConstraints="NO" id="71P-pk-ZYe">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="112"/>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-zr-K6P">
-                                        <rect key="frame" x="100" y="6" width="40" height="20"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🚨실종된 동물을 제보해주세요!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yaZ-zr-K6P">
+                                        <rect key="frame" x="18.5" y="6" width="203" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zt-Z4-Kmc">
-                                        <rect key="frame" x="100" y="38" width="40" height="20"/>
+                                        <rect key="frame" x="100" y="42" width="40" height="20"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDS-UB-pde">
-                                        <rect key="frame" x="20" y="62" width="200" height="44"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="Cli-Dv-6Re"/>
-                                        </constraints>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="ViewBoardButton" title=""/>
-                                        <connections>
-                                            <action selector="viewRequestPostButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cQZ-j4-Y8C"/>
-                                        </connections>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUg-DX-Q04">
+                                        <rect key="frame" x="100" y="78" width="40" height="20"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="yaZ-zr-K6P" firstAttribute="centerX" secondItem="twM-aI-bSu" secondAttribute="centerX" id="4BA-Da-L0k"/>
                                     <constraint firstAttribute="width" constant="240" id="7at-lb-01x"/>
-                                    <constraint firstAttribute="bottom" secondItem="EDS-UB-pde" secondAttribute="bottom" constant="6" id="AOY-5t-1ut"/>
                                     <constraint firstItem="71P-pk-ZYe" firstAttribute="leading" secondItem="twM-aI-bSu" secondAttribute="leading" id="Gie-1d-lyT"/>
-                                    <constraint firstAttribute="trailing" secondItem="EDS-UB-pde" secondAttribute="trailing" constant="20" id="HH8-ae-5Wm"/>
-                                    <constraint firstItem="EDS-UB-pde" firstAttribute="leading" secondItem="twM-aI-bSu" secondAttribute="leading" constant="20" id="JOy-2Z-WNu"/>
-                                    <constraint firstItem="6zt-Z4-Kmc" firstAttribute="top" secondItem="yaZ-zr-K6P" secondAttribute="bottom" constant="12" id="NmU-cH-R2s"/>
+                                    <constraint firstItem="6zt-Z4-Kmc" firstAttribute="top" secondItem="yaZ-zr-K6P" secondAttribute="bottom" constant="16" id="NmU-cH-R2s"/>
                                     <constraint firstItem="6zt-Z4-Kmc" firstAttribute="centerX" secondItem="twM-aI-bSu" secondAttribute="centerX" id="R2W-rL-vfG"/>
+                                    <constraint firstItem="rUg-DX-Q04" firstAttribute="top" secondItem="6zt-Z4-Kmc" secondAttribute="bottom" constant="16" id="VT5-7C-2Gy"/>
+                                    <constraint firstItem="rUg-DX-Q04" firstAttribute="leading" secondItem="6zt-Z4-Kmc" secondAttribute="leading" id="h8T-cB-jHU"/>
                                     <constraint firstAttribute="trailing" secondItem="71P-pk-ZYe" secondAttribute="trailing" id="iIg-A2-5Z8"/>
                                     <constraint firstItem="yaZ-zr-K6P" firstAttribute="top" secondItem="twM-aI-bSu" secondAttribute="top" constant="6" id="mlO-1I-ZmJ"/>
                                     <constraint firstAttribute="bottom" secondItem="71P-pk-ZYe" secondAttribute="bottom" id="uAn-Nc-brX"/>
@@ -112,8 +106,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MarkerInfoImage" width="240" height="112"/>
-        <image name="ViewBoardButton" width="150" height="30"/>
+        <image name="MarkerInfoImage" width="240" height="120"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

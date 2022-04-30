@@ -15,10 +15,14 @@ struct MarkerInfo {
 }
 
 // 데이터 요청 후
-// 타이머 발동
-//
-// 모든 마커 객체 missingTime -1 씩 줄임
-// UI MakerInfo 정보 표시
+// 실종시간 > 남은시간으로
+// 날짜 시간 변환 > 남은 시간 = 현재 핸드폰 시간 - 실종 시간 > 남은시간 marker에 저장 > 남은 시간
+// 타이머 발동 > 남은시간 - count
+// 함수 적용
+// 의뢰글 나오게 하기
+// 터치 하면 잃어버린 위치 마커 캡션 토글값
+// 지도 터치시 뷰 없애기
+// 이미지 리사이즈 및 뽑기
 
 class EmergencyRescueViewController: MapViewController {
     
@@ -26,8 +30,7 @@ class EmergencyRescueViewController: MapViewController {
     var mTimer: Timer?
     var remainTime = 0 // 남은시간
     var count = 0   // 시간 카운트
-    var time = 1 // 넣는 시간
-//    var time = "뷁"
+    var missingTime = 1 // 넣는 시간
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
     
@@ -68,7 +71,7 @@ class EmergencyRescueViewController: MapViewController {
         emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
             guard let missingPet = missingPet else { return }
             guard let missingPets = missingPet.missingPetInfos else { return }
-
+            
             self.updateMapUI(with: missingPets)
         }
 
@@ -100,17 +103,9 @@ class EmergencyRescueViewController: MapViewController {
                 marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
                 
                 
-//                guard let time = missingPets[i].missingTime else { return }
-                
-                
-                time += 1000
+                guard let time = missingPets[i].missingTime else { return }
 
                 guard let money = missingPets[i].money else { return }
-                
-                // marker userinfo의 missingtime 업데이트
-                // missingtime 접근하여 분 혹은 초마다 1씩 감소
-
-//                marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
                 
                 marker.userInfo = ["MissingTime": time, "Money": money]
                 
@@ -130,8 +125,16 @@ class EmergencyRescueViewController: MapViewController {
                         print("마커 터치")
                         // 터치시 실종시간 - count
                         // 계속 1씩 감소
-                        if let time = marker.userInfo["MissingTime"] as? Int {
-                            self?.remainTime = time
+                        if let missingTime = marker.userInfo["MissingTime"] as? String {
+                            if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
+                                print("현재 시간 \(currentDate)")
+                                print("missingTime \(missingTime)")
+                                if let missingDate = missingTime.stringToDate() {
+                                    print("missingDate \(missingDate)")
+                                    self?.remainTime = Int(currentDate.timeIntervalSince(missingDate))
+                                    print("남은 시간(초) \(self?.remainTime)")
+                                }
+                            }
                         }
                         if let money = marker.userInfo["Money"] {
                             self?.moneyLabel.text = "사례금 \(money)"
@@ -229,9 +232,9 @@ class EmergencyRescueViewController: MapViewController {
 //                goldenTimeLabel.text = "골든 타임 \(String(describing: marker.userInfo["MissingTime"]))"
 //            }
 //        }
-        
         if remainTime - count > 0 {
-            goldenTimeLabel.text = "골든 타임 \(remainTime - count)"
+            remainTime = remainTime - count
+            goldenTimeLabel.text = "골든 타임 \(remainTime.hour) \(remainTime.minute) \(remainTime.second)"
         } else {
             goldenTimeLabel.text = "0"
         }
@@ -334,7 +337,40 @@ extension String {
 //        }
 //        return nil
     }
+    
+    func currentKorDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = self
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.string(from: Date())
+    }
+    
+    func stringFromDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = self
+        return dateFormatter.string(from: Date())
+    }
+    
+    func stringToDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "KST")
+        return dateFormatter.date(from: self)
+    }
 }
+
+extension Int {
+  var hour: Int {
+    self / 3600
+  }
+  var minute: Int {
+    (self % 3600) / 60
+  }
+  var second: Int {
+    (self % 60)
+  }
+}
+
 
 extension UIImage {
 //    var roundedImage: UIImage {
