@@ -126,6 +126,7 @@ class EmergencyRescueViewController: MapViewController {
                         // 터치시 실종시간 - count
                         // 계속 1씩 감소
                         if let missingTime = marker.userInfo["MissingTime"] as? String {
+                            print(missingTime)
                             if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
                                 print("현재 시간 \(currentDate)")
                                 print("missingTime \(missingTime)")
@@ -353,8 +354,8 @@ extension String {
     
     func stringToDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "KST")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
         return dateFormatter.date(from: self)
     }
 }
