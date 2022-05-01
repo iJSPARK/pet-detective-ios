@@ -22,24 +22,21 @@ struct MarkerInfo {
 // 의뢰글 나오게 하기
 // 터치 하면 잃어버린 위치 마커 캡션 토글값
 // 지도 터치시 뷰 없애기
-// 이미지 리사이즈 및 뽑기
 
-class EmergencyRescueViewController: MapViewController {
+class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate {
     
     var markers = [NMFMarker]()
-    var mTimer: Timer?
-    var remainTime = 0 // 남은시간
-    var count = 0   // 시간 카운트
-    var missingTime = 1 // 넣는 시간
-    
+    var secondTimer: Timer?
+    var remainTime = 1 // 남은시간
+    var cnt = 0
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
     
     let naverMap = MapView().naverMapView!
     
-    var infoWindow = NMFInfoWindow()
+//    var infoWindow = NMFInfoWindow()
 //    var dataSource = NMFInfoWindowDefaultTextSource.data()
     
-    var customInfoWindowDataSource = CustomInfoWindowDataSource()
+//    var customInfoWindowDataSource = CustomInfoWindowDataSource()
     
     @IBOutlet weak var rescueMapView: UIView!
     
@@ -64,18 +61,42 @@ class EmergencyRescueViewController: MapViewController {
         naverMap.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         
+        naverMap.mapView.touchDelegate = self
+        
         setLocationManager()
         
         naverMap.mapView.addCameraDelegate(delegate: self)
         
+        markerInfoView.isHidden = true
+        
+//        timerRun()
+        
+//        emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
+//            guard let missingPet = missingPet else { return }
+//            guard let missingPets = missingPet.missingPetInfos else { return }
+//
+//            self.updateMapUI(with: missingPets)
+//        }
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
             guard let missingPet = missingPet else { return }
             guard let missingPets = missingPet.missingPetInfos else { return }
             
             self.updateMapUI(with: missingPets)
         }
-
+        
         timerRun()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let timer = secondTimer {
+            if(timer.isValid){
+                timer.invalidate()
+            }
+        }
     }
     
     func updateMapUI(with missingPets: [MissingPetInfo]) {
@@ -128,20 +149,25 @@ class EmergencyRescueViewController: MapViewController {
                         if let missingTime = marker.userInfo["MissingTime"] as? String {
                             print(missingTime)
                             if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
-                                print("현재 시간 \(currentDate)")
-                                print("missingTime \(missingTime)")
-                                if let missingDate = missingTime.stringToDate() {
-                                    print("missingDate \(missingDate)")
-                                    self?.remainTime = Int(currentDate.timeIntervalSince(missingDate))
-                                    print("남은 시간(초) \(self?.remainTime)")
+                                print("현재 날짜 시간 \(currentDate)")
+                                print("String type 실종 날짜 시간 \(missingTime)")
+                                if let missingTime = missingTime.stringToDate() {
+                                    print("Date type 실종 날짜 시간 \(missingTime)")
+                                    self?.remainTime = Int(currentDate.timeIntervalSince(missingTime))
+                                    print("골든 타임 남은 시간(초) \(self?.remainTime)")
+                                    
                                 }
                             }
                         }
+                        
                         if let money = marker.userInfo["Money"] {
-                            self?.moneyLabel.text = "사례금 \(money)"
+                            self?.moneyLabel.text = "💰 사례금 \(money)"
                         }
+                        
                         self?.markerInfoView.isHidden = false
-                        return true // 이벤트 소비, -mapView:didTapMap:point 이벤트는 발생하지 않음
+                        
+        
+                        return true
                         
                     }
 //                    marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
@@ -179,101 +205,49 @@ class EmergencyRescueViewController: MapViewController {
 //                    };
                 }
                 
-//                if let timer = self?.mTimer {
-//                    //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
-//                    if !timer.isValid {
-//                        /** 1초마다 timerCallback함수를 호출하는 타이머 */
-//                        mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback()), userInfo: nil, repeats: true)
-//                    }
-//
-//                } else {
-//                    //timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
-//                    /** 1초마다 timerCallback함수를 호출하는 타이머 */
-//                    mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback()), userInfo: nil, repeats: true)
-//                }
             }
             
         }
         
     }
     
-    @IBAction func viewRequestPostButtonTapped(_ sender: Any) {
-        
-    }
     
     func timerRun() {
-        print("timerRun")
-        if let timer = mTimer {
+        if let timer = secondTimer {
             //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
             if !timer.isValid {
-                /** 1초마다 timerCallback함수를 호출하는 타이머 */
-                mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+                // 1초마다 timerCallback함수를 호출하는 타이머
+                secondTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
             }
-
         } else {
-            //timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
-            /** 1초마다 timerCallback함수를 호출하는 타이머 */
-            mTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
+            // timer 객체가 nil 인 경우에 객체를 생성하고 타이머를 시작한다
+            // 1초마다 timerCallback함수를 호출하는 타이머
+            secondTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         }
     }
     
     // 뷰가 업데이트 할때마다 네트워크 요청
     //타이머가 호출하는 콜백함수
     @objc func timerCallback() {
-//        let markInfo = marker.userInfo["MarkerInfo"] as! MarkerInfo
-//        var number = Int(markInfo.missingTime)!
-        print("timerCallback")
-//        for marker in markers {
-//            if let missingTime = marker.userInfo["MissingTime"] as? Int {
-//                if missingTime > 0 {
-//                    marker.userInfo["MissingTime"] = missingTime - count
-//                } else {
-//                    marker.userInfo["MissingTime"] = 0
-//                }
-//                goldenTimeLabel.text = "골든 타임 \(String(describing: marker.userInfo["MissingTime"]))"
-//            }
-//        }
-        if remainTime - count > 0 {
-            remainTime = remainTime - count
-            goldenTimeLabel.text = "골든 타임 \(remainTime.hour) \(remainTime.minute) \(remainTime.second)"
+        
+        print("timercallback")
+        if remainTime > 0 {
+            remainTime = remainTime - 1
+            goldenTimeLabel.text = "🛎 골든 타임 \(remainTime.hour)시간 \(remainTime.minute)분 \(remainTime.second)초"
         } else {
-            goldenTimeLabel.text = "0"
+            goldenTimeLabel.text = "🛎 골든 타임 \(remainTime.hour)시간 \(remainTime.minute)분 \(remainTime.second)초"
         }
-        count += 1
-//        if number == 0 {
-//            if let timer = mTimer {
-//                if (timer.isValid) {
-//                    timer.invalidate()
-//                }
-//            }
-//        }
-//        marker.userInfo = ["MarkerInfo": MarkerInfo(missingTime: String(number), money: markInfo.money)]
-//        number -= 1
-//        if number == 0 {
-//            if let timer = mTimer {
-//                if (timer.isValid) {
-//                    timer.invalidate()
-//                }
-//            }
-//        }
-//        time = String(number)
-//        mark.userInfo = ["MarkerInfo": MarkerInfo(missingTime: time, money: money)]
+    }
+    
+    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        markerInfoView.isHidden = true
+        print("지도 탭")
+    }
+    
+    @IBAction func viewRequestPostButtonTapped(_ sender: Any) {
+        //
     }
 
-    
-//    func view(with overlay: NMFOverlay) -> UIView {
-//        print("IN view")
-//        let markInfoView = MarkerInfoView()
-//        let markerInfo = overlay.userInfo["MarkerInfo"] as! MarkerInfo
-//        markInfoView.goldenTimeLabel.text = markerInfo.missingTime
-//        markInfoView.moneyLabel.text = "\(markerInfo.money)"
-//        
-//        print(markerInfo.missingTime)
-//        print(markerInfo.money)
-//        
-//        print(markInfoView)
-//        return markInfoView
-//    }
     
 //    func reSize(imageString: String?) -> UIImage {
 ////        let url = URL(string: imageString!)!
@@ -317,12 +291,7 @@ class EmergencyRescueViewController: MapViewController {
 //    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 //        print("error")
 //    }
-    
-//    // 지도 터치 함수
-//    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-//
-//    }
-    
+
 }
 
 extension String {
@@ -331,12 +300,6 @@ extension String {
         guard let data = try? Data(contentsOf: url) else { return nil }
         guard let image = UIImage(data: data) else { return nil }
         return image
-//        let data = try? Data(contentsOf: url)
-//        let image = UIImage(data: data!)
-//        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-//            return UIImage(data: data)
-//        }
-//        return nil
     }
     
     func currentKorDate() -> String {
@@ -374,13 +337,6 @@ extension Int {
 
 
 extension UIImage {
-//    var roundedImage: UIImage {
-//        let rect = CGRect(origin:CGPoint(x: 0, y: 0), size: self.size)
-//        UIGraphicsBeginImageContextWithOptions(self.size, false, 1)
-//        UIBezierPath(roundedRect: newImageRect, cornerRadius: 50).addClip()
-//        self.draw(in: rect)
-//        return UIGraphicsGetImageFromCurrentImageContext()!
-//    }
     
     func circleReSize() -> UIImage? {
         let newWidth = 36
@@ -400,14 +356,3 @@ extension UIImage {
         return newImage
     }
 }
-
-//extension UIView {
-//    func toMakerView(_ view: UIView) -> MarkerInfoView {
-//        view.addSubview(<#T##view: UIView##UIView#>)
-//        if let data = Data(base64Encoded: self, options: .ignoreUnknownCharacters){
-//            return UIImage(data: data)
-//        }
-//        return nil
-//    }
-//}
-
