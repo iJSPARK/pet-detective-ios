@@ -32,6 +32,9 @@
 		8E494AA427EB5B3C00884379 /* ReportWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E494AA327EB5B3C00884379 /* ReportWriteViewController.swift */; };
 		8E8F4C5E281906E100393F2B /* AlarmBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8F4C5D281906E100393F2B /* AlarmBoardViewController.swift */; };
 		8E8F4C6028190FCB00393F2B /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8F4C5F28190FCB00393F2B /* Alarm.swift */; };
+		8E8F4C63281E594400393F2B /* AlarmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8F4C61281E594400393F2B /* AlarmCell.swift */; };
+		8E8F4C64281E594400393F2B /* AlarmCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E8F4C62281E594400393F2B /* AlarmCell.xib */; };
+		8E8F4C66281F903D00393F2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8F4C65281F903D00393F2B /* LoginViewController.swift */; };
 		8EDB01E328103875008C9F2F /* Find.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB01E228103875008C9F2F /* Find.swift */; };
 		8EDB01E6281259F7008C9F2F /* FinderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDB01E4281259F7008C9F2F /* FinderCell.swift */; };
 		8EDB01E7281259F7008C9F2F /* FinderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8EDB01E5281259F7008C9F2F /* FinderCell.xib */; };
@@ -87,6 +90,9 @@
 		8E494AA327EB5B3C00884379 /* ReportWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportWriteViewController.swift; sourceTree = "<group>"; };
 		8E8F4C5D281906E100393F2B /* AlarmBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmBoardViewController.swift; sourceTree = "<group>"; };
 		8E8F4C5F28190FCB00393F2B /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
+		8E8F4C61281E594400393F2B /* AlarmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCell.swift; sourceTree = "<group>"; };
+		8E8F4C62281E594400393F2B /* AlarmCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AlarmCell.xib; sourceTree = "<group>"; };
+		8E8F4C65281F903D00393F2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8EDB01E228103875008C9F2F /* Find.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Find.swift; sourceTree = "<group>"; };
 		8EDB01E4281259F7008C9F2F /* FinderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinderCell.swift; sourceTree = "<group>"; };
 		8EDB01E5281259F7008C9F2F /* FinderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FinderCell.xib; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 		8E243349280796D400573F9E /* VCs */ = {
 			isa = PBXGroup;
 			children = (
+				8E8F4C65281F903D00393F2B /* LoginViewController.swift */,
 				8E24336F280BBE5700573F9E /* SegueControlViewController.swift */,
 				8E494A9D27EB13C100884379 /* ReportBoardViewController.swift */,
 				8EFF6E1D27F6E76200E8A63F /* ReportDetailViewController.swift */,
@@ -247,6 +254,8 @@
 				8EDB01E5281259F7008C9F2F /* FinderCell.xib */,
 				8EDB01E8281267AF008C9F2F /* ReportCell.swift */,
 				8EDB01E9281267AF008C9F2F /* ReportCell.xib */,
+				8E8F4C61281E594400393F2B /* AlarmCell.swift */,
+				8E8F4C62281E594400393F2B /* AlarmCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -399,6 +408,7 @@
 				7948396D27E5FD56004B04FD /* EmergencyRescue.storyboard in Resources */,
 				7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */,
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
+				8E8F4C64281E594400393F2B /* AlarmCell.xib in Resources */,
 				7948392927E5F20F004B04FD /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,6 +547,7 @@
 				8E8F4C6028190FCB00393F2B /* Alarm.swift in Sources */,
 				8E13966927F2BE9D00DA2D4D /* Pet.swift in Sources */,
 				8E13966B27F318E100DA2D4D /* Report.swift in Sources */,
+				8E8F4C66281F903D00393F2B /* LoginViewController.swift in Sources */,
 				8E43395427FAB666008D611B /* APICodable.swift in Sources */,
 				8E24337A280BE78A00573F9E /* DetectWriteViewController.swift in Sources */,
 				8EDB01E328103875008C9F2F /* Find.swift in Sources */,
@@ -544,6 +555,7 @@
 				8E243370280BBE5700573F9E /* SegueControlViewController.swift in Sources */,
 				8E24337C280BE79F00573F9E /* DetectDetailViewController.swift in Sources */,
 				7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */,
+				8E8F4C63281E594400393F2B /* AlarmCell.swift in Sources */,
 				8EFF6E1E27F6E76200E8A63F /* ReportDetailViewController.swift in Sources */,
 				8E494A9E27EB13C100884379 /* ReportBoardViewController.swift in Sources */,
 				8EDB01EA281267AF008C9F2F /* ReportCell.swift in Sources */,

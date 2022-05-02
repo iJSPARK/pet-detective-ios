@@ -8,6 +8,7 @@
 import Foundation
 
 struct Alarm{
+    var alarmMode: String
     var boardType: String
     var boardId: Int
 }
@@ -19,8 +20,7 @@ struct Alarm{
 //        title = “타이틀”;
 //    };
 //    sound = default;
-//    board = “report or find or protect”
-//    findTime = “만약 find or protect으로 게시글이 올라오고 발견시각이 3시간 안이라면 골든타임에서 활용 가능”
-//    경도, 위도
+//    mode = 골든타임용 또는 새로운 게시글 작성
+//    type = 외뢰 또는 제보 또는 보호
 //    "target-content-id" = 75;
 //}

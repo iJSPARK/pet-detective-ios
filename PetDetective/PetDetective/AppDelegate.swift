@@ -11,6 +11,12 @@ import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var alarms = [Alarm]() {
+        didSet {
+            self.saveTasks()
+        }
+    }
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
@@ -24,14 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         application.registerForRemoteNotifications() // 디바이스 토큰 요청
         
+        // UserDefault에서 불러오기
+        self.loadTasks()
+        
         return true
     }
 
-    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
         let deviceTokenString = deviceToken.map { String(format: "%02x", $0) }.joined()
         print("디바이스 토큰: \(deviceTokenString)")
-        
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(deviceTokenString, forKey: "petDeviceToken")
     }
 
     // MARK: UISceneSession Lifecycle
@@ -92,7 +101,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    // MARK: - Alarm 기능
+    
 
+    
+    func saveTasks() {
+        let data = self.alarms.map {
+            [
+                "alarmMode": $0.alarmMode,
+                "boardType": $0.boardType,
+                "boardId": $0.boardId
+            ]
+        }
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(data, forKey: "petAlarm")
+    }
+    
+        func loadTasks() {
+            let userDefaults = UserDefaults.standard
+            guard let data = userDefaults.object(forKey: "petAlarm") as? [[String: Any]] else { return }
+            self.alarms = data.compactMap {
+                guard let alarmMode =  $0["alarmMode"] as? String else { return nil }
+                guard let boardType = $0["boardType"] as? String else { return nil }
+                guard let boardId = $0["boardId"] as? Int else { return nil }
+                return Alarm(alarmMode: alarmMode, boardType: boardType, boardId: boardId)
+            }
+            print(self.alarms)
+        }
+    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
@@ -103,10 +150,37 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if let aps = response.notification.request.content.userInfo["aps"] as? NSDictionary {
-            print(aps)
-            if let id = aps["target-content-id"] as? NSString {
-                NotificationCenter.default.post(name: NSNotification.Name("newReport"), object: id)
+//            print(aps)
+            if let alert = aps["alert"] as? NSDictionary {
+                if let summaryArg = alert["summary-arg"] as? NSString {
+                    let summaryStr = summaryArg as String
+                    let dict = convertToDictionary(text: summaryStr)
+//                    print(dict)
+                    guard let mode = dict!["mode"] as? String else { return }
+                    guard let type = dict!["type"] as? String else { return }
+                    guard let boardId = dict!["boardId"] as? String else { return }
+                    if(mode == "새로운  test 게시글 작성"){
+                        if(type == "의뢰"){
+                            let alarm = Alarm(alarmMode: "게시글 작성", boardType: "의뢰", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                        }
+                        else if(type == "보관"){
+                            let alarm = Alarm(alarmMode: "게시글 작성", boardType: "보호", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                        }
+                        else{
+                            let alarm = Alarm(alarmMode: "게시글 작성", boardType: "발견", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                        }
+                    }
+                    else{
+
+                    }
+                 }
             }
+//            if let id = aps["target-content-id"] as? NSString {
+//                NotificationCenter.default.post(name: NSNotification.Name("newReport"), object: id)
+//            }
         }
     }
     

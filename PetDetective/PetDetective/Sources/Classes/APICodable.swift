@@ -80,6 +80,15 @@ class APIDetectDetailResponse:Codable {
     let operation: Bool
 }
 
+class GetCertificationNumber: Decodable{
+    let needjoin: Bool
+    let cernum: String
+}
+
+class PassCertification: Decodable{
+    let id: Int
+}
+
 struct PutWithoutImage:Encodable{
     let breed: String
     let color: String
@@ -94,3 +103,4 @@ struct PutWithoutImage:Encodable{
     let missingLongitude: Double
     let missingLatitude: Double
 }
+

@@ -177,6 +177,7 @@ class DetectWriteViewController: UIViewController {
             }
         }
         else if( self.detectEdictorMode == .edit && self.imagePickedFlag == 1 ){
+            let imageData: Data? = self.petImageView.image?.pngData()!
             let url = "https://iospring.herokuapp.com/finder/\(self.findId!)"
             AF.upload(multipartFormData: {multipartFormData in
                 let imageData: Data? = self.petImageView.image?.pngData()!
