@@ -19,30 +19,33 @@ struct MarkerInfo {
 // 날짜 시간 변환 > 남은 시간 = 현재 핸드폰 시간 - 실종 시간 > 남은시간 marker에 저장 > 남은 시간
 // 타이머 발동 > 남은시간 - count
 // 함수 적용
-// 의뢰글 나오게 하기
-// 터치 하면 잃어버린 위치 마커 캡션 토글값
 // 지도 터치시 뷰 없애기
+// 마커 초기값 설정
+// 터치 하면 잃어버린 위치 토글
+// 의뢰글 나오게 하기, alamofire 적용
+// 의뢰 / 목격 적용
+
 
 class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate {
     
+    let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
+    let naverMap = MapView().naverMapView!
+    
     var markers = [NMFMarker]()
+    var getMarker: NMFMarker?
     var secondTimer: Timer?
     var remainTime = 1 // 남은시간
     var cnt = 0
-    let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
-    
-    let naverMap = MapView().naverMapView!
-    
+
 //    var infoWindow = NMFInfoWindow()
 //    var dataSource = NMFInfoWindowDefaultTextSource.data()
-    
 //    var customInfoWindowDataSource = CustomInfoWindowDataSource()
     
     @IBOutlet weak var rescueMapView: UIView!
-    
     @IBOutlet weak var markerInfoView: UIView!
     @IBOutlet weak var goldenTimeLabel: UILabel!
     @IBOutlet weak var moneyLabel: UILabel!
+    @IBOutlet weak var requestBoardButton: UIButton!
     
     override var isAuthorized: Bool {
         didSet {
@@ -69,15 +72,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         markerInfoView.isHidden = true
         
-//        timerRun()
+        requestBoardButton.setTitle("의뢰글 보기", for: .normal)
         
-//        emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
-//            guard let missingPet = missingPet else { return }
-//            guard let missingPets = missingPet.missingPetInfos else { return }
-//
-//            self.updateMapUI(with: missingPets)
-//        }
-        
+        requestBoardButton.backgroundColor = .systemBrown
+
+        requestBoardButton.addTarget(self, action: #selector(buttonTapped(button:)), for: .touchUpInside)
+                
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,15 +114,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 } else {
                     add += 0.01
                 }
-                
         
                 let imageString: String? =  "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
                 guard let petImage = imageString?.toImage() else { return }
                 guard let petImageCircleResize = petImage.circleReSize() else { return }
-                
                     
                 marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
-                
                 
                 guard let time = missingPets[i].missingTime else { return }
 
@@ -130,46 +127,89 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 
                 marker.userInfo = ["MissingTime": time, "Money": money]
                 
+                // 마커 초기값 저장
+                if i == 0 {
+                    getMarker = marker
+                }
+                
                 markers.append(marker)
                 print("\(missingPets[i].latitude), \(missingPets[i].longtitude)")
             }
 
             DispatchQueue.main.async { [weak self] in
                 // 메인 스레드 (오버레이 객체 맵에 올림)
-                
 
                 for marker in self!.markers {
                     
                     marker.mapView = self?.naverMap.mapView
                     
-                    marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-                        print("마커 터치")
-                        // 터치시 실종시간 - count
-                        // 계속 1씩 감소
-                        if let missingTime = marker.userInfo["MissingTime"] as? String {
-                            print(missingTime)
-                            if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
-                                print("현재 날짜 시간 \(currentDate)")
-                                print("String type 실종 날짜 시간 \(missingTime)")
-                                if let missingTime = missingTime.stringToDate() {
-                                    print("Date type 실종 날짜 시간 \(missingTime)")
-                                    self?.remainTime = Int(currentDate.timeIntervalSince(missingTime))
-                                    print("골든 타임 남은 시간(초) \(self?.remainTime)")
-                                    
+                    // 마커 초기값
+                    if self?.getMarker == marker {
+                        if self?.markerInfoView.isHidden == true {
+                            if let missingTime = marker.userInfo["MissingTime"] as? String {
+                                print(missingTime)
+                                if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
+                                    print("현재 날짜 시간 \(currentDate)")
+                                    print("String type 실종 날짜 시간 \(missingTime)")
+                                    if let missingTime = missingTime.stringToDate() {
+                                        print("Date type 실종 날짜 시간 \(missingTime)")
+                                        self?.remainTime = Int(currentDate.timeIntervalSince(missingTime))
+                                        print("골든 타임 남은 시간(초) \(self?.remainTime)")
+                                        
+                                    }
                                 }
                             }
+                            
+                            if let money = marker.userInfo["Money"] {
+                                self?.moneyLabel.text = "💰 사례금 \(money)"
+                                self?.getMarker = marker
+                                self?.getMarker?.captionText = "잃어버린 위치"
+                                self?.getMarker?.captionColor = UIColor.red
+                            }
+                            
+                            self?.markerInfoView.isHidden = false
+                        } else {
+                            self?.getMarker?.captionText = ""
+                            self?.markerInfoView.isHidden = true
                         }
-                        
-                        if let money = marker.userInfo["Money"] {
-                            self?.moneyLabel.text = "💰 사례금 \(money)"
+                    }
+                   
+                    
+                    marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+                        print("마커 터치")
+                        if self?.markerInfoView.isHidden == true {
+                            if let missingTime = marker.userInfo["MissingTime"] as? String {
+                                print(missingTime)
+                                if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
+                                    print("현재 날짜 시간 \(currentDate)")
+                                    print("String type 실종 날짜 시간 \(missingTime)")
+                                    if let missingTime = missingTime.stringToDate() {
+                                        print("Date type 실종 날짜 시간 \(missingTime)")
+                                        self?.remainTime = Int(currentDate.timeIntervalSince(missingTime))
+                                        print("골든 타임 남은 시간(초) \(self?.remainTime)")
+                                        
+                                    }
+                                }
+                            }
+                            
+                            if let money = marker.userInfo["Money"] {
+                                self?.moneyLabel.text = "💰 사례금 \(money)"
+                                self?.getMarker = marker
+                                self?.getMarker?.captionText = "잃어버린 위치"
+                                self?.getMarker?.captionColor = UIColor.red
+                            }
+                            
+                            self?.markerInfoView.isHidden = false
+                        } else {
+                            self?.getMarker?.captionText = ""
+                            self?.markerInfoView.isHidden = true
                         }
-                        
-                        self?.markerInfoView.isHidden = false
                         
         
                         return true
                         
                     }
+                    
 //                    marker.touchHandler = { [self] (overlay: NMFOverlay) -> Bool in
 //                        if let marker = overlay as? NMFMarker {
 //                            if marker.infoWindow == nil {
@@ -239,14 +279,17 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
+    @objc func buttonTapped(button: UIButton) {
+        // 의뢰글 올려짐
+//        self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
+    }
+    
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         markerInfoView.isHidden = true
+        self.getMarker?.captionText = ""
         print("지도 탭")
     }
     
-    @IBAction func viewRequestPostButtonTapped(_ sender: Any) {
-        //
-    }
 
     
 //    func reSize(imageString: String?) -> UIImage {
@@ -334,7 +377,6 @@ extension Int {
     (self % 60)
   }
 }
-
 
 extension UIImage {
     

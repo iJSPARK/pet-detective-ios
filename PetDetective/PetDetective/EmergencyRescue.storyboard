@@ -18,7 +18,22 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-cX-nNE" customClass="NMFNaverMapView">
                                 <rect key="frame" x="0.0" y="100" width="414" height="796"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6z-al-mWu">
+                                        <rect key="frame" x="67" y="710" width="280" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="Lqg-sU-bhK"/>
+                                            <constraint firstAttribute="width" constant="280" id="WH0-3h-NGf"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="h6z-al-mWu" firstAttribute="centerX" secondItem="Ohc-cX-nNE" secondAttribute="centerX" id="9zf-Sa-hln"/>
+                                    <constraint firstAttribute="bottom" secondItem="h6z-al-mWu" secondAttribute="bottom" constant="42" id="LW9-Ob-8JL"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="twM-aI-bSu">
                                 <rect key="frame" x="67" y="130" width="280" height="140"/>
@@ -96,6 +111,7 @@
                         <outlet property="goldenTimeLabel" destination="rUg-DX-Q04" id="gWK-Im-Gqt"/>
                         <outlet property="markerInfoView" destination="twM-aI-bSu" id="11b-FG-HMp"/>
                         <outlet property="moneyLabel" destination="6zt-Z4-Kmc" id="8ec-0q-O1x"/>
+                        <outlet property="requestBoardButton" destination="h6z-al-mWu" id="A2f-ca-gAX"/>
                         <outlet property="rescueMapView" destination="Ohc-cX-nNE" id="B1T-Xk-QrA"/>
                     </connections>
                 </viewController>
