@@ -9,10 +9,10 @@ import NMapsMap
 
 class MapViewController: LocationController, NMFMapViewCameraDelegate {
     
-    func moveCameraFirstRun(_ naverMapView: NMFNaverMapView) {
+    func moveCameraFirstRun(_ naverMapView: NMFNaverMapView, lat: Double, lng: Double) {
         // 앱 처음 실행시 카메라 이동 현재 위치 비동기 처리 (1초후 카메라 이동)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: self.locationManager.location?.coordinate.latitude ?? 0, lng: self.locationManager.location?.coordinate.longitude ?? 0))
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat:lat, lng:lng))
             naverMapView.mapView.moveCamera(cameraUpdate) { (isCancelled) in
                 if isCancelled {
                     print("카메라 이동 취소")

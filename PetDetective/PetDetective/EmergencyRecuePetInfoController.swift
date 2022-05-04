@@ -40,5 +40,37 @@ struct EmergencyRescuePetInfoController {
         
         taskObject.resume()
     }
+    
+    func fetchedFindPetInfo(completion: @escaping (FindPet?) -> Void) {
+        // http는 info.plist > app transport security setting > allow arbitray loads
+        let baseUrl = URL(string: "https://iospring.herokuapp.com/detect")!
+        
+        let query: [String: String] = [
+            "page": "2"
+        ]
+        
+        guard let url = baseUrl.withQueries(query) else {
+            print("Unalbe to build URL")
+            return
+        }
+        
+        let taskObject = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            let jsonDecoder = JSONDecoder()
+            
+            if let data = data, let petInfo = try? jsonDecoder.decode(FindPet.self, from: data) {
+                // 응답 처리 로직
+                print("Data was returned and data was properly decoded")
+                completion(petInfo) // 함수가 끝나고 나면 호출
+            } else {
+                print("Either no data was returned, or data was not properly decoded")
+                completion(nil)
+                return
+            }
+            
+        }
+        
+        taskObject.resume()
+    }
+
 
 }
