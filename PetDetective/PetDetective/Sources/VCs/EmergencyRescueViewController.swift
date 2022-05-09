@@ -51,10 +51,10 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         self.rescueMapView.addSubview(naverMap)
         
         naverMap.translatesAutoresizingMaskIntoConstraints = false
-        naverMap.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1).isActive = true
-        naverMap.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1).isActive = true
-        naverMap.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        naverMap.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        naverMap.widthAnchor.constraint(equalTo: self.rescueMapView.widthAnchor, multiplier: 1).isActive = true
+        naverMap.heightAnchor.constraint(equalTo: self.rescueMapView.heightAnchor, multiplier: 1).isActive = true
+        naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
+        naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
         
         naverMap.mapView.touchDelegate = self
         
