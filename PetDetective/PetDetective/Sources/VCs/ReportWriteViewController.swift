@@ -10,7 +10,7 @@ import Alamofire
 
 enum ReportEditorMode{
     case new
-//    case edit(IndexPath, Report)
+    //    case edit(IndexPath, Report)
     case edit
 }
 
@@ -24,6 +24,8 @@ class ReportWriteViewController: UIViewController {
     var boardId: Int?
     var userId: Int?
     var imagePickedFlag = 0
+    var posterPhoneN: String?
+    var viewerPhoneN: String = ""
     @IBOutlet weak var petImageView: UIImageView!
     let imagePicker = UIImagePickerController()
     @IBOutlet weak var breedTextField: UITextField!
@@ -40,32 +42,33 @@ class ReportWriteViewController: UIViewController {
     @IBOutlet weak var etcTextView: UITextView!
     @IBOutlet weak var confirmBtn: UIBarButtonItem!
     var reportEditMode: ReportEditorMode = .new
-//    var fCurTextfieldBottom: CGFloat = 0.0
-//    var keyHeight: CGFloat?
+    //    var fCurTextfieldBottom: CGFloat = 0.0
+    //    var keyHeight: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.breedTextField.isEnabled = false
         self.configureImg()
         self.configureDatePicker()
+        self.configureTextField()
         configureEditMode()
         //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         //        self.confirmBtn.isEnabled = false
     }
     
-    
-    //    private func configureTextField(){
-    //        self.breedTextField.delegate = self
-    //        self.furColorTextField.delegate = self
-    //        self.locationTextField.delegate = self
-    //        self.dateTextField.delegate = self
-    //        self.ageTextField.delegate = self
-    //        self.featureTextField.delegate = self
-    //        self.moneyTextField.delegate = self
-    //        self.diseaseTextField.delegate = self
-    //        self.ageTextField.delegate = self
-    //    }
+    private func configureTextField(){
+        self.breedTextField.delegate = self
+        self.furColorTextField.delegate = self
+        self.locationTextField.delegate = self
+        self.dateTextField.delegate = self
+        self.ageTextField.delegate = self
+        self.featureTextField.delegate = self
+        self.moneyTextField.delegate = self
+        self.diseaseTextField.delegate = self
+        self.ageTextField.delegate = self
+        self.moneyTextField.keyboardType = .numberPad
+        self.ageTextField.keyboardType = .numberPad
+    }
     
     private func configureImg(){
         self.imagePicker.sourceType = .photoLibrary // 앨범에서 가져옴
@@ -88,25 +91,25 @@ class ReportWriteViewController: UIViewController {
     
     private func configureEditMode(){
         switch self.reportEditMode {
-        case let .new:
+        case .new:
             break
-        case let .edit:
+        case .edit:
             self.getInfo(id: self.reportId!)
             break
-//        case let .edit(_, report):
-//            self.boardId = report.boardId
-//            self.userId = report.userId
-//            self.petId = report.petId
-//            self.dateTextField.text = self.formatDate(date: report.missingTime)
-//            self.locationTextField.text = report.missingLocation
-//            //            self.moneyTextField.text = report.money
+            //        case let .edit(_, report):
+            //            self.boardId = report.boardId
+            //            self.userId = report.userId
+            //            self.petId = report.petId
+            //            self.dateTextField.text = self.formatDate(date: report.missingTime)
+            //            self.locationTextField.text = report.missingLocation
+            //            //            self.moneyTextField.text = report.money
         }
     }
     
     @IBAction func tabConfirmBtn(_ sender: UIBarButtonItem) {
         guard let breed = self.breedTextField.text else { return }
         guard let color = self.furColorTextField.text else { return }
-        guard let date = self.reportDate else { return }
+        guard let date = self.dateTextField.text else { return }
         guard let location = self.locationTextField.text else { return }
         guard let money = self.moneyTextField.text else { return }
         guard let feature = self.featureTextField.text else { return }
@@ -119,7 +122,7 @@ class ReportWriteViewController: UIViewController {
         guard let age = Int(ageStr) else { return }
         guard let etc = self.etcTextView.text else { return }
         print("등록")
-        postInfo(breed: breed, color: color, date: formatDate(date: date), location: location, money: money, sex: sex, operation: operation, disease: disease, age: age, content: etc, missingLongitude: "48.0", missingLatitude: "148.1", feature: feature)
+        postInfo(breed: breed, color: color, date: date, location: location, money: money, sex: sex, operation: operation, disease: disease, age: age, content: etc, missingLongitude: "48.0", missingLatitude: "148.1", feature: feature)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -140,6 +143,7 @@ class ReportWriteViewController: UIViewController {
                         let decodedData = try JSONDecoder().decode(APIDetectDetailResponse.self, from: data!)
                         let url = URL(string: decodedData.mainImageUrl)
                         let data = try? Data(contentsOf: url!)
+                        self.posterPhoneN = decodedData.userPhoneNumber
                         self.petImageView.image = UIImage(data: data!)
                         self.breedTextField.text = decodedData.breed
                         self.furColorTextField.text = decodedData.color
@@ -337,7 +341,7 @@ class ReportWriteViewController: UIViewController {
     
     func formatDate(date: Date) -> String{
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY년 MMMM dd일 HH:mm"
+        formatter.dateFormat = "YYYY:MM:dd:HH:mm:ss"
         return formatter.string(from: date)
     }
     
@@ -390,6 +394,10 @@ class ReportWriteViewController: UIViewController {
     //    @objc func keyboardWillHide(_ sender: Notification) {
     //        self.view.frame.size.height += keyHeight!
     //    }
+    
+    
+    
+    
 }
 
 extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -408,28 +416,35 @@ extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigati
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
         self.imagePickedFlag = 1
         
-        let url = "https://iospring-teachable.herokuapp.com/breed"
+        //        let url = "https://iospring-teachable.herokuapp.com/breed"
         
-        AF.upload(multipartFormData: {multipartFormData in
-            let imageData: Data? = self.petImageView.image?.pngData()!
-            multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
-        }, to: url, method: .post)
-        .validate(statusCode: 200..<500)
-        .responseData { response in
-            switch response.result {
-            case .success:
-                guard let data = response.data else {return}
-                do {
-                    let decoder = JSONDecoder()
-                    let json = try decoder.decode([Prediction].self, from: data)
-                    self.breedTextField.text = json[0].prediction
-                }
-                catch {
-                    print("error!\(error)")
-                }
-            case let .failure(error):
-                print(error)
-            }
-        }
+        //        AF.upload(multipartFormData: {multipartFormData in
+        //            let imageData: Data? = self.petImageView.image?.pngData()!
+        //            multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
+        //        }, to: url, method: .post)
+        //        .validate(statusCode: 200..<500)
+        //        .responseData { response in
+        //            switch response.result {
+        //            case .success:
+        //                guard let data = response.data else {return}
+        //                do {
+        //                    let decoder = JSONDecoder()
+        //                    let json = try decoder.decode([Prediction].self, from: data)
+        //                    self.breedTextField.text = json[0].prediction
+        //                }
+        //                catch {
+        //                    print("error!\(error)")
+        //                }
+        //            case let .failure(error):
+        //                print(error)
+        //            }
+        //        }
+    }
+}
+
+extension ReportWriteViewController: UITextFieldDelegate{
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
 }

@@ -12,6 +12,8 @@ class ReportDetailViewController: UIViewController {
     var reportId: Int?
     var indexPath: IndexPath?
     var report: Report?
+    var posterPhoneN: String?
+    var viewerPhoneN: String = ""
     
     @IBOutlet weak var petImageView: UIImageView!
     @IBOutlet weak var breedLabel: UILabel!
@@ -30,6 +32,15 @@ class ReportDetailViewController: UIViewController {
         super.viewDidLoad()
 //        myPostStackBtn.isHidden = true
         getInfo(id: self.reportId!)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let userDefaults = UserDefaults.standard
+        guard let data = userDefaults.object(forKey: "petUserPhoneN") as? String else { return }
+        self.viewerPhoneN = data
+        if(self.posterPhoneN != self.viewerPhoneN){
+            self.myPostStackBtn.isHidden = true
+        }
     }
     
     private func getInfo(id: Int){
@@ -102,6 +113,7 @@ class ReportDetailViewController: UIViewController {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportWriteViewController") as? ReportWriteViewController else { return }
         viewController.reportEditMode = .edit
         viewController.reportId = self.reportId
+        viewController.posterPhoneN = self.posterPhoneN
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

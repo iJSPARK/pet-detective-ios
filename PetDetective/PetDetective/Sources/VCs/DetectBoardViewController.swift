@@ -238,7 +238,9 @@ extension DetectBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
         let findId = self.boardList[indexPath.row].id
+        let posterPhoneN = self.boardList[indexPath.row].userPhoneNumber
         viewController.findId = findId!
+        viewController.posterPhoneN = posterPhoneN
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

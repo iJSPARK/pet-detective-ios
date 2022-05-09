@@ -49,20 +49,34 @@ class LoginViewController: UIViewController {
         self.authBtn.isHidden = true
         self.sendAuthBtn.isHidden = false
         self.reGetPNBtn.isHidden = false
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(phoneNumber, forKey: "petUserPhoneN")
         
         let url = "https://iospring.herokuapp.com/check/sendSMS"
         
-        AF.upload(multipartFormData: {multipartFormData in
-            multipartFormData.append("\(self.phoneNumber)".data(using: String.Encoding.utf8)!, withName: "phoneNumber")
-            multipartFormData.append("\(self.deviceToken)".data(using: String.Encoding.utf8)!, withName: "diviceToken")
-        }, to: url, method: .post)
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
+        
+        let params = ["phoneNumber":"\(self.phoneNumber)", "diviceToken":"\(self.deviceToken)"] as Dictionary
+        
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request)
         .validate(statusCode: 200..<500)
         .responseData { response in
             switch response.result {
             case .success:
                 if let data = response.data {
                     do{
+                        debugPrint(response)
                         let decodedData = try JSONDecoder().decode(GetCertificationNumber.self, from: data)
+                        print(decodedData.cernum)
                         self.cernum = decodedData.cernum
                         self.needjoin = decodedData.needjoin
                     } catch {
@@ -89,7 +103,7 @@ class LoginViewController: UIViewController {
                 reGetPNBtn.isHidden = true
             }
             else{
-                print("로그인 완료")
+                transitionToService()
             }
         }
         else{
@@ -111,33 +125,35 @@ class LoginViewController: UIViewController {
         //준서 파트
     }
     @IBAction func submitInfo(_ sender: UIButton) {
+        
+        self.email = self.emailTextField.text!
+
         let url = "https://iospring.herokuapp.com/join"
         
-        self.email = emailTextField.text!
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
         
-        AF.upload(multipartFormData: {multipartFormData in
-            multipartFormData.append("\(self.phoneNumber)".data(using: String.Encoding.utf8)!, withName: "phoneNumber")
-            multipartFormData.append("\(self.deviceToken)".data(using: String.Encoding.utf8)!, withName: "deviceToken")
-            multipartFormData.append("\(self.email)".data(using: String.Encoding.utf8)!, withName: "email")
-            multipartFormData.append("\(self.address)".data(using: String.Encoding.utf8)!, withName: "loadAddress")
-            multipartFormData.append("\(self.latitude)".data(using: String.Encoding.utf8)!, withName: "latitude")
-            multipartFormData.append("\(self.longitude)".data(using: String.Encoding.utf8)!, withName: "longitude")
-        }, to: url, method: .post)
+        let params = ["phoneNumber":"\(self.phoneNumber)", "email":"\(self.email)", "loadAddress":"\(self.address)", "latitude": "\(self.latitude)", "longitude":"\(self.longitude)", "deviceToken":"\(self.deviceToken)"] as Dictionary
+        
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+        AF.request(request)
         .validate(statusCode: 200..<500)
         .responseData { response in
             switch response.result {
             case .success:
-                if let data = response.data {
-                    do{
-                        debugPrint(response)
-                        let decodedData = try JSONDecoder().decode(PassCertification.self, from: data)
-//                        let userDefaults = UserDefaults.standard
-//                        userDefaults.set(decodedData.id, forKey: "petUserId")
-                        print(decodedData.id)
-                    } catch {
-                        print(error)
-                    }
-                }
+                debugPrint(response)
+                guard let data = response.data else { return }
+                guard let id = String(data: data, encoding: String.Encoding.utf8) as String? else { return }
+                let userDefaults = UserDefaults.standard
+                userDefaults.set(id, forKey: "petUserId")
+                self.transitionToService()
             case let .failure(error):
                 print(error)
             }
@@ -157,4 +173,11 @@ class LoginViewController: UIViewController {
         self.view.endEditing(true)
     }
     
+    
+    private func transitionToService(){
+        let ServiceViewController = storyboard?.instantiateViewController(withIdentifier: "ServiceTabBarController") as? UITabBarController
+        
+        view.window?.rootViewController = ServiceViewController
+        view.window?.makeKeyAndVisible()
+    }
 }

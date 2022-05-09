@@ -70,7 +70,22 @@ extension AlarmBoardViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AlarmCell", for: indexPath) as? AlarmCell else { return UITableViewCell() }
         let alarm = self.alarms[indexPath.row]
         cell.alarmTitle.text = alarm.boardType
-        cell.alarmBody.text = String(alarm.boardId)
+//        cell.alarmBody.text = String(alarm.boardId)
+        if( alarm.alarmMode == "게시글 작성"){
+            if( alarm.boardType == "의뢰"){
+                cell.alarmBody.text = "새로운 의뢰가 들어왔어요!"
+            }
+            else if ( alarm.boardType == "보호" ){
+                cell.alarmBody.text = "반려견과 비슷한 친구가 보호 중이에요!"
+            }
+            else if ( alarm.boardType == "발견" ){
+                cell.alarmBody.text = "반려견과 비슷한 친구가 제보가 되었어요!"
+            }
+        }
+        else if(alarm.alarmMode == "골든타임"){
+            
+        }
+        
         return cell
     }
 

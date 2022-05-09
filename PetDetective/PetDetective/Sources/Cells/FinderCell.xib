@@ -25,13 +25,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="보호 / 발견" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aM-Dr-kyN">
-                        <rect key="frame" x="5" y="291" width="240" height="21"/>
+                        <rect key="frame" x="5" y="281" width="240" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="위치" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YNL-h4-5kY">
-                        <rect key="frame" x="5" y="260" width="240" height="21"/>
+                        <rect key="frame" x="5" y="250" width="240" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                 <constraint firstItem="B2e-Zc-LuF" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="NvB-UB-9G6"/>
                 <constraint firstItem="6aM-Dr-kyN" firstAttribute="top" secondItem="YNL-h4-5kY" secondAttribute="bottom" constant="10" id="Sqc-uh-Mll"/>
                 <constraint firstAttribute="trailing" secondItem="YNL-h4-5kY" secondAttribute="trailing" constant="5" id="ciy-YN-3zx"/>
-                <constraint firstItem="YNL-h4-5kY" firstAttribute="top" secondItem="B2e-Zc-LuF" secondAttribute="bottom" constant="10" id="gda-kE-NwV"/>
+                <constraint firstItem="YNL-h4-5kY" firstAttribute="top" secondItem="B2e-Zc-LuF" secondAttribute="bottom" id="gda-kE-NwV"/>
                 <constraint firstItem="6aM-Dr-kyN" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="lRz-cn-Upt"/>
             </constraints>
             <size key="customSize" width="209" height="332"/>

@@ -37,6 +37,8 @@ class DetectWriteViewController: UIViewController {
     var imagePickedFlag = 0
     var latitude = "0.0"
     var longitude = "0.0"
+//    var posterPhoneN = String?
+    
     var detectEdictorMode: DetectEditorMode = .new
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,14 @@ class DetectWriteViewController: UIViewController {
         if( self.detectEdictorMode == .edit){
             getInfo(id: findId!)
         }
+    }
+    
+    private func configureTextField(){
+        self.breedTextField.delegate = self
+        self.furColorTextField.delegate = self
+        self.locationTextField.delegate = self
+        self.dateTextField.delegate = self
+        self.featureTextField.delegate = self
     }
     
     private func configureImg(){
@@ -72,7 +82,7 @@ class DetectWriteViewController: UIViewController {
     
     func formatDate(date: Date) -> String{
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY년 MMMM dd일 HH:mm"
+        formatter.dateFormat = "YYYY:MM:dd:HH:mm:ss"
         return formatter.string(from: date)
     }
     
@@ -177,7 +187,6 @@ class DetectWriteViewController: UIViewController {
             }
         }
         else if( self.detectEdictorMode == .edit && self.imagePickedFlag == 1 ){
-            let imageData: Data? = self.petImageView.image?.pngData()!
             let url = "https://iospring.herokuapp.com/finder/\(self.findId!)"
             AF.upload(multipartFormData: {multipartFormData in
                 let imageData: Data? = self.petImageView.image?.pngData()!
@@ -208,6 +217,7 @@ class DetectWriteViewController: UIViewController {
             }
         }
         else if(self.detectEdictorMode == .new){
+            
             let url = "https://iospring.herokuapp.com/finder"
             AF.upload(multipartFormData: {multipartFormData in
                 let imageData: Data? = self.petImageView.image?.pngData()!
@@ -315,12 +325,12 @@ extension DetectWriteViewController: UIImagePickerControllerDelegate, UINavigati
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
         self.imagePickedFlag = 1
         
-        let url = "https://iospring-teachable.herokuapp.com/breed"
+        let url1 = "https://iospring-teachable.herokuapp.com/breed"
         
         AF.upload(multipartFormData: {multipartFormData in
             let imageData: Data? = self.petImageView.image?.pngData()!
             multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
-        }, to: url, method: .post)
+        }, to: url1, method: .post)
         .validate(statusCode: 200..<500)
         .responseData { response in
             switch response.result {
@@ -338,5 +348,36 @@ extension DetectWriteViewController: UIImagePickerControllerDelegate, UINavigati
                 print(error)
             }
         }
+        
+        let url2 = "https://iospring-teachable.herokuapp.com/color"
+        
+        AF.upload(multipartFormData: {multipartFormData in
+            let imageData: Data? = self.petImageView.image?.pngData()!
+            multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
+        }, to: url2, method: .post)
+        .validate(statusCode: 200..<500)
+        .responseData { response in
+            switch response.result {
+            case .success:
+                guard let data = response.data else {return}
+                do {
+                    let decoder = JSONDecoder()
+                    let json = try decoder.decode([Prediction].self, from: data)
+                    self.furColorTextField.text = json[0].prediction
+                }
+                catch {
+                    print("error!\(error)")
+                }
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
+}
+
+extension DetectWriteViewController: UITextFieldDelegate{
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
     }
 }

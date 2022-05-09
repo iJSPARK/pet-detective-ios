@@ -20,12 +20,24 @@ class DetectDetailViewController: UIViewController {
     @IBOutlet weak var operationLabel: UILabel!
     @IBOutlet weak var etcTextView: UITextView!
     var findId: Int?
-    
+    var posterPhoneN: String?
+    var viewerPhoneN: String = ""
+    @IBOutlet weak var myPostStackBtn: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         getInfo(id: findId!)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let userDefaults = UserDefaults.standard
+        guard let data = userDefaults.object(forKey: "petUserPhoneN") as? String else { return }
+        self.viewerPhoneN = data
+        if(self.posterPhoneN != self.viewerPhoneN){
+            self.myPostStackBtn.isHidden = true
+        }
+    }
+    
     
     private func getInfo(id: Int){
         guard let url = URL(string: "https://iospring.herokuapp.com/finder/\(id)") else {

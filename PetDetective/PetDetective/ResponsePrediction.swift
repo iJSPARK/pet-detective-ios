@@ -11,3 +11,5 @@ struct Prediction: Decodable{
     let prediction: String
     let score: String
 }
+
+

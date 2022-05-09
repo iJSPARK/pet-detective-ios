@@ -170,11 +170,11 @@ extension ReportBoardViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ReportCell", for: indexPath) as? ReportCell else { return UICollectionViewCell() }
-//        let url = URL(string: boardList[indexPath.row].mainImageUrl!)
-//        let data = try? Data(contentsOf: url!)
-//        DispatchQueue.main.async {
-//            cell.petImg.image = UIImage(data: data!)
-//        }
+        let url = URL(string: boardList[indexPath.row].mainImageUrl!)
+        let data = try? Data(contentsOf: url!)
+        DispatchQueue.main.async {
+            cell.petImg.image = UIImage(data: data!)
+        }
         cell.petLocation.text = boardList[indexPath.row].missingLocation!
 //        cell.date.text = self.dateToString(date: report.date) // date->String
         return cell
@@ -226,8 +226,12 @@ extension ReportBoardViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
         let reportId = self.boardList[indexPath.row].id
+        let posterPhoneN = self.boardList[indexPath.row].userPhoneNumber
         viewController.reportId = reportId
-        print(reportId)
+        viewController.posterPhoneN = posterPhoneN
+//        print(reportId)
+        print(posterPhoneN)
         self.navigationController?.pushViewController(viewController, animated: true)
+        
     }
 }

@@ -15,6 +15,7 @@ class ReportBoard: Codable{
     let missingLatitude: Double?
     let missingLongitude: Double?
     let missingTime: String?
+    let userPhoneNumber: String
 }
 
 class FindBoard: Codable{
@@ -25,6 +26,7 @@ class FindBoard: Codable{
     let missingLongitude: Double?
     let missingTime: String?
     let care: Bool
+    let userPhoneNumber: String
 }
 
 //"mainImageUrl":"https://iospring.s3.ap-northeast-2.amazonaws.com/7c4cf621-1600-4043-8418-1826da262de2.png",
@@ -65,6 +67,7 @@ class APIDetectBoardResponse<T: Codable> : Codable {
 }
 
 class APIDetectDetailResponse:Codable {
+    let userPhoneNumber: String
     let breed: String
     let color: String
     let missingTime: String
