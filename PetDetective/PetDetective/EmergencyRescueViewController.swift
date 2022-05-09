@@ -17,19 +17,6 @@ enum ReportMode: String {
     }
 }
 
-// 데이터 요청 후
-// 실종시간 > 남은시간으로
-// 날짜 시간 변환 > 남은 시간 = 현재 핸드폰 시간 - 실종 시간 > 남은시간 marker에 저장 > 남은 시간
-// 타이머 발동 > 남은시간 - count
-// 함수 적용
-// 지도 터치시 뷰 없애기
-// 마커 초기값 설정
-// 터치 하면 잃어버린 위치 토글
-// 의뢰 / 목격 적용
-// 의뢰글 나오게 하기
-
-// seguementControl에 따른 mapview 다시 업로드
-// 요청 회원 유저 아이디 보내줌
 // 의뢰 > 탐색위치 추가해서 받아와야함
 // 목격 > 실종위치 추가해서 받아와야함
 
@@ -78,8 +65,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
         boardButton.backgroundColor = .systemBrown
-
-        boardButton.addTarget(self, action: #selector(buttonTapped(button:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,7 +82,11 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         markerInfoView.isHidden = true
         if mode == .find {
             emergencyRescuePetInfoController.fetchedFindPetInfo { (findPet) in
-                guard let findPet = findPet else { return }
+                guard let findPet = findPet else {
+                    // 목격신고한 유저 없으면
+                    self.alertOk( title: "실종 신고한 이력이 없습니다.", message: "실종 신고한 이력이 없습니다.\n실종 신고한 애완동물과 같은 종의 동물이 지도에 표시됩니다.", viewController: self)
+                    return
+                }
                 guard let findPets = findPet.findPetInfos else { return }
 
                 self.updateMapUI(with: findPets)
@@ -288,6 +277,11 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                                     self.getMarker?.captionColor = UIColor.red
                                 }
                                 
+                                if let boardId = marker.userInfo["BoardId"] {
+                                    // reportView(boardId)
+                                }
+                                
+                                
                                 self.markerInfoView.isHidden = false
                             }
                             else {
@@ -353,12 +347,23 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         print("지도 탭")
     }
     
-    @objc func buttonTapped(button: UIButton) {
-        // 의뢰글 올려짐
-//        self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
+    func alertOk( title: String, message: String, viewController: UIViewController ) {
+
+        let alert = UIAlertController( title: title, message: message, preferredStyle: UIAlertController.Style.alert )
+        
+        let okAction = UIAlertAction( title: "OK", style: .default ) { (action) in }
+        alert.addAction(okAction)
+        
+        viewController.present( alert, animated: false, completion: nil )
+
     }
     
-   
+//    func reportView(_ boardId: Int) {
+//        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+//        print(boardId)
+//        self.navigationController?.pushViewController(viewController, animated: true)
+//    }
+    
     @IBAction func switchView(_ sender: Any) {
         if markers != [] {
             for marker in markers {
@@ -376,7 +381,11 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     }
     
-
+    @IBAction func viewBoardButtonTapped(_ sender: Any) {
+        // 의뢰글 올려짐
+//        self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
+    }
+    
     
 //    func reSize(imageString: String?) -> UIImage {
 ////        let url = URL(string: imageString!)!
@@ -484,3 +493,4 @@ extension UIImage {
         return newImage
     }
 }
+

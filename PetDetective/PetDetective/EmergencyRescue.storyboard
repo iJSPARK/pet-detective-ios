@@ -68,6 +68,9 @@
                                 </constraints>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <connections>
+                                    <action selector="viewBoardButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="1hm-T8-bRN"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qCP-eO-7I2">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="136"/>
@@ -87,12 +90,12 @@
                                             <segment title="의뢰"/>
                                             <segment title="목격"/>
                                         </segments>
+                                        <color key="selectedSegmentTintColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <action selector="switchView:" destination="Y6W-OH-hqX" eventType="valueChanged" id="B43-GP-b5f"/>
                                         </connections>
                                     </segmentedControl>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="136" id="4oN-AY-48R"/>
                                     <constraint firstItem="yYa-Uz-2Y9" firstAttribute="top" secondItem="qCP-eO-7I2" secondAttribute="top" constant="60" id="HuZ-TZ-oYw"/>
