@@ -19,7 +19,6 @@
 		7948394527E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */; };
 		7948396027E5F684004B04FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948395F27E5F684004B04FD /* ViewController.swift */; };
 		79E49B872828F3F200E8D34D /* EmergencyRescueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7B2828F3F100E8D34D /* EmergencyRescueViewController.swift */; };
-		79E49B882828F3F200E8D34D /* EmergencyRescue.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79E49B7C2828F3F100E8D34D /* EmergencyRescue.storyboard */; };
 		79E49B892828F3F200E8D34D /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7D2828F3F100E8D34D /* MapView.swift */; };
 		79E49B8A2828F3F200E8D34D /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7E2828F3F100E8D34D /* LocationController.swift */; };
 		79E49B8B2828F3F200E8D34D /* SelectionMissingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7F2828F3F100E8D34D /* SelectionMissingLocationViewController.swift */; };
@@ -87,7 +86,6 @@
 		7948394427E5F211004B04FD /* PetDetectiveUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDetectiveUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7948395F27E5F684004B04FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		79E49B7B2828F3F100E8D34D /* EmergencyRescueViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyRescueViewController.swift; sourceTree = "<group>"; };
-		79E49B7C2828F3F100E8D34D /* EmergencyRescue.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = EmergencyRescue.storyboard; sourceTree = "<group>"; };
 		79E49B7D2828F3F100E8D34D /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		79E49B7E2828F3F100E8D34D /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		79E49B7F2828F3F100E8D34D /* SelectionMissingLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionMissingLocationViewController.swift; sourceTree = "<group>"; };
@@ -193,7 +191,6 @@
 				7948392A27E5F210004B04FD /* Assets.xcassets */,
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
-				79E49B7C2828F3F100E8D34D /* EmergencyRescue.storyboard */,
 				79E49B832828F3F200E8D34D /* FindLocation.storyboard */,
 				79E49B812828F3F200E8D34D /* SelectionMissingLocation.storyboard */,
 				7948393727E5F211004B04FD /* PetDetectiveTests */,
@@ -422,7 +419,6 @@
 			files = (
 				8EDB01E7281259F7008C9F2F /* FinderCell.xib in Resources */,
 				8EDB01EB281267AF008C9F2F /* ReportCell.xib in Resources */,
-				79E49B882828F3F200E8D34D /* EmergencyRescue.storyboard in Resources */,
 				7948392E27E5F210004B04FD /* LaunchScreen.storyboard in Resources */,
 				79E49B8F2828F3F200E8D34D /* FindLocation.storyboard in Resources */,
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
