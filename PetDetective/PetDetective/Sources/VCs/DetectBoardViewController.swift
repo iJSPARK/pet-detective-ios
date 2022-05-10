@@ -125,10 +125,7 @@ class DetectBoardViewController: UIViewController {
         self.collectionView.contentInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 10)
         self.collectionView.delegate = self  // 하단 extension 참조
         self.collectionView.dataSource = self // 하단 extension 참조
-        self.writeBtn.layer.borderWidth = 1
-        self.writeBtn.frame.size = CGSize(width: 300, height: 50)
-        self.writeBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.writeBtn.frame.width/2, y: self.view.frame.height - 250)
-        self.writeBtn.layer.cornerRadius = 8
+        self.writeBtn.layer.cornerRadius = 6
     }
     
     private func fetchData(page: Int){

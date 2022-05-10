@@ -228,7 +228,7 @@
                                     <segment title="의뢰"/>
                                     <segment title="보호 / 발견"/>
                                 </segments>
-                                <color key="selectedSegmentTintColor" red="0.84313726430000002" green="0.72156864399999998" blue="0.5411764979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="selectedSegmentTintColor" red="0.84313726430000002" green="0.7243054666438723" blue="0.54717105839869062" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="switchViews:" destination="0LK-m3-Nt3" eventType="valueChanged" id="TWT-gy-a1J"/>
                                 </connections>
@@ -352,11 +352,16 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yX-58-o3O">
-                                <rect key="frame" x="171" y="789" width="73" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2yX-58-o3O">
+                                <rect key="frame" x="87" y="630" width="240" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Ykr-4C-hXP"/>
+                                    <constraint firstAttribute="height" constant="44" id="bqJ-qN-UTS"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="신고하기"/>
+                                <buttonConfiguration key="configuration" style="filled" title="신고하기">
+                                    <color key="baseBackgroundColor" red="0.84313726430000002" green="0.7243054666438723" blue="0.54717105839869062" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="ae9-Y3-A2c" kind="push" id="yyR-rd-uz1"/>
                                 </connections>
@@ -367,6 +372,8 @@
                         <constraints>
                             <constraint firstItem="sFb-4T-X4G" firstAttribute="leading" secondItem="4GX-zN-NZd" secondAttribute="leading" id="SvM-Rr-rfl"/>
                             <constraint firstItem="4GX-zN-NZd" firstAttribute="trailing" secondItem="sFb-4T-X4G" secondAttribute="trailing" id="X53-Sq-rT3"/>
+                            <constraint firstAttribute="bottom" secondItem="2yX-58-o3O" secondAttribute="bottom" constant="20" id="XLu-8O-cKR"/>
+                            <constraint firstItem="2yX-58-o3O" firstAttribute="centerX" secondItem="sFb-4T-X4G" secondAttribute="centerX" id="YSV-Xd-ZhR"/>
                             <constraint firstItem="4GX-zN-NZd" firstAttribute="bottom" secondItem="sFb-4T-X4G" secondAttribute="bottom" id="ZdO-Aw-TJT"/>
                             <constraint firstItem="sFb-4T-X4G" firstAttribute="top" secondItem="4GX-zN-NZd" secondAttribute="top" id="ihu-pH-fSc"/>
                         </constraints>
@@ -401,11 +408,16 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWE-Ct-T80">
-                                <rect key="frame" x="151" y="713" width="113" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CWE-Ct-T80">
+                                <rect key="frame" x="87" y="630" width="240" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="fae-fB-KQ6"/>
+                                    <constraint firstAttribute="height" constant="44" id="yBK-CO-idE"/>
+                                </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="발견 / 보호 제보"/>
+                                <buttonConfiguration key="configuration" style="filled" title="발견 / 보호 제보">
+                                    <color key="baseBackgroundColor" red="0.84313726430000002" green="0.7243054666438723" blue="0.54717105839869062" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <segue destination="AGr-Zb-nP1" kind="push" id="ok0-aU-J4Y"/>
                                 </connections>
@@ -415,9 +427,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Cy4-Kl-RIR" firstAttribute="leading" secondItem="4FD-tc-0Av" secondAttribute="leading" id="Cyq-K6-cew"/>
+                            <constraint firstAttribute="bottom" secondItem="CWE-Ct-T80" secondAttribute="bottom" constant="20" id="EGt-Xi-YeV"/>
                             <constraint firstItem="Cy4-Kl-RIR" firstAttribute="trailing" secondItem="4FD-tc-0Av" secondAttribute="trailing" id="FeN-r8-fPR"/>
                             <constraint firstItem="4FD-tc-0Av" firstAttribute="bottom" secondItem="Cy4-Kl-RIR" secondAttribute="bottom" id="SUb-Kb-8iX"/>
                             <constraint firstItem="Cy4-Kl-RIR" firstAttribute="top" secondItem="4FD-tc-0Av" secondAttribute="top" id="lgx-jF-Pyg"/>
+                            <constraint firstItem="CWE-Ct-T80" firstAttribute="centerX" secondItem="Cy4-Kl-RIR" secondAttribute="centerX" id="nvM-eD-fDn"/>
                         </constraints>
                     </view>
                     <connections>

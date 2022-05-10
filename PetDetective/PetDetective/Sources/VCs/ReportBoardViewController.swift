@@ -121,10 +121,7 @@ class ReportBoardViewController: UIViewController {
         self.collectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.collectionView.delegate = self  // 하단 extension 참조
         self.collectionView.dataSource = self // 하단 extension 참조
-        self.reportWriteBtn.layer.borderWidth = 1
-        self.reportWriteBtn.frame.size = CGSize(width: 300, height: 50)
-        self.reportWriteBtn.frame.origin = CGPoint(x: self.view.frame.width/2 - self.reportWriteBtn.frame.width/2, y: self.view.frame.height - 250)
-        self.reportWriteBtn.layer.cornerRadius = 8
+        self.reportWriteBtn.layer.cornerRadius = 6
     }
     
     private func fetchData(page: Int){
