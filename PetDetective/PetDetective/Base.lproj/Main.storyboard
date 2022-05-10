@@ -228,6 +228,7 @@
                                     <segment title="의뢰"/>
                                     <segment title="보호 / 발견"/>
                                 </segments>
+                                <color key="selectedSegmentTintColor" red="0.84313726430000002" green="0.72156864399999998" blue="0.5411764979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="switchViews:" destination="0LK-m3-Nt3" eventType="valueChanged" id="TWT-gy-a1J"/>
                                 </connections>
@@ -246,7 +247,7 @@
                             </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="f3t-Gc-vVD"/>
-                        <color key="backgroundColor" red="0.84313726430000002" green="0.72156864399999998" blue="0.5411764979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="XOv-Mo-xgl" firstAttribute="top" secondItem="f3t-Gc-vVD" secondAttribute="top" id="7pO-xO-Jzf"/>
                             <constraint firstItem="f3t-Gc-vVD" firstAttribute="trailing" secondItem="XOv-Mo-xgl" secondAttribute="trailing" id="Gh1-hh-VcY"/>
@@ -314,7 +315,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="H6w-uY-rgR"/>
-                        <color key="backgroundColor" red="0.84313726430000002" green="0.72156864399999998" blue="0.5411764979" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="H6w-uY-rgR" firstAttribute="trailing" secondItem="XjK-Mf-2Fq" secondAttribute="trailing" id="Hfj-bw-IiO"/>
                             <constraint firstItem="XjK-Mf-2Fq" firstAttribute="leading" secondItem="H6w-uY-rgR" secondAttribute="leading" id="TKU-Ay-Ohk"/>

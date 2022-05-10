@@ -92,11 +92,13 @@ class LoginViewController: UIViewController {
     
     @IBAction func secondAuthFunc(_ sender: UIButton) {
         self.view.endEditing(true)
-        self.sendAuthBtn.isHidden = true
         if(self.cernum == cellphoneTextField.text!){
+            self.sendAuthBtn.isHidden = true
             if ( self.needjoin == true){
+                self.cellphoneTextField.text = ""
                 emailTextField.isHidden = false
                 locationTextField.isHidden = false
+                cellphoneTextField.isHidden = true
                 getLocBtn.isHidden = false
                 submitBtn.isHidden = false
                 cancleBtn.isHidden = false
