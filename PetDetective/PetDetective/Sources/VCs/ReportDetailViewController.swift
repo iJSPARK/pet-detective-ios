@@ -32,6 +32,12 @@ class ReportDetailViewController: UIViewController {
         super.viewDidLoad()
 //        myPostStackBtn.isHidden = true
         getInfo(id: self.reportId!)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reGetInfo(_:)),
+            name: NSNotification.Name("postReport"),
+            object: nil
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +47,11 @@ class ReportDetailViewController: UIViewController {
         if(self.posterPhoneN != self.viewerPhoneN){
             self.myPostStackBtn.isHidden = true
         }
+        
+    }
+    
+    @objc func reGetInfo(_ notification: Notification) {
+        getInfo(id: self.reportId!)
     }
     
     private func getInfo(id: Int){
@@ -115,5 +126,9 @@ class ReportDetailViewController: UIViewController {
         viewController.reportId = self.reportId
         viewController.posterPhoneN = self.posterPhoneN
         self.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

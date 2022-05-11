@@ -27,6 +27,16 @@ class DetectDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getInfo(id: findId!)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(reGetInfo(_:)),
+            name: NSNotification.Name("postFind"),
+            object: nil
+        )
+    }
+    
+    @objc func reGetInfo(_ notification: Notification) {
+        getInfo(id: self.findId!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +123,10 @@ class DetectDetailViewController: UIViewController {
             }
         }
         task.resume()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
 }

@@ -16,6 +16,8 @@ enum ReportEditorMode{
 
 class ReportWriteViewController: UIViewController {
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     var report: Report?
     var indexPath: IndexPath?
     var reportId: Int?
@@ -47,13 +49,11 @@ class ReportWriteViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.spinner.isHidden = true
         self.configureImg()
         self.configureDatePicker()
         self.configureTextField()
         configureEditMode()
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        //        self.confirmBtn.isEnabled = false
     }
     
     private func configureTextField(){
@@ -122,6 +122,8 @@ class ReportWriteViewController: UIViewController {
         guard let age = Int(ageStr) else { return }
         guard let etc = self.etcTextView.text else { return }
         print("등록")
+        self.spinner.isHidden = false
+        self.spinner.startAnimating()
         postInfo(breed: breed, color: color, date: date, location: location, money: money, sex: sex, operation: operation, disease: disease, age: age, content: etc, missingLongitude: "48.0", missingLatitude: "148.1", feature: feature)
         self.navigationController?.popViewController(animated: true)
     }
@@ -187,6 +189,7 @@ class ReportWriteViewController: UIViewController {
     }
     
     private func postInfo(breed: String, color: String, date: String, location: String, money:String?, sex: String, operation: String, disease: String?, age: Int?, content: String?, missingLongitude: String, missingLatitude: String, feature: String?){
+        
         if(self.reportEditMode == .edit && self.imagePickedFlag == 0){
             let url = "https://iospring.herokuapp.com/detect/\(self.reportId!)"
             var operationBool: String
@@ -229,6 +232,8 @@ class ReportWriteViewController: UIViewController {
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    NotificationCenter.default.post(name: NSNotification.Name("postReport"), object: nil)
+                    self.spinner.stopAnimating()
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
@@ -280,6 +285,8 @@ class ReportWriteViewController: UIViewController {
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    NotificationCenter.default.post(name: NSNotification.Name("postReport"), object: nil)
+                    self.spinner.stopAnimating()
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
@@ -330,6 +337,7 @@ class ReportWriteViewController: UIViewController {
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    self.spinner.stopAnimating()
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
@@ -380,24 +388,6 @@ class ReportWriteViewController: UIViewController {
         return newImage!
     }
     
-    //    // 키보드가 나타났다는 알림을 받으면 실행할 메서드
-    //    @objc func keyboardWillShow(_ sender: Notification) {
-    //        let userInfo:NSDictionary = sender.userInfo! as NSDictionary
-    //        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
-    //        let keyboardRectangle = keyboardFrame.cgRectValue
-    //        let keyboardHeight = keyboardRectangle.height
-    //        keyHeight = keyboardHeight
-    //
-    //        self.view.frame.size.height -= keyboardHeight
-    //    }
-    //    // 키보드가 사라졌다는 알림을 받으면 실행할 메서드
-    //    @objc func keyboardWillHide(_ sender: Notification) {
-    //        self.view.frame.size.height += keyHeight!
-    //    }
-    
-    
-    
-    
 }
 
 extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -415,30 +405,6 @@ extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigati
         self.petImageView.image = resizedImg // 받아온 이미지를 update
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
         self.imagePickedFlag = 1
-        
-        //        let url = "https://iospring-teachable.herokuapp.com/breed"
-        
-        //        AF.upload(multipartFormData: {multipartFormData in
-        //            let imageData: Data? = self.petImageView.image?.pngData()!
-        //            multipartFormData.append(imageData!, withName: "uploadFile", fileName: "testImage.png", mimeType: "image/png")
-        //        }, to: url, method: .post)
-        //        .validate(statusCode: 200..<500)
-        //        .responseData { response in
-        //            switch response.result {
-        //            case .success:
-        //                guard let data = response.data else {return}
-        //                do {
-        //                    let decoder = JSONDecoder()
-        //                    let json = try decoder.decode([Prediction].self, from: data)
-        //                    self.breedTextField.text = json[0].prediction
-        //                }
-        //                catch {
-        //                    print("error!\(error)")
-        //                }
-        //            case let .failure(error):
-        //                print(error)
-        //            }
-        //        }
     }
 }
 

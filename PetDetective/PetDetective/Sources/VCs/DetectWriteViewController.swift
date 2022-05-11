@@ -180,6 +180,7 @@ class DetectWriteViewController: UIViewController {
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    NotificationCenter.default.post(name: NSNotification.Name("postFind"), object: nil)
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)
@@ -210,6 +211,7 @@ class DetectWriteViewController: UIViewController {
                 switch response.result {
                 case .success:
                     debugPrint(response)
+                    NotificationCenter.default.post(name: NSNotification.Name("postFind"), object: nil)
                     self.navigationController?.popViewController(animated: true)
                 case let .failure(error):
                     print(error)

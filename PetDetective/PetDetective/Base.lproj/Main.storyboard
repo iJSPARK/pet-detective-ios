@@ -672,6 +672,13 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="sgu-Og-iGH">
+                                                <rect key="frame" x="132" y="230" width="150" height="150"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="150" id="cIR-Ku-pHA"/>
+                                                    <constraint firstAttribute="width" constant="150" id="fLA-Ka-yzY"/>
+                                                </constraints>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -683,6 +690,7 @@
                                             <constraint firstItem="Puh-Rg-tf2" firstAttribute="top" secondItem="PMv-Tc-mFV" secondAttribute="bottom" constant="10" id="4ln-Vc-Gmc"/>
                                             <constraint firstItem="zx2-6h-qex" firstAttribute="top" secondItem="cNl-va-9NC" secondAttribute="bottom" constant="25" id="5ea-mL-aPt"/>
                                             <constraint firstItem="XXA-Ai-BpC" firstAttribute="top" secondItem="w1z-J9-C1O" secondAttribute="bottom" constant="25" id="7Ts-rT-IdA"/>
+                                            <constraint firstItem="sgu-Og-iGH" firstAttribute="centerX" secondItem="SB7-up-ZjH" secondAttribute="centerX" id="7xz-7q-bRs"/>
                                             <constraint firstItem="GvV-l9-uQz" firstAttribute="top" secondItem="fB1-0Q-bmJ" secondAttribute="bottom" constant="10" id="8sf-hM-q19"/>
                                             <constraint firstItem="cNl-va-9NC" firstAttribute="top" secondItem="L5r-81-NMb" secondAttribute="bottom" constant="10" id="9Fv-SE-9ou"/>
                                             <constraint firstItem="PMv-Tc-mFV" firstAttribute="centerX" secondItem="SB7-up-ZjH" secondAttribute="centerX" id="9cc-UO-BvE"/>
@@ -724,6 +732,7 @@
                                             <constraint firstItem="Qmd-Fy-hLw" firstAttribute="centerX" secondItem="SB7-up-ZjH" secondAttribute="centerX" id="nRo-MG-9xc"/>
                                             <constraint firstItem="dcZ-JQ-4Vn" firstAttribute="top" secondItem="SYn-2Y-SrZ" secondAttribute="bottom" constant="10" id="nux-z4-5yU"/>
                                             <constraint firstItem="JOK-ra-mas" firstAttribute="centerX" secondItem="SB7-up-ZjH" secondAttribute="centerX" id="viH-MT-Ray"/>
+                                            <constraint firstItem="sgu-Og-iGH" firstAttribute="top" secondItem="SB7-up-ZjH" secondAttribute="top" constant="230" id="xzi-7M-VuE"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -769,6 +778,7 @@
                         <outlet property="neuteringSegControl" destination="Puh-Rg-tf2" id="xNu-dZ-CXE"/>
                         <outlet property="petImageView" destination="L5r-81-NMb" id="liS-a6-Ij8"/>
                         <outlet property="sexSegControl" destination="ecQ-1O-Oj4" id="gzq-M9-9vM"/>
+                        <outlet property="spinner" destination="sgu-Og-iGH" id="n43-Sc-KcA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K5l-yd-3Hp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
