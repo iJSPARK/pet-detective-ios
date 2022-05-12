@@ -68,9 +68,11 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        timerRun()
 //        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
         updateReportUI(mode: reportMode) // report mode를 초기값으로 (알림으로 들어오면 board값으로
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,33 +80,57 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     func updateReportUI(mode: ReportMode?) {
-        timerQuit()
         markerInfoView.isHidden = true
-        if mode == .find {
-            print("find mode")
-            emergencyRescuePetInfoController.fetchedFindPetInfo { (findPet) in
-                guard let findPet = findPet else {
+        emergencyRescuePetInfoController.fetchedGoldenUserTimeInfo { (userGoldenTimePetInfo) in
+            guard let userGoldenTimePetInfo = userGoldenTimePetInfo else { return }
+            if mode == .find {
+                print("find mode")
+                guard let findPets = userGoldenTimePetInfo.findPetInfos else {
                     // 목격신고한 유저 없으면
                     self.alertOk( title: "실종 신고한 이력이 없습니다.", message: "실종 신고한 이력이 없습니다.\n실종 신고한 애완동물과 같은 종의 동물이 지도에 표시됩니다.", viewController: self)
                     return
                 }
-                guard let findPets = findPet.findPetInfos else { return }
-
                 self.updateMapUI(with: findPets)
-            }
-
-        } else { // mode request 이거나 nil 일때
-            print("request or nil mode")
-            reportMode = .request
-            emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
-                guard let missingPet = missingPet else { return }
-                print("missinPet Data")
-                guard let missingPets = missingPet.missingPetInfos else { return }
-                print("missinPets Data")
+                guard let userMissingPetLatitude = userGoldenTimePetInfo.userMissingPetLatitude else { return }
+                guard let userMissingPetLongitude = userGoldenTimePetInfo.userMissingPetLongitude else { return }
+                self.moveCameraFirstRun(self.naverMap, latitude: userMissingPetLatitude, longitude: userMissingPetLongitude)
+                
+            } else { // mode request 이거나 nil 일때
+                print("request or nil mode")
+                self.reportMode = .request
+                guard let missingPets = userGoldenTimePetInfo.missingPetInfos else { return }
                 self.updateMapUI(with: missingPets)
-                print("updateMapUI")
+                guard let userLatitude = userGoldenTimePetInfo.userLatitude else { return }
+                guard let userLongitude = userGoldenTimePetInfo.userLongitude else { return }
+                self.moveCameraFirstRun(self.naverMap, latitude: userLatitude, longitude: userLongitude)
             }
         }
+        
+//        if mode == .find {
+//            print("find mode")
+//            emergencyRescuePetInfoController.fetchedFindPetInfo { (findPet) in
+//                guard let findPet = findPet else {
+//                    // 목격신고한 유저 없으면
+//                    self.alertOk( title: "실종 신고한 이력이 없습니다.", message: "실종 신고한 이력이 없습니다.\n실종 신고한 애완동물과 같은 종의 동물이 지도에 표시됩니다.", viewController: self)
+//                    return
+//                }
+//                guard let findPets = findPet.findPetInfos else { return }
+//
+//                self.updateMapUI(with: findPets)
+//            }
+//
+//        } else { // mode request 이거나 nil 일때
+//            print("request or nil mode")
+//            reportMode = .request
+//            emergencyRescuePetInfoController.fetchedMissingPetInfo { (missingPet) in
+//                guard let missingPet = missingPet else { return }
+//                print("missinPet Data")
+//                guard let missingPets = missingPet.missingPetInfos else { return }
+//                print("missinPets Data")
+//                self.updateMapUI(with: missingPets)
+//                print("updateMapUI")
+//            }
+//        }
         // 카메라 이동 (실종 / 발견 위치 시점)
     }
     
@@ -112,52 +138,49 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         // seguementcontrol 값 변경 되면 삭제후 새 마커 찍기
         // 신고한 글 없으면 경고창
         // 마커 존재 하면 삭제하고 실행
-        timerRun()
         print("updateMapUI")
         if let missingPets = pets as? [MissingPetInfo] {
             DispatchQueue.global(qos: .default).async { [self] in
                 // 백그라운드 스레드 (오버레이 객체 생성)
-                var add = 0.01
-               
-                for i in 0..<missingPets.count {
+//                var add = 0.01
+                for missingPet in missingPets {
                     print("Add Marker")
+                    //                    let marker = NMFMarker(position: NMGLatLng(lat: 37.33517959240947 + add, lng: 127.11733318999303 + add))
+                                        
+                    //                    if i % 2 == 0 {
+                    //                        add -= 0.015
+                    //                    } else {
+                    //                        add += 0.01
+                    //                    }
+//                    let imageString: String? =  "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
+//                    guard let time = missingPets[i].missingTime else { return }
+//
+//                    guard let money = missingPets[i].money else { return }
+                                        
                     
-                    let marker = NMFMarker(position: NMGLatLng(lat: 37.33517959240947 + add, lng: 127.11733318999303 + add))
-                    
-//                    let marker = NMFMarker(position: NMGLatLng(lat: 37.33517959240947 + add, lng: 127.11733318999303 + add))
-                    
-                    if i % 2 == 0 {
-                        add -= 0.015
-                    } else {
-                        add += 0.01
-                    }
-                    
-
-                    let imageString: String? =  "https://user-images.githubusercontent.com/92430498/163326267-f21af1c6-4c9a-43fa-b301-ec44084a49af.jpg"
-                    guard let petImage = imageString?.toImage() else { return }
+                    guard let latitude = missingPet.latitude else { return }
+                    guard let longitude = missingPet.longitude else { return }
+                    guard let time = missingPet.time else { return }
+                    guard let image = missingPet.imageString else { return }
+                    guard let petImage = image.toImage() else { return }
                     guard let petImageCircleResize = petImage.circleReSize() else { return }
+                    guard let money = missingPet.money else { return }
+                    guard let boardId = missingPet.boardId else { return }
+        
+                    let marker = NMFMarker(position: NMGLatLng(lat: latitude, lng: longitude))
                     
-    //                    guard let imageString = missingPets[i].image else { return }
-    //
-    //                    guard let petImage = imageString.toImage() else { return }
-    //
-    //                    guard let petImageCircleResize = petImage.circleReSize() else { return }
-                        
                     marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
                     
-                    guard let time = missingPets[i].missingTime else { return }
-
-                    guard let money = missingPets[i].money else { return }
+                    marker.userInfo = ["MissingTime": time, "Money": money, "BoradId": boardId]
                     
-                    marker.userInfo = ["MissingTime": time, "Money": money]
-                    
-                    // 마커 초기값 저장
-                    if i == 0 {
-                        getMarker = marker
-                    }
+//                    // 마커 초기값 저장
+//                    if missingPet == missingPets.first {
+//                        getMarker = marker
+//                    }
                     
                     markers.append(marker)
-                    print("\(missingPets[i].latitude), \(missingPets[i].longtitude)")
+                    
+                    print("\(missingPet.latitude), \(missingPet.longitude)")
                 }
 
                 DispatchQueue.main.async { [self] in
@@ -171,6 +194,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                                 if let missingTime = marker.userInfo["MissingTime"] as? String {
                                     print(missingTime)
                                     if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
+                                        // // "yyyy-MM-dd HH:mm:ss"
                                         print("현재 날짜 시간 \(currentDate)")
                                         print("String type 실종 날짜 시간 \(missingTime)")
                                         if let missingTime = missingTime.stringToDate() {
@@ -187,6 +211,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                                     self.getMarker = marker
                                     self.getMarker?.captionText = "잃어버린 위치"
                                     self.getMarker?.captionColor = UIColor.red
+//                                    marker.captionText = "잃어버린 위치"
+//                                    marker.captionColor = UIColor.red
                                 }
                                 self.titleLabel.text = "🚨 목격된 같은 종의 애완동물"
                                 self.boardButton.setTitle("목격글 보기", for: .normal) // 버튼 이름 변경
@@ -194,13 +220,14 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                             }
                             else {
                                 self.getMarker?.captionText = ""
+//                                marker.captionText = ""
                                 self.markerInfoView.isHidden = true
                             }
                         }
                         
                         // 마커 초기값
-                        if self.getMarker == marker {
-                            createRequestMarkerInfoView()
+                        if self.getmarker == marker {
+                           createRequestMarkerInfoView()
                         }
                        
                         
@@ -209,101 +236,102 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                             createRequestMarkerInfoView()
                             return true
                         }
+                        
                     }
                 }
                 
             }
         }
-        else if let findPets = pets as? [FindPetInfo] {
-            DispatchQueue.global(qos: .default).async { [self] in
-                // 백그라운드 스레드 (오버레이 객체 생성)
-                
-                for findPet in findPets {
-                    print("Add Marker")
-                    
-                    let marker = NMFMarker(position: NMGLatLng(lat: findPet.latitude!, lng: findPet.longtitude!))
-    
-                    guard let imageString = findPet.imageString else { return }
-
-                    guard let petImage = imageString.toImage() else { return }
-
-                    guard let petImageCircleResize = petImage.circleReSize() else { return }
-                        
-                    marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
-                    
-                    guard let time = findPet.time else { return }
-                    
-                    guard let location = findPet.location else { return }
-
-                    guard let boardId = findPet.boardId else { return }
-                    
-                    marker.userInfo = ["FindTime": time, "BoradId": boardId, "Location": location]
-                    
-                    // 마커 초기값 저장
-                    if findPet == findPets.first {
-                        getMarker = marker
-                    }
-                    
-                    markers.append(marker)
-                    print("\(findPet.latitude), \(findPet.longtitude)")
-                }
-
-                DispatchQueue.main.async { [self] in
-                    // 메인 스레드 (오버레이 객체 맵에 올림)
-                    
-                    for marker in markers {
-                        
-                        marker.mapView = self.naverMap.mapView
-                       
-                        func createFindMarkerInfoView() {
-                            if self.markerInfoView.isHidden == true {
-                                if let findTime = marker.userInfo["FindTime"] as? String {
-                                    print(findTime)
-                                    if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
-                                        print("현재 날짜 시간 \(currentDate)")
-                                        print("String type 발견 날짜 시간 \(findTime)")
-                                        if let findTime = findTime.stringToDate() {
-                                            print("Date type 발견 날짜 시간 \(findTime)")
-                                            self.remainTime = Int(currentDate.timeIntervalSince(findTime))
-                                            print("골든 타임 남은 시간(초) \(self.remainTime)")
-                                        }
-                                    }
-                                }
-                                
-                                if let findLocation = marker.userInfo["Location"] {
-                                    self.addDetailLabel.text = "발견 위치 \(findLocation)"
-                                    self.getMarker = marker
-                                    self.getMarker?.captionText = "발견된 위치"
-                                    self.getMarker?.captionColor = UIColor.red
-                                }
-                                
-                                if let boardId = marker.userInfo["BoardId"] {
-                                    // reportView(boardId)
-                                }
-                                self.titleLabel.text = "🚨 실종된 애완동물을 제보해주세요!"
-                                self.boardButton.setTitle("의뢰글 보기", for: .normal)
-                                self.markerInfoView.isHidden = false
-                            }
-                            else {
-                                self.getMarker?.captionText = ""
-                                self.markerInfoView.isHidden = true
-                            }
-                        }
-                        
-                        // 마커 초기값
-                        if self.getMarker == marker {
-                            createFindMarkerInfoView()
-                        }
-                        
-                        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
-                            print("마커 터치")
-                            createFindMarkerInfoView()
-                            return true
-                        }
-                    }
-                }
-            }
-        }
+//        else if let findPets = pets as? [FindPetInfo] {
+//            DispatchQueue.global(qos: .default).async { [self] in
+//                // 백그라운드 스레드 (오버레이 객체 생성)
+//
+//                for findPet in findPets {
+//                    print("Add Marker")
+//
+//                    let marker = NMFMarker(position: NMGLatLng(lat: findPet.latitude!, lng: findPet.longtitude!))
+//
+//                    guard let imageString = findPet.imageString else { return }
+//
+//                    guard let petImage = imageString.toImage() else { return }
+//
+//                    guard let petImageCircleResize = petImage.circleReSize() else { return }
+//
+//                    marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
+//
+//                    guard let time = findPet.time else { return }
+//
+//                    guard let location = findPet.location else { return }
+//
+//                    guard let boardId = findPet.boardId else { return }
+//
+//                    marker.userInfo = ["FindTime": time, "BoradId": boardId, "Location": location]
+//
+//                    // 마커 초기값 저장
+//                    if findPet == findPets.first {
+//                        getMarker = marker
+//                    }
+//
+//                    markers.append(marker)
+//                    print("\(findPet.latitude), \(findPet.longtitude)")
+//                }
+//
+//                DispatchQueue.main.async { [self] in
+//                    // 메인 스레드 (오버레이 객체 맵에 올림)
+//
+//                    for marker in markers {
+//
+//                        marker.mapView = self.naverMap.mapView
+//
+//                        func createFindMarkerInfoView() {
+//                            if self.markerInfoView.isHidden == true {
+//                                if let findTime = marker.userInfo["FindTime"] as? String {
+//                                    print(findTime)
+//                                    if let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() {
+//                                        print("현재 날짜 시간 \(currentDate)")
+//                                        print("String type 발견 날짜 시간 \(findTime)")
+//                                        if let findTime = findTime.stringToDate() {
+//                                            print("Date type 발견 날짜 시간 \(findTime)")
+//                                            self.remainTime = Int(currentDate.timeIntervalSince(findTime))
+//                                            print("골든 타임 남은 시간(초) \(self.remainTime)")
+//                                        }
+//                                    }
+//                                }
+//
+//                                if let findLocation = marker.userInfo["Location"] {
+//                                    self.addDetailLabel.text = "발견 위치 \(findLocation)"
+//                                    self.getMarker = marker
+//                                    self.getMarker?.captionText = "발견된 위치"
+//                                    self.getMarker?.captionColor = UIColor.red
+//                                }
+//
+//                                if let boardId = marker.userInfo["BoardId"] {
+//                                    // reportView(boardId)
+//                                }
+//                                self.titleLabel.text = "🚨 실종된 애완동물을 제보해주세요!"
+//                                self.boardButton.setTitle("의뢰글 보기", for: .normal)
+//                                self.markerInfoView.isHidden = false
+//                            }
+//                            else {
+//                                self.getMarker?.captionText = ""
+//                                self.markerInfoView.isHidden = true
+//                            }
+//                        }
+//
+//                        // 마커 초기값
+//                        if self.getMarker == marker {
+//                            createFindMarkerInfoView()
+//                        }
+//
+//                        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+//                            print("마커 터치")
+//                            createFindMarkerInfoView()
+//                            return true
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     
@@ -336,6 +364,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         print("timercallback")
         if remainTime > 0 {
             remainTime = remainTime - 1
+            print("남은 시간 \(remainTime)")
             goldenTimeLabel.text = "🛎 골든 타임 \(remainTime.hour)시간 \(remainTime.minute)분 \(remainTime.second)초"
         } else {
             goldenTimeLabel.text = "🛎 골든 타임 \(remainTime.hour)시간 \(remainTime.minute)분 \(remainTime.second)초"
@@ -470,7 +499,7 @@ extension Int {
     (self % 3600) / 60
   }
   var second: Int {
-    (self % 60)
+    (self % 3600) % 60
   }
 }
 
