@@ -93,11 +93,11 @@ struct FindPetInfo: Codable, Equatable {
     
     // key 대칭
     enum Codingkeys: String, CodingKey {
-        case boardId = "boardID"
+        case boardId = "boardId"
         case imageString = "mainImageUrl"
         case time = "findTime"
-        case latitude = "findLatitude"
-        case longitude = "findLongitude"
+        case latitude = "findLongitude"
+        case longitude = "findLatitude"
         case location = "findLocation"
         case distance
     }

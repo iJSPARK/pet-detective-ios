@@ -30,7 +30,8 @@ class ReportDetailViewController: UIViewController {
     @IBOutlet weak var myPostStackBtn: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
-//        myPostStackBtn.isHidden = true
+        myPostStackBtn.isHidden = true
+        print("겟요청 \(self.reportId!)")
         getInfo(id: self.reportId!)
         NotificationCenter.default.addObserver(
             self,
@@ -41,20 +42,20 @@ class ReportDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "petUserPhoneN") as? String else { return }
         self.viewerPhoneN = data
         if(self.posterPhoneN != self.viewerPhoneN){
             self.myPostStackBtn.isHidden = true
         }
-        
     }
     
     @objc func reGetInfo(_ notification: Notification) {
         getInfo(id: self.reportId!)
     }
     
-    private func getInfo(id: Int){
+    func getInfo(id: Int){
         guard let url = URL(string: "https://iospring.herokuapp.com/detect/\(id)") else {
             return
         }
@@ -120,6 +121,7 @@ class ReportDetailViewController: UIViewController {
         }
         task.resume()
     }
+    
     @IBAction func editReport(_ sender: UIButton) {
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportWriteViewController") as? ReportWriteViewController else { return }
         viewController.reportEditMode = .edit

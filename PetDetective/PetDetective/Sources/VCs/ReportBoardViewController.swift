@@ -226,7 +226,7 @@ extension ReportBoardViewController: UICollectionViewDelegate {
         let posterPhoneN = self.boardList[indexPath.row].userPhoneNumber
         viewController.reportId = reportId
         viewController.posterPhoneN = posterPhoneN
-//        print(reportId)
+        print(reportId)
         print(posterPhoneN)
         self.navigationController?.pushViewController(viewController, animated: true)
         
