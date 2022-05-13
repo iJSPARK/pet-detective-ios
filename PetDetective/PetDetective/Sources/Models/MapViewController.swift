@@ -34,6 +34,7 @@ class MapViewController: LocationController, NMFMapViewCameraDelegate {
         naverMapView.showLocationButton = isAuthorized
         
         addressLabel?.isEnabled = isAuthorized
+        
         setLocationButton?.isEnabled = isAuthorized
         
         if isAuthorized {

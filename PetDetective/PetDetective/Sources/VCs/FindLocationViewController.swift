@@ -54,9 +54,15 @@ class FindLocationViewController: MapViewController {
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let LV = segue.destination as? LoginViewController {
+            LV.locationTextField.text = customMapView.addressLabel.text
+        }
+    }
+    
     @objc func buttonTapped(button: UIButton) {
         // 데이터 저장
-        self.performSegue(withIdentifier: "unwindToMainSetFindLocation", sender: self)
+        self.performSegue(withIdentifier: "unwindFromFindLocation", sender: self)
     }
     
     /*

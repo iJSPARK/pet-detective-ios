@@ -14,8 +14,7 @@ enum DetectEditorMode{
     case edit
 }
 
-class DetectWriteViewController: UIViewController {
-    
+class DetectWriteViewController: UIViewController, SelectionLocationProtocol {
     
     let imagePicker = UIImagePickerController()
     var reportEditMode: DetectEditorMode = .new
@@ -119,6 +118,17 @@ class DetectWriteViewController: UIViewController {
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+    
+    func dataSend(data: String) {
+        locationTextField.text = data
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: Any) {
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionMissingLocationViewController") as? SelectionMissingLocationViewController else { return }
+        SMLVC.reportBoardMode = .find
+        SMLVC.delegate = self
+        self.navigationController?.pushViewController(SMLVC, animated: true)
     }
     
     @IBAction func submitBtn(_ sender: UIBarButtonItem) {

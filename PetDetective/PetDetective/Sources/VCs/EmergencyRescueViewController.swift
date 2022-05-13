@@ -17,9 +17,6 @@ enum ReportMode: String {
     }
 }
 
-// 의뢰 > 탐색위치 추가해서 받아와야함
-// 목격 > 실종위치 추가해서 받아와야함
-
 class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate {
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
@@ -28,9 +25,9 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var markers = [NMFMarker]()
     var getMarker: NMFMarker?
     var secondTimer: Timer?
+//    var isGet: Bool = false
     var reportMode: ReportMode?
     var timeGap = 0
-//    var remainTime = 1 // 남은시간
     var count = 0
     
     @IBOutlet weak var rescueMapView: UIView!
@@ -62,22 +59,24 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         setLocationManager()
         
+        naverMap.showLocationButton = true
+        
         naverMap.mapView.addCameraDelegate(delegate: self)
         
         timerRun()
 //        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
         updateReportUI(mode: reportMode) // report mode를 초기값으로 (알림으로 들어오면 board값으로
-        
+       
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
-        boardButton.backgroundColor = .systemBrown
     }
     
-
-    func updateReportUI(mode: ReportMode?) {
+    private func updateReportUI(mode: ReportMode?) {
         self.markerInfoView.isHidden = true
+        self.boardButton.isHidden = true
         emergencyRescuePetInfoController.fetchedGoldenUserTimeInfo { (userGoldenTimePetInfo) in
             guard let userGoldenTimePetInfo = userGoldenTimePetInfo else { return }
+            
             if mode == .find {
                 print("find mode")
                 guard let findPets = userGoldenTimePetInfo.findPetInfos else {
@@ -104,7 +103,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    func updateMapUI(with pets: [Any]) {
+    private func updateMapUI(with pets: [Any]) {
         // seguementcontrol 값 변경 되면 삭제후 새 마커 찍기
         // 신고한 글 없으면 경고창
         // 마커 존재 하면 삭제하고 실행
@@ -207,7 +206,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    func createMarkerInfoView(_ mode: ReportMode?) {
+    private func createMarkerInfoView(_ mode: ReportMode?) {
         if self.markerInfoView.isHidden == true {
             if let remainTime = getMarker?.userInfo["RemainTime"] as? Int {
                 self.timeGap = remainTime
@@ -221,7 +220,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 }
                 self.titleLabel.text = "🚨 실종된 애완동물을 찾아주세요!"
                 self.boardButton.setTitle("의뢰글 보기", for: .normal) // 버튼 이름 변경
-                self.markerInfoView.isHidden = false
             }
             else if mode == .find {
                 if let findLocation = getMarker?.userInfo["FindLocation"] {
@@ -231,16 +229,18 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 }
                 self.titleLabel.text = "🚨 목격된 같은 종의 애완동물"
                 self.boardButton.setTitle("목격글 보기", for: .normal) // 버튼 이름 변경
-                self.markerInfoView.isHidden = false
             }
+            self.markerInfoView.isHidden = false
+            self.boardButton.isHidden = false
         }
         else {
             self.getMarker?.captionText = ""
             self.markerInfoView.isHidden = true
+            self.boardButton.isHidden = true
         }
     }
     
-    func timerRun() {
+    private func timerRun() {
         print("timerRun")
         if let timer = secondTimer {
             //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
@@ -255,7 +255,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    func timerQuit() {
+    private func timerQuit() {
         if let timer = secondTimer {
             if(timer.isValid){
                 timer.invalidate()

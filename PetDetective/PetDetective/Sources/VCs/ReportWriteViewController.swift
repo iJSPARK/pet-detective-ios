@@ -14,7 +14,7 @@ enum ReportEditorMode{
     case edit
 }
 
-class ReportWriteViewController: UIViewController {
+class ReportWriteViewController: UIViewController, SelectionLocationProtocol {
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -43,6 +43,7 @@ class ReportWriteViewController: UIViewController {
     @IBOutlet weak var ageTextField: UITextField!
     @IBOutlet weak var etcTextView: UITextView!
     @IBOutlet weak var confirmBtn: UIBarButtonItem!
+    @IBOutlet weak var locationButton: UIButton!
     var reportEditMode: ReportEditorMode = .new
     //    var fCurTextfieldBottom: CGFloat = 0.0
     //    var keyHeight: CGFloat?
@@ -53,7 +54,6 @@ class ReportWriteViewController: UIViewController {
         self.configureImg()
         self.configureDatePicker()
         self.configureTextField()
-        configureEditMode()
     }
     
     private func configureTextField(){
@@ -358,6 +358,18 @@ class ReportWriteViewController: UIViewController {
         self.reportDate = datePikcer.date
     }
     
+    func dataSend(data: String) {
+        locationTextField.text = data
+    }
+    
+    @IBAction func locationButtonTapped(_ sender: Any) {
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionMissingLocationViewController") as? SelectionMissingLocationViewController else { return }
+        SMLVC.reportBoardMode = .request
+        SMLVC.delegate = self
+        self.navigationController?.pushViewController(SMLVC, animated: true)
+    }
+
+    
     @IBAction func pickImg(_ sender: UIButton) {
         self.present(self.imagePicker, animated: true)
     }
@@ -411,6 +423,6 @@ extension ReportWriteViewController: UIImagePickerControllerDelegate, UINavigati
 extension ReportWriteViewController: UITextFieldDelegate{
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true;
+        return true
     }
 }

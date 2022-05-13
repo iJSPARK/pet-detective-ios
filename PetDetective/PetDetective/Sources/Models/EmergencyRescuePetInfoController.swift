@@ -14,7 +14,7 @@ struct EmergencyRescuePetInfoController {
         // http는 info.plist > app transport security setting > allow arbitray loads 
         let baseUrl = URL(string: "https://iospring.herokuapp.com/goldentime")!
         
-        let userId = 74
+        let userId = 74 // interim
         
         let query: [String: String] = [
             "userId": "\(userId)"

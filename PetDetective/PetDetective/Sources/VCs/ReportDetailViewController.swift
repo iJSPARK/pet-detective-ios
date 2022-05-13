@@ -31,7 +31,6 @@ class ReportDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myPostStackBtn.isHidden = true
-        print("겟요청 \(self.reportId!)")
         getInfo(id: self.reportId!)
         NotificationCenter.default.addObserver(
             self,
@@ -55,7 +54,7 @@ class ReportDetailViewController: UIViewController {
         getInfo(id: self.reportId!)
     }
     
-    func getInfo(id: Int){
+    private func getInfo(id: Int){
         guard let url = URL(string: "https://iospring.herokuapp.com/detect/\(id)") else {
             return
         }

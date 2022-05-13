@@ -33,12 +33,23 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         cellphoneTextField.keyboardType = .numberPad 
         loadDeviceToken()
+        getLocBtn.addTarget(self, action: #selector(getLocBtnTapped(button:)), for: .touchDown)
+    }
+    
+    @objc func getLocBtnTapped(button: UIButton) {
+        // 데이터 저장
+        self.performSegue(withIdentifier: "ChooseUserSearchLocation", sender: self)
     }
     
     private func loadDeviceToken(){
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "petDeviceToken") as? String else { return }
         self.deviceToken = data
+    }
+    
+    @IBAction func unwindToLoginView(_ unwindSegue: UIStoryboardSegue) {
+//        let sourceViewController = unwindSegue.source
+        // Use data from the view controller which initiated the unwind segue
     }
     
     @IBAction func authenticationBtn(_ sender: UIButton) {
@@ -122,10 +133,6 @@ class LoginViewController: UIViewController {
         self.phoneNumber = "-1"
     }
     
-    @IBAction func getLocation(_ sender: UIButton) {
-        print("location")
-        //준서 파트
-    }
     @IBAction func submitInfo(_ sender: UIButton) {
         
         self.email = self.emailTextField.text!
@@ -144,7 +151,7 @@ class LoginViewController: UIViewController {
         } catch {
             print("http Body Error")
         }
-        
+    
         AF.request(request)
         .validate(statusCode: 200..<500)
         .responseData { response in

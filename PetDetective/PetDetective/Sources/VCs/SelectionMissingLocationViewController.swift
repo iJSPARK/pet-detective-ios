@@ -7,10 +7,20 @@
 
 import NMapsMap
 
+enum ReportBoardMode {
+    case request
+    case find
+}
+
+protocol SelectionLocationProtocol {
+    func dataSend(data: String)
+}
+
 class SelectionMissingLocationViewController: MapViewController {
     
     let customMapView = MapView()
-    
+    var reportBoardMode: ReportBoardMode?
+    var delegate: SelectionLocationProtocol?
     var missingLatitude: Double?   // 위도
     var missingLongtitude: Double? // 경도
     var missingAddress: String? {
@@ -20,6 +30,8 @@ class SelectionMissingLocationViewController: MapViewController {
     }
     
     @IBOutlet weak var missingMapView: UIView!
+    
+    @IBOutlet weak var pointImageView: UIImageView!
     
     override var isAuthorized: Bool {
         didSet {
@@ -41,9 +53,7 @@ class SelectionMissingLocationViewController: MapViewController {
         
         setLocationManager()
         
-        customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
-        
-        customMapView.setLocationButton.backgroundColor = .systemRed
+        updateReportModeUI()
         
         customMapView.mapView.addCameraDelegate(delegate: self)
         
@@ -51,9 +61,29 @@ class SelectionMissingLocationViewController: MapViewController {
         
     }
     
+    func updateReportModeUI() {
+        if reportBoardMode == .request {
+            customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
+            
+            customMapView.setLocationButton.backgroundColor = .systemRed
+            
+            pointImageView.image = UIImage(named: "MissingPoint2")
+        }
+        else if reportBoardMode == .find {
+            customMapView.setLocationButton.setTitle("발견 위치 설정", for: .normal)
+            
+            customMapView.setLocationButton.backgroundColor = .systemGreen
+            
+            pointImageView.image = UIImage(named: "FindPoint-1")
+        }
+    }
+    
     @objc func buttonTapped(button: UIButton) {
-        // 데이터 저장
-        self.performSegue(withIdentifier: "unwinToMainFromSetMissingLocation", sender: self)
+        if let textData = customMapView.addressLabel.text {
+            delegate?.dataSend(data: textData)
+        }
+        self.navigationController?.popViewController(animated: true)
+
     }
     
 

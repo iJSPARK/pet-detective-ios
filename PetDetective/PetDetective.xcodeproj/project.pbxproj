@@ -23,7 +23,6 @@
 		79E49B8A2828F3F200E8D34D /* LocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7E2828F3F100E8D34D /* LocationController.swift */; };
 		79E49B8B2828F3F200E8D34D /* SelectionMissingLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B7F2828F3F100E8D34D /* SelectionMissingLocationViewController.swift */; };
 		79E49B8C2828F3F200E8D34D /* EmergencyResquePetInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B802828F3F100E8D34D /* EmergencyResquePetInfo.swift */; };
-		79E49B8D2828F3F200E8D34D /* SelectionMissingLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79E49B812828F3F200E8D34D /* SelectionMissingLocation.storyboard */; };
 		79E49B8E2828F3F200E8D34D /* URL+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79E49B822828F3F200E8D34D /* URL+Helpers.swift */; };
 		79E49B8F2828F3F200E8D34D /* FindLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79E49B832828F3F200E8D34D /* FindLocation.storyboard */; };
 		79E49B902828F3F200E8D34D /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79E49B842828F3F200E8D34D /* MapView.xib */; };
@@ -90,7 +89,6 @@
 		79E49B7E2828F3F100E8D34D /* LocationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationController.swift; sourceTree = "<group>"; };
 		79E49B7F2828F3F100E8D34D /* SelectionMissingLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionMissingLocationViewController.swift; sourceTree = "<group>"; };
 		79E49B802828F3F100E8D34D /* EmergencyResquePetInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmergencyResquePetInfo.swift; sourceTree = "<group>"; };
-		79E49B812828F3F200E8D34D /* SelectionMissingLocation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SelectionMissingLocation.storyboard; sourceTree = "<group>"; };
 		79E49B822828F3F200E8D34D /* URL+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Helpers.swift"; sourceTree = "<group>"; };
 		79E49B832828F3F200E8D34D /* FindLocation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FindLocation.storyboard; sourceTree = "<group>"; };
 		79E49B842828F3F200E8D34D /* MapView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 				7948392C27E5F210004B04FD /* LaunchScreen.storyboard */,
 				7948392727E5F20F004B04FD /* Main.storyboard */,
 				79E49B832828F3F200E8D34D /* FindLocation.storyboard */,
-				79E49B812828F3F200E8D34D /* SelectionMissingLocation.storyboard */,
 				7948393727E5F211004B04FD /* PetDetectiveTests */,
 				7948392F27E5F210004B04FD /* Info.plist */,
 			);
@@ -424,7 +421,6 @@
 				7948392B27E5F210004B04FD /* Assets.xcassets in Resources */,
 				8E8F4C64281E594400393F2B /* AlarmCell.xib in Resources */,
 				7948392927E5F20F004B04FD /* Main.storyboard in Resources */,
-				79E49B8D2828F3F200E8D34D /* SelectionMissingLocation.storyboard in Resources */,
 				79E49B902828F3F200E8D34D /* MapView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
