@@ -14,7 +14,7 @@ enum ReportEditorMode{
     case edit
 }
 
-class ReportWriteViewController: UIViewController, SelectionLocationProtocol {
+class ReportWriteViewController: UIViewController {
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
@@ -358,10 +358,6 @@ class ReportWriteViewController: UIViewController, SelectionLocationProtocol {
         self.reportDate = datePikcer.date
     }
     
-    func dataSend(data: String) {
-        locationTextField.text = data
-    }
-    
     @IBAction func locationButtonTapped(_ sender: Any) {
         guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionMissingLocationViewController") as? SelectionMissingLocationViewController else { return }
         SMLVC.reportBoardMode = .request
@@ -424,5 +420,11 @@ extension ReportWriteViewController: UITextFieldDelegate{
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension ReportWriteViewController: SelectionLocationProtocol {
+    func dataSend(data: String) {
+        locationTextField.text = data
     }
 }

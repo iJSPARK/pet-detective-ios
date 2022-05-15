@@ -14,7 +14,7 @@ enum DetectEditorMode{
     case edit
 }
 
-class DetectWriteViewController: UIViewController, SelectionLocationProtocol {
+class DetectWriteViewController: UIViewController {
     
     let imagePicker = UIImagePickerController()
     var reportEditMode: DetectEditorMode = .new
@@ -118,10 +118,6 @@ class DetectWriteViewController: UIViewController, SelectionLocationProtocol {
         UIGraphicsEndImageContext()
         
         return newImage!
-    }
-    
-    func dataSend(data: String) {
-        locationTextField.text = data
     }
     
     @IBAction func locationButtonTapped(_ sender: Any) {
@@ -391,5 +387,11 @@ extension DetectWriteViewController: UITextFieldDelegate{
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
+    }
+}
+
+extension DetectWriteViewController: SelectionLocationProtocol {
+    func dataSend(data: String) {
+        locationTextField.text = data
     }
 }
