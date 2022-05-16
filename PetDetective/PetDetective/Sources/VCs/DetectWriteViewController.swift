@@ -34,8 +34,8 @@ class DetectWriteViewController: UIViewController {
     var findId: Int?
 //    var userId: Int?
     var imagePickedFlag = 0
-    var latitude = "0.0"
-    var longitude = "0.0"
+    var latitude: Double?
+    var longitude: Double?
 //    var posterPhoneN = String?
     
     var detectEdictorMode: DetectEditorMode = .new
@@ -133,6 +133,8 @@ class DetectWriteViewController: UIViewController {
         let date = self.dateTextField.text ?? ""
         let location = self.locationTextField.text ?? ""
         let careSeg = self.protectSegControl.selectedSegmentIndex
+        let latitude = self.latitude ?? 0.0
+        let longitude = self.longitude ?? 0.0
         var care = "false"
         if(careSeg == 1){
             care = "true"
@@ -161,7 +163,7 @@ class DetectWriteViewController: UIViewController {
             neutering = "null"
         }
         let content = self.etcTextView.text ?? ""
-        postInfo(breed: breed, color: color, date: date, location: location, care: care, sex: sex, operation: neutering, disease: "", feature: feature, missingLongitude: self.longitude, missingLatitude: self.latitude, content: content)
+        postInfo(breed: breed, color: color, date: date, location: location, care: care, sex: sex, operation: neutering, disease: "", feature: feature, missingLongitude: String(longitude), missingLatitude: String(latitude), content: content)
     }
     private func postInfo(breed: String, color: String, date: String, location: String, care: String, sex: String, operation: String, disease: String?, feature: String, missingLongitude: String, missingLatitude: String, content: String){
         if(self.detectEdictorMode == .edit && self.imagePickedFlag == 0){
@@ -391,7 +393,9 @@ extension DetectWriteViewController: UITextFieldDelegate{
 }
 
 extension DetectWriteViewController: SelectionLocationProtocol {
-    func dataSend(data: String) {
-        locationTextField.text = data
+    func dataSend(location: String, latitude: Double, longitude: Double) {
+        locationTextField.text = location
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

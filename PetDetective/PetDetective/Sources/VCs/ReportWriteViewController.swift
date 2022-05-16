@@ -28,6 +28,8 @@ class ReportWriteViewController: UIViewController {
     var imagePickedFlag = 0
     var posterPhoneN: String?
     var viewerPhoneN: String = ""
+    var latitude: Double?
+    var longitude: Double?
     @IBOutlet weak var petImageView: UIImageView!
     let imagePicker = UIImagePickerController()
     @IBOutlet weak var breedTextField: UITextField!
@@ -113,6 +115,8 @@ class ReportWriteViewController: UIViewController {
         guard let location = self.locationTextField.text else { return }
         guard let money = self.moneyTextField.text else { return }
         guard let feature = self.featureTextField.text else { return }
+        guard let latitude = latitude else { return }
+        guard let longitude = longitude else { return }
         let sexArray = ["남", "여", "모름"]
         let sex = sexArray[self.sexSegControl.selectedSegmentIndex]
         let operationArray = ["유", "무", "모름"]
@@ -124,7 +128,8 @@ class ReportWriteViewController: UIViewController {
         print("등록")
         self.spinner.isHidden = false
         self.spinner.startAnimating()
-        postInfo(breed: breed, color: color, date: date, location: location, money: money, sex: sex, operation: operation, disease: disease, age: age, content: etc, missingLongitude: "48.0", missingLatitude: "148.1", feature: feature)
+        postInfo(breed: breed, color: color, date: date, location: location, money: money, sex: sex, operation: operation, disease: disease, age: age, content: etc, missingLongitude: String(longitude), missingLatitude:
+                    String(latitude), feature: feature)
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -424,7 +429,9 @@ extension ReportWriteViewController: UITextFieldDelegate{
 }
 
 extension ReportWriteViewController: SelectionLocationProtocol {
-    func dataSend(data: String) {
-        locationTextField.text = data
+    func dataSend(location: String, latitude: Double, longitude: Double) {
+        locationTextField.text = location
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

@@ -13,7 +13,7 @@ enum ReportBoardMode {
 }
 
 protocol SelectionLocationProtocol {
-    func dataSend(data: String)
+    func dataSend(location: String, latitude: Double, longitude: Double)
 }
 
 class SelectionMissingLocationViewController: MapViewController {
@@ -79,9 +79,10 @@ class SelectionMissingLocationViewController: MapViewController {
     }
     
     @objc func buttonTapped(button: UIButton) {
-        if let textData = customMapView.addressLabel.text {
-            delegate?.dataSend(data: textData)
-        }
+        guard let location = customMapView.addressLabel.text else { return }
+        guard let latitude = missingLatitude else { return }
+        guard let longitude = missingLongtitude else { return }
+        delegate?.dataSend(location: location, latitude: latitude, longitude: longitude)
         self.navigationController?.popViewController(animated: true)
 
     }

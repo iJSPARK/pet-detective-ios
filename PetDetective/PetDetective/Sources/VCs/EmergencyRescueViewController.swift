@@ -65,7 +65,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         timerRun()
 //        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
-        updateReportUI(mode: reportMode) // report mode를 초기값으로 (알림으로 들어오면 board값으로
+        updateReportUI(mode: reportMode) 
        
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
@@ -114,14 +114,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 print("missingPet marker property")
                 print("실종된 애완동물 개수 \(pets.count)")
                 for missingPet in missingPets {
-                   
+                    // 알림 모드(게시글 작성/골든타임) 타입(발견/보호) 게시판 아이디로 구문
+                    // 알림 받음 > 화면이동 > 겟 요청 > 시간 지남 > 시간 지났다고 말해야함
+                    guard let boardId = missingPet.boardId else { return }
                     guard let latitude = missingPet.latitude else { return }
                     guard let longitude = missingPet.longitude else { return }
                     guard let image = missingPet.imageString else { return }
                     guard let petImage = image.toImage() else { return }
                     guard let petImageCircleResize = petImage.circleReSize() else { return }
                     guard let money = missingPet.money else { return }
-                    guard let boardId = missingPet.boardId else { return }
                     guard let missingTime = missingPet.time else { return }
                     
                     print("String type 실종 날짜 시간 \(missingTime)")
@@ -150,12 +151,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 print("발견된 애완동물 개수 \(pets.count)")
                 for findPet in findPets {
                     
+                    guard let boardId = findPet.boardId else { return }
                     guard let latitude = findPet.latitude else { return }
                     guard let longitude = findPet.longitude else { return }
                     guard let image = findPet.imageString else { return }
                     guard let petImage = image.toImage() else { return }
                     guard let petImageCircleResize = petImage.circleReSize() else { return }
-                    guard let boardId = findPet.boardId else { return }
                     guard let findTime = findPet.time else { return }
                     guard let findLocation = findPet.location else { return }
                     
