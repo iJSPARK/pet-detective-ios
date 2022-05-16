@@ -30,7 +30,6 @@ class ReportDetailViewController: UIViewController {
     @IBOutlet weak var myPostStackBtn: UIStackView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        myPostStackBtn.isHidden = true
         getInfo(id: self.reportId!)
         NotificationCenter.default.addObserver(
             self,
@@ -45,7 +44,7 @@ class ReportDetailViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "petUserPhoneN") as? String else { return }
         self.viewerPhoneN = data
-        if(self.posterPhoneN != self.viewerPhoneN){
+        if(self.posterPhoneN! != self.viewerPhoneN){
             self.myPostStackBtn.isHidden = true
         }
     }

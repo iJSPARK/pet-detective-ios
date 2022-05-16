@@ -159,6 +159,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     guard let mode = dict!["mode"] as? String else { return }
                     guard let type = dict!["type"] as? String else { return }
                     guard let boardId = dict!["boardId"] as? String else { return }
+                    print(mode)
+                    print(type)
+                    print(boardId)
                     if(mode == "새로운  test 게시글 작성"){
                         if(type == "의뢰"){
                             let alarm = Alarm(alarmMode: "게시글 작성", boardType: "의뢰", boardId: Int(boardId)!)

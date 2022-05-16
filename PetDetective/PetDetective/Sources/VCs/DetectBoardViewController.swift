@@ -238,6 +238,7 @@ extension DetectBoardViewController: UICollectionViewDelegate {
         let posterPhoneN = self.boardList[indexPath.row].userPhoneNumber
         viewController.findId = findId!
         viewController.posterPhoneN = posterPhoneN
+        print(posterPhoneN)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
