@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 10
         
-        let params = ["phoneNumber":"\(self.phoneNumber)", "diviceToken":"\(self.deviceToken)"] as Dictionary
+        let params = ["phoneNumber":"\(self.phoneNumber)", "deviceToken":"\(self.deviceToken)"] as Dictionary
         
         do {
             try request.httpBody = JSONSerialization.data(withJSONObject: params, options: [])
