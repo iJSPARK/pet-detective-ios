@@ -36,12 +36,12 @@ class DetectBoardViewController: UIViewController {
         self.collectionView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         fetchData(page: 1)
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(goToDetailNotification(_:)),
-//            name: NSNotification.Name("newReport"),
-//            object: nil
-//        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goToDetailNotification(_:)),
+            name: NSNotification.Name("newDetect"),
+            object: nil
+        )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(searchPostNotification(_:)),
@@ -60,16 +60,16 @@ class DetectBoardViewController: UIViewController {
         
     }
     
-//    @objc func goToDetailNotification(_ notification: Notification){
+    @objc func goToDetailNotification(_ notification: Notification){
 //        print("받기 완료")
-//        guard let id = notification.object else { return }
-//        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-//        guard let reportId = id as? String else { return }
-//        print("변환 완료")
-//        print(reportId)
-//        viewController.reportId = Int(reportId)
-//        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
+        guard let boardId = notification.object else { return }
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
+        guard let findId = boardId as? Int else { return }
+
+        viewController.findId = findId
+        viewController.posterPhoneN = "00000000000"
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
     
     @objc func searchPostNotification(_ notification: Notification){
         guard let objectdic = notification.object as? [String:String] else { return }
@@ -238,7 +238,7 @@ extension DetectBoardViewController: UICollectionViewDelegate {
         let posterPhoneN = self.boardList[indexPath.row].userPhoneNumber
         viewController.findId = findId!
         viewController.posterPhoneN = posterPhoneN
-        print(posterPhoneN)
+//        print(posterPhoneN)
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

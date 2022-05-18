@@ -81,7 +81,7 @@ class DetectWriteViewController: UIViewController {
     
     func formatDate(date: Date) -> String{
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY:MM:dd:HH:mm:ss"
+        formatter.dateFormat = "YYYY-MM-dd HH:mm:ss"
         return formatter.string(from: date)
     }
     

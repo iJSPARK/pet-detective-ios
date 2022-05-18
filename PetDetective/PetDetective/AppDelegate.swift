@@ -150,7 +150,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         if let aps = response.notification.request.content.userInfo["aps"] as? NSDictionary {
-//            print(aps)
+            print(aps)
             if let alert = aps["alert"] as? NSDictionary {
                 if let summaryArg = alert["summary-arg"] as? NSString {
                     let summaryStr = summaryArg as String
@@ -162,28 +162,42 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     print(mode)
                     print(type)
                     print(boardId)
-                    if(mode == "새로운  test 게시글 작성"){
+                    if(mode == "게시글 작성"){
                         if(type == "의뢰"){
                             let alarm = Alarm(alarmMode: "게시글 작성", boardType: "의뢰", boardId: Int(boardId)!)
                             alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newReport"), object: boardId)
                         }
                         else if(type == "보관"){
                             let alarm = Alarm(alarmMode: "게시글 작성", boardType: "보호", boardId: Int(boardId)!)
                             alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetect"), object: boardId)
                         }
                         else{
                             let alarm = Alarm(alarmMode: "게시글 작성", boardType: "발견", boardId: Int(boardId)!)
                             alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetect"), object: boardId)
                         }
                     }
                     else{
-
+                        if(type == "의뢰"){
+                            let alarm = Alarm(alarmMode: "골든타임", boardType: "의뢰", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newReportGolden"), object: boardId)
+                        }
+                        else if(type == "보관"){
+                            let alarm = Alarm(alarmMode: "골든타임", boardType: "보호", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: boardId)
+                        }
+                        else{
+                            let alarm = Alarm(alarmMode: "골든타임", boardType: "발견", boardId: Int(boardId)!)
+                            alarms.append(alarm)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: boardId)
+                        }
                     }
                  }
             }
-//            if let id = aps["target-content-id"] as? NSString {
-//                NotificationCenter.default.post(name: NSNotification.Name("newReport"), object: id)
-//            }
         }
     }
     
