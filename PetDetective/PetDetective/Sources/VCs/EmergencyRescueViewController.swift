@@ -32,6 +32,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var searchLatitude: Double?
     var searchLongitude: Double?
     
+    @IBOutlet weak var changedSearchLocationButton: UIButton!
     @IBOutlet weak var rescueMapView: UIView!
     @IBOutlet weak var markerInfoView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -40,7 +41,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     @IBOutlet weak var boardButton: UIButton!
     @IBOutlet weak var reportSegment: UISegmentedControl!
     
-    override var isAuthorized: Bool {
+    override var isAuthorized: Bool? {
         didSet {
             updateUIFromMode(isAuthorized: isAuthorized, naverMapView: naverMap, nil, nil)
         }
@@ -57,13 +58,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
         
-        naverMap.mapView.touchDelegate = self
-        
         setLocationManager()
         
-        naverMap.showLocationButton = true
+        print("권환 확인 \(isAuthorized)")
         
         naverMap.mapView.addCameraDelegate(delegate: self)
+        
+        naverMap.mapView.touchDelegate = self
         
         timerRun()
 //        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
@@ -71,6 +72,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
        
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
+        
+        changedSearchLocationButton.layer.cornerRadius = 2
+        changedSearchLocationButton.layer.shadowColor = UIColor.black.cgColor
+        changedSearchLocationButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        changedSearchLocationButton.layer.shadowRadius = 1
+        changedSearchLocationButton.layer.shadowOpacity = 0.4
     }
     
     private func updateReportUI(mode: ReportMode?) {
@@ -446,7 +453,7 @@ extension UIImage {
     }
 }
 
-extension EmergencyRescueViewController: SelectionLocationProtocol {
+extension EmergencyRescueViewController: SelectionLocationProtocol {    
     func dataSend(location: String, latitude: Double, longitude: Double) {
         self.searchLatitude = latitude
         self.searchLongitude = longitude

@@ -30,12 +30,13 @@ class SelectionLocationViewController: MapViewController {
         }
     }
     
+    @IBOutlet weak var nofiForPinLabel: UILabel!
     @IBOutlet weak var locationPointLabel: UILabel!
     @IBOutlet weak var missingMapView: UIView!
     
     @IBOutlet weak var pointImageView: UIImageView!
     
-    override var isAuthorized: Bool {
+    override var isAuthorized: Bool? {
         didSet {
             updateUIFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView, customMapView.addressLabel, customMapView.setLocationButton)
         }
@@ -64,6 +65,9 @@ class SelectionLocationViewController: MapViewController {
     }
     
     func updateReportModeUI() {
+        
+        nofiForPinLabel.text = "핀으로 부터 3km 이내에  사용자들에게 알림이 갑니다."
+        
         if reportBoardMode == .request {
             customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
             

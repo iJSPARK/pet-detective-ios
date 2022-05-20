@@ -13,9 +13,10 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
     
     let locationManager = CLLocationManager()   // 위치 객체
     
-    var isAuthorized = false
+    var isAuthorized: Bool?
     
     func setLocationManager() {
+
         // 델리게이트 설정
         locationManager.delegate = self
 
@@ -24,6 +25,8 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
 
         // GPS 위치 정보 받아오기
         locationManager.startUpdatingLocation()
+        
+        isAuthorized = UserDefaults.standard.object(forKey: "LocationAuthorization") as? Bool
     }
     
     // 권한 없으면 권한 설정 화면으로
@@ -46,16 +49,20 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("Check Location Authorization")
         // tracking mode = false면 uiView update
-        isAuthorized = false
         switch manager.authorizationStatus {
         case .authorizedWhenInUse, .authorizedAlways:
             print("Location is Authorized")
+            UserDefaults.standard.set(true, forKey: "LocationAuthorization")
             isAuthorized = true
         case .notDetermined, .restricted:
             print("Location is not Authorized")
+            UserDefaults.standard.set(false, forKey: "LocationAuthorization")
+            isAuthorized = false
             manager.requestWhenInUseAuthorization() // 권한 받아오기
         case .denied:
             print("Location Authorization is denied")
+            UserDefaults.standard.set(false, forKey: "LocationAuthorization")
+            isAuthorized = false
             setAuthAlertAction() // 위치 권한 거부: 설정 창으로 가서 권한을 변경하도록 유도해야 함
         @unknown default:
             break
