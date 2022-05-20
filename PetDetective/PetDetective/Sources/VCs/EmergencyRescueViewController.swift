@@ -60,8 +60,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         setLocationManager()
         
-        print("권환 확인 \(isAuthorized)")
-        
         naverMap.mapView.addCameraDelegate(delegate: self)
         
         naverMap.mapView.touchDelegate = self

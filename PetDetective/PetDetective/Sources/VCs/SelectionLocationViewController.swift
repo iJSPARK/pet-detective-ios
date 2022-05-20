@@ -66,8 +66,6 @@ class SelectionLocationViewController: MapViewController {
     
     func updateReportModeUI() {
         
-        nofiForPinLabel.text = "핀으로 부터 3km 이내에  사용자들에게 알림이 갑니다."
-        
         if reportBoardMode == .request {
             customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
             
@@ -76,6 +74,8 @@ class SelectionLocationViewController: MapViewController {
             customMapView.setLocationButton.backgroundColor = .systemRed
             
             pointImageView.image = UIImage(named: "MissingPoint")
+            
+            nofiForPinLabel.text = "실종 위치로 부터 3km 이내의 탐정단들에게 알림이 갑니다."
         }
         else if reportBoardMode == .find {
             customMapView.setLocationButton.setTitle("발견 위치 설정", for: .normal)
@@ -85,6 +85,8 @@ class SelectionLocationViewController: MapViewController {
             customMapView.setLocationButton.backgroundColor = .systemRed
             
             pointImageView.image = UIImage(named: "MissingPoint")
+            
+            nofiForPinLabel.text = "목격 위치로 3km 이내의 실종 견주들에게 알림이 갑니다."
         }
         else if reportBoardMode == .search {
             customMapView.setLocationButton.setTitle("탐색 위치 설정", for: .normal)
@@ -94,6 +96,8 @@ class SelectionLocationViewController: MapViewController {
             customMapView.setLocationButton.backgroundColor = .systemGreen
             
             pointImageView.image = UIImage(named: "SearchPoint")
+            
+            nofiForPinLabel.text = "탐색 위치로 부터 3km 이내의 실종견에 대한 알림이 옵니다."
         }
     }
     
