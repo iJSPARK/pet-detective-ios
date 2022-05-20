@@ -10,13 +10,14 @@ import NMapsMap
 enum ReportBoardMode {
     case request
     case find
+    case search
 }
 
 protocol SelectionLocationProtocol {
     func dataSend(location: String, latitude: Double, longitude: Double)
 }
 
-class SelectionMissingLocationViewController: MapViewController {
+class SelectionLocationViewController: MapViewController {
     
     let customMapView = MapView()
     var reportBoardMode: ReportBoardMode?
@@ -29,6 +30,7 @@ class SelectionMissingLocationViewController: MapViewController {
         }
     }
     
+    @IBOutlet weak var locationPointLabel: UILabel!
     @IBOutlet weak var missingMapView: UIView!
     
     @IBOutlet weak var pointImageView: UIImageView!
@@ -65,16 +67,29 @@ class SelectionMissingLocationViewController: MapViewController {
         if reportBoardMode == .request {
             customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
             
+            locationPointLabel.text = "실종"
+            
             customMapView.setLocationButton.backgroundColor = .systemRed
             
-            pointImageView.image = UIImage(named: "MissingPoint2")
+            pointImageView.image = UIImage(named: "MissingPoint")
         }
         else if reportBoardMode == .find {
             customMapView.setLocationButton.setTitle("발견 위치 설정", for: .normal)
             
+            locationPointLabel.text = "발견"
+            
+            customMapView.setLocationButton.backgroundColor = .systemRed
+            
+            pointImageView.image = UIImage(named: "MissingPoint")
+        }
+        else if reportBoardMode == .search {
+            customMapView.setLocationButton.setTitle("탐색 위치 설정", for: .normal)
+            
+            locationPointLabel.text = "탐색 위치"
+            
             customMapView.setLocationButton.backgroundColor = .systemGreen
             
-            pointImageView.image = UIImage(named: "FindPoint-1")
+            pointImageView.image = UIImage(named: "SearchPoint")
         }
     }
     
@@ -84,7 +99,6 @@ class SelectionMissingLocationViewController: MapViewController {
         guard let longitude = missingLongtitude else { return }
         delegate?.dataSend(location: location, latitude: latitude, longitude: longitude)
         self.navigationController?.popViewController(animated: true)
-
     }
     
 
@@ -100,7 +114,7 @@ class SelectionMissingLocationViewController: MapViewController {
 
 }
 
-extension SelectionMissingLocationViewController {
+extension SelectionLocationViewController {
     // 카메라 움직임 종료시 실행
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         

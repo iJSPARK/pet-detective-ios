@@ -29,6 +29,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var reportMode: ReportMode?
     var timeGap = 0
     var count = 0
+    var searchLatitude: Double?
+    var searchLongitude: Double?
     
     @IBOutlet weak var rescueMapView: UIView!
     @IBOutlet weak var markerInfoView: UIView!
@@ -330,6 +332,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    @IBAction func changeSearchLocationButtonTapped(_ sender: Any) {
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionLocationViewController") as? SelectionLocationViewController else { return }
+        SMLVC.reportBoardMode = .search
+        SMLVC.delegate = self
+        self.navigationController?.pushViewController(SMLVC, animated: true)
+    }
     
 //    func reSize(imageString: String?) -> UIImage {
 ////        let url = URL(string: imageString!)!
@@ -438,3 +446,10 @@ extension UIImage {
     }
 }
 
+extension EmergencyRescueViewController: SelectionLocationProtocol {
+    func dataSend(location: String, latitude: Double, longitude: Double) {
+        self.searchLatitude = latitude
+        self.searchLongitude = longitude
+        // get 요청
+    }
+}

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "MissingPoint2.png",
+      "filename" : "SearchPointButton.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "MissingPoint2@2x.png",
+      "filename" : "SearchPointButton@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "MissingPoint2@3x.png",
+      "filename" : "SearchPointButton@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

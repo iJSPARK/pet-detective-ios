@@ -121,7 +121,7 @@ class DetectWriteViewController: UIViewController {
     }
     
     @IBAction func locationButtonTapped(_ sender: Any) {
-        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionMissingLocationViewController") as? SelectionMissingLocationViewController else { return }
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionLocationViewController") as? SelectionLocationViewController else { return }
         SMLVC.reportBoardMode = .find
         SMLVC.delegate = self
         self.navigationController?.pushViewController(SMLVC, animated: true)
@@ -394,7 +394,7 @@ extension DetectWriteViewController: UITextFieldDelegate{
 
 extension DetectWriteViewController: SelectionLocationProtocol {
     func dataSend(location: String, latitude: Double, longitude: Double) {
-        locationTextField.text = location
+        self.locationTextField.text = location
         self.latitude = latitude
         self.longitude = longitude
     }

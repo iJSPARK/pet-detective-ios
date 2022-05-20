@@ -33,12 +33,6 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         cellphoneTextField.keyboardType = .numberPad 
         loadDeviceToken()
-        getLocBtn.addTarget(self, action: #selector(getLocBtnTapped(button:)), for: .touchDown)
-    }
-    
-    @objc func getLocBtnTapped(button: UIButton) {
-        // 데이터 저장
-        self.performSegue(withIdentifier: "ChooseUserSearchLocation", sender: self)
     }
     
     private func loadDeviceToken(){
@@ -47,9 +41,11 @@ class LoginViewController: UIViewController {
         self.deviceToken = data
     }
     
-    @IBAction func unwindToLoginView(_ unwindSegue: UIStoryboardSegue) {
-//        let sourceViewController = unwindSegue.source
-        // Use data from the view controller which initiated the unwind segue
+    @IBAction func locationButtonTapped(_ sender: Any) {
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionLocationViewController") as? SelectionLocationViewController else { return }
+        SMLVC.reportBoardMode = .search
+        SMLVC.delegate = self
+        self.navigationController?.pushViewController(SMLVC, animated: true)
     }
     
     @IBAction func authenticationBtn(_ sender: UIButton) {
@@ -168,6 +164,7 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
     @IBAction func cancleAll(_ sender: UIButton) {
         self.cellphoneTextField.isHidden = false
         self.authBtn.isHidden = false
@@ -188,5 +185,13 @@ class LoginViewController: UIViewController {
         
         view.window?.rootViewController = ServiceViewController
         view.window?.makeKeyAndVisible()
+    }
+}
+
+extension LoginViewController: SelectionLocationProtocol {
+    func dataSend(location: String, latitude: Double, longitude: Double) {
+        self.locationTextField.text = location
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

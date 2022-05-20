@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "FindPoint.png",
+      "filename" : "MissingPoint.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "MissingPoint@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "MissingPoint@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
