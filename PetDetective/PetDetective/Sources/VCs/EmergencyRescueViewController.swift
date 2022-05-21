@@ -59,6 +59,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goldenTimeNotification(_:)),
+            name: NSNotification.Name("newReportGolden"),
+            object: nil
+        )
+        
         setLocationManager()
         
         naverMap.mapView.addCameraDelegate(delegate: self)
@@ -77,6 +84,40 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         changedSearchLocationButton.layer.shadowOffset = CGSize(width: 0, height: 0)
         changedSearchLocationButton.layer.shadowRadius = 1
         changedSearchLocationButton.layer.shadowOpacity = 0.4
+    }
+    
+    @objc func goldenTimeNotification(_ notification: Notification) {
+        
+        guard let boardId = notification.object else { return }
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        
+        self.performSegue(withIdentifier: "GoldenTimeNavigation", sender: self)
+//        guard let tabVC = storyboard.instantiateViewControllerWithIdentifier("TheAssignedID") as? TabViewController
+        
+//        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        
+//        let ERVC = EmergencyRescueViewController()
+        
+//        self.view.window?.rootViewController?.dismiss(animated: false, completion: {
+//            let ERVC = EmergencyRescueViewController()
+//
+////          let homeVC = HomeViewController()
+//            ERVC.modalPresentationStyle = .fullScreen
+//          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
+////          appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
+//
+//        })
+//        self.navigationController.pus
+//        guard let ERVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+//        self.tabBarController.push
+//        guard let reportId = boardId as? String else { return }
+////        print("변환 완료")
+//        print(reportId)
+//        viewController.reportId = Int(reportId)
+//        viewController.posterPhoneN = "00000000000"
+//        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     private func updateReportUI(mode: ReportMode?) {

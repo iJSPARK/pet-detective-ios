@@ -16,6 +16,8 @@ struct EmergencyRescuePetInfoController {
         
         let userId = 74 // interim
         
+        let phoneNumber = UserDefaults.standard.object(forKey: "petUserPhoneN") as! String
+        
         let query: [String: String] = [
             "userId": "\(userId)"
         ]
