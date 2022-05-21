@@ -126,7 +126,18 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
             }
         }
         else if(alarm.alarmMode == "골든타임"){
-            print("골든타임")
+            print("알림 탭에서 골든타임")
+            
+//            guard let boardId = notification.object else { return }
+            
+            print("게시판 아이디 \(alarm.boardId)")
+//            self.navigationController?.popToRootViewController(animated: true)
+            
+            guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+            
+            print("스토리보드 이동")
+            
+            self.navigationController?.pushViewController(EV, animated: true)
         }
     }
 }

@@ -88,11 +88,25 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     @objc func goldenTimeNotification(_ notification: Notification) {
         
+        print("외부에서 골든타임 탭")
+        
         guard let boardId = notification.object else { return }
         
-        self.navigationController?.popToRootViewController(animated: true)
+        print("게시판 아이디 \(boardId)")
         
-        self.performSegue(withIdentifier: "GoldenTimeNavigation", sender: self)
+        self.navigationController?.popToRootViewController(animated: true)
+        print("루트뷰까지 팝")
+        
+        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+        
+        print("스토리보드 이동")
+        
+        self.navigationController?.pushViewController(EV, animated: true)
+        
+//        viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
+//        self.navigationController?.pushViewController(viewController, animated: true)
+        
+//        self.performSegue(withIdentifier: "EmergencyRescueViewController", sender: self)
 //        guard let tabVC = storyboard.instantiateViewControllerWithIdentifier("TheAssignedID") as? TabViewController
         
 //        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
