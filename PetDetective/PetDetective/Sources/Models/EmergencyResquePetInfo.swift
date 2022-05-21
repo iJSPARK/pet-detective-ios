@@ -40,8 +40,8 @@ struct MissingPetInfo: Codable, Equatable {
         case boardId
         case imageString = "mainImageUrl"
         case time = "missingTime"
-        case latitude = "missingLongitude"
-        case longitude = "missingLatitude"
+        case latitude = "missingLatitude"
+        case longitude = "missingLongitude"
         case location = "missingLocation"
         case money
         case distance
@@ -96,8 +96,8 @@ struct FindPetInfo: Codable, Equatable {
         case boardId = "boardId"
         case imageString = "mainImageUrl"
         case time = "findTime"
-        case latitude = "findLongitude"
-        case longitude = "findLatitude"
+        case latitude = "findLatitude"
+        case longitude = "findLongitude"
         case location = "findLocation"
         case distance
     }

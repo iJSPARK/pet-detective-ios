@@ -19,6 +19,7 @@ class ReportBoardViewController: UIViewController {
     var searchFlag = 0
     var category = ""
     var condition = ""
+    var delegate: goldenTimeAlarmProtocol?
     
     @IBOutlet weak var reportWriteBtn: UIButton!
     private var refreshControl = UIRefreshControl()
@@ -56,19 +57,55 @@ class ReportBoardViewController: UIViewController {
         )
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(goldenTimeNotification(_:)),
+            selector: #selector(goldenTimeReportNotification(_:)),
             name: NSNotification.Name("newReportGolden"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goldenTimeDetectNotification(_:)),
+            name: NSNotification.Name("newDetectGolden"),
             object: nil
         )
     }
     
-    @objc func goldenTimeNotification(_ notification: Notification) {
+    @objc func goldenTimeReportNotification(_ notification: Notification) {
         
         print("외부에서 골든타임 탭")
         
-        guard let boardId = notification.object else { return }
+        guard let alarm = notification.object as? Alarm else { return }
         
-        print("게시판 아이디 \(boardId)")
+//        guard let boardId = notification.object else { return }
+        
+        print("게시판 아이디 \(alarm.boardId)")
+        
+//        guard let stringBoardID = boardId as? String else { return }
+
+        delegate?.dataSend(alarm: alarm)
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        print("루트뷰까지 팝")
+        
+        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+        
+        print("스토리보드 이동")
+        
+        self.navigationController?.pushViewController(EV, animated: true)
+    }
+    
+    @objc func goldenTimeDetectNotification(_ notification: Notification) {
+        
+        print("외부에서 골든타임 탭")
+        
+        guard let alarm = notification.object as? Alarm else { return }
+        
+//        guard let boardId = notification.object else { return }
+        
+        print("게시판 아이디 \(alarm.boardId)")
+        
+//        guard let stringBoardID = boardId as? String else { return }
+
+        delegate?.dataSend(alarm: alarm)
         
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")

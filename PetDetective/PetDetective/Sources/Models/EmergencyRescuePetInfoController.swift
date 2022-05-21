@@ -12,20 +12,20 @@ import Foundation
 struct EmergencyRescuePetInfoController {
     func fetchedGoldenUserTimeInfo(completion: @escaping (UserGoldenTime?) -> Void) {
         // http는 info.plist > app transport security setting > allow arbitray loads 
-        let baseUrl = URL(string: "https://iospring.herokuapp.com/goldentime")!
+        let url = URL(string: "https://iospring.herokuapp.com/goldentime")!
         
-        let userId = 74 // interim
+//        let userId = 74 // interim
+//
+//        let phoneNumber = UserDefaults.standard.object(forKey: "petUserPhoneN") as! String
+//
+//        let query: [String: String] = [
+//            "userId": "\(userId)"
+//        ]
         
-        let phoneNumber = UserDefaults.standard.object(forKey: "petUserPhoneN") as! String
-        
-        let query: [String: String] = [
-            "userId": "\(userId)"
-        ]
-        
-        guard let url = baseUrl.withQueries(query) else {
-            print("Unalbe to build URL")
-            return
-        }
+//        guard let url = baseUrl.withQueries(query) else {
+//            print("Unalbe to build URL")
+//            return
+//        }
         
         
         let taskObject = URLSession.shared.dataTask(with: url) { (data, response, error) in
