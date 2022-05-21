@@ -72,13 +72,13 @@ extension AlarmBoardViewController: UITableViewDataSource {
         cell.alarmTitle.text = alarm.alarmMode//        cell.alarmBody.text = String(alarm.boardId)
         if( alarm.alarmMode == "게시글 작성"){
             if( alarm.boardType == "의뢰"){
-                cell.alarmBody.text = "\(alarm.boardType) 새로운 의뢰가 들어왔어요!"
+                cell.alarmBody.text = "새로운 의뢰가 들어왔어요!"
             }
             else if ( alarm.boardType == "보호" ){
-                cell.alarmBody.text = "\(alarm.boardType) 반려견과 비슷한 친구가 보호 중이에요!"
+                cell.alarmBody.text = "반려견과 비슷한 친구가 보호 중이에요!"
             }
             else if ( alarm.boardType == "발견" ){
-                cell.alarmBody.text = "\(alarm.boardType) 반려견과 비슷한 친구가 제보가 되었어요!"
+                cell.alarmBody.text = "반려견과 비슷한 친구가 제보가 되었어요!"
             }
         }
         else if(alarm.alarmMode == "골든타임"){
@@ -111,18 +111,18 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
         let alarm = self.alarms[indexPath.row] // 선택된 셀의 인덱스 값을 알려줌
         if( alarm.alarmMode == "게시글 작성"){
             if( alarm.boardType == "의뢰"){
-                print("게시글 작성 의뢰")
-//                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-//                viewController.reportId = alarm.boardId
-//                viewController.posterPhoneN = "0000000000"
-//                self.navigationController?.pushViewController(viewController, animated: true)
+//                print("게시글 작성 의뢰")
+                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+                viewController.reportId = alarm.boardId
+                viewController.posterPhoneN = "0000000000"
+                self.navigationController?.pushViewController(viewController, animated: true)
             }
             else{
-                print("게시글 작성 발견 보호")
-//                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
-//                viewController.findId = alarm.boardId
-//                viewController.posterPhoneN = "0000000000"
-//                self.navigationController?.pushViewController(viewController, animated: true)
+//                print("게시글 작성 발견 보호")
+                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
+                viewController.findId = alarm.boardId
+                viewController.posterPhoneN = "0000000000"
+                self.navigationController?.pushViewController(viewController, animated: true)
             }
         }
         else if(alarm.alarmMode == "골든타임"){

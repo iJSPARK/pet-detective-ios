@@ -61,12 +61,11 @@ class DetectBoardViewController: UIViewController {
     }
     
     @objc func goToDetailNotification(_ notification: Notification){
-//        print("받기 완료")
+        print("받기 완료")
         guard let boardId = notification.object else { return }
         guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
-        guard let findId = boardId as? Int else { return }
-
-        viewController.findId = findId
+        guard let strBoardId = boardId as? String else { return }
+        viewController.findId = Int(strBoardId)
         viewController.posterPhoneN = "00000000000"
         self.navigationController?.pushViewController(viewController, animated: true)
     }
