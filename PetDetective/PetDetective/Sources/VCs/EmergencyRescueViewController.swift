@@ -5,6 +5,7 @@
 //  Created by Junseo Park on 3/19/22.
 //
 
+import Alamofire
 import NMapsMap
 import UIKit
 
@@ -453,8 +454,61 @@ extension UIImage {
 
 extension EmergencyRescueViewController: SelectionLocationProtocol {    
     func dataSend(location: String, latitude: Double, longitude: Double) {
-        self.searchLatitude = latitude
-        self.searchLongitude = longitude
+//        self.searchLatitude = latitude
+//        self.searchLongitude = longitude
+//        self.
         // get 요청
+        
+        let url = "https://iospring.herokuapp.com/user/update-point"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
+        
+        let phoneNumber = UserDefaults.standard.object(forKey: "petUserPhoneN") as! String
+        print("핸드폰 번호 \(phoneNumber)")
+        
+        
+        // POST 로 보낼 정보
+        let parameter: [String: Any] = ["phoneNumber": phoneNumber, "loadAddress": location, "latitude": latitude, "longitude": longitude]
+
+        
+//        {
+//            "userLocationDto":
+//            "phoneNumber": phoneNumber
+//            "loadAddress": location
+//            "latitude": latitude
+//            "longitude": longitude
+//        }
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: parameter, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+//        AF.request(url,
+//                   method: .post,
+//                   parameters: login,
+//                   encoder: JSONParameterEncoder.default).response { (response) in
+//            switch response.result {
+//            case .success:
+//                print("POST 성공")
+//                debugPrint(response)
+//            case .failure(let error):
+//                print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
+//            }
+//        }
+//
+        AF.request(request).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("PUT 성공")
+                debugPrint(response)
+            case let .failure(error):
+                print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
+            }
+        }
     }
 }

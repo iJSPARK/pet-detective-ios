@@ -97,7 +97,7 @@ class SelectionLocationViewController: MapViewController {
             
             pointImageView.image = UIImage(named: "SearchPoint")
             
-            nofiForPinLabel.text = "탐색 위치로 부터 3km 이내의 실종견에 대한 알림이 옵니다."
+            nofiForPinLabel.text = "탐색 위치로부터 3km 이내의 실종견에 대한 알림이 옵니다."
         }
     }
     
