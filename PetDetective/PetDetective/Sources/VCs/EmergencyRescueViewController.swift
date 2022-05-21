@@ -33,8 +33,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var searchLatitude: Double?
     var searchLongitude: Double?
     
-    var alarmBoardId: Int?
-    
     @IBOutlet weak var changedSearchLocationButton: UIButton!
     @IBOutlet weak var rescueMapView: UIView!
     @IBOutlet weak var markerInfoView: UIView!
@@ -204,7 +202,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     print("현재 날짜 시간 \(currentDate)")
                     guard let missingTime = missingTime.stringToDate() else { return }
                     print("Date type 실종 날짜 시간 \(missingTime)")
-                    let remainTime = Int(currentDate.timeIntervalSince(missingTime))
+                    let remainTime = 10800 - Int(currentDate.timeIntervalSince(missingTime))
                     print("골든 타임 남은 시간(초) \(remainTime)")
                     
                     let marker = NMFMarker(position: NMGLatLng(lat: latitude, lng: longitude))
@@ -240,7 +238,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     guard let findTime = findTime.stringToDate() else { return }
                     print("Date type 발견 날짜 시간 \(findTime)")
         
-                    let remainTime = Int(currentDate.timeIntervalSince(findTime))
+                    let remainTime = 10800 - Int(currentDate.timeIntervalSince(findTime))
                     print("골든 타임 남은 시간(초) \(remainTime)")
 
                     let marker = NMFMarker(position: NMGLatLng(lat: latitude, lng: longitude))
@@ -248,7 +246,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     marker.iconImage = NMFOverlayImage(image: petImageCircleResize)
                     
                 
-                    marker.userInfo = ["RemainTime": findTime, "FindLocation": findLocation, "BoardId": boardId]
+                    marker.userInfo = ["RemainTime": remainTime, "FindLocation": findLocation, "BoardId": boardId]
 
                     markers.append(marker)
                     
@@ -264,15 +262,24 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     
                     marker.mapView = self.naverMap.mapView
                     
-                    if alarmBoardId == marker.userInfo["BoardId"] as? Int {
-                        print(alarmBoardId)
+                    
+                    
+                    let markerID = marker.userInfo["BoardId"] as? Int
+                    
+                    if goldenAlarm?.boardId == markerID  {
+                        print("알람 마커 추가")
+                        print("😀 같음 markID\(markerID) goldenAlarm Id \(goldenAlarm?.boardId)")
+                        
                         getMarker = marker
                         createMarkerInfoView(self.reportMode)
                     } else {
                         // 마커 초기값
-                        if marker == markers.first {
-                            getMarker = marker
-                            createMarkerInfoView(self.reportMode)
+                        print("😂 다름 markID\(markerID) goldenAlarm Id \(goldenAlarm?.boardId)")
+                        if goldenAlarm == nil {
+                            if marker == markers.first {
+                                getMarker = marker
+                                createMarkerInfoView(self.reportMode)
+                            }
                         }
                     }
                     
@@ -352,7 +359,14 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
 //        print("timer call back") // 현재시간 - 실종시간
         count += 1
 //        print("남은 시간 \(timeGap - count)")
+        
         goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+        
+//        if timeGap <= 0 {
+//            goldenTimeLabel.text = "🛎 골든 타임 0시간 0분 0초"
+//        } else {
+//            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+//        }
     }
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
@@ -414,9 +428,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     @IBAction func viewBoardButtonTapped(_ sender: Any) {
         // 게시글 보기
-        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-        viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
-        self.navigationController?.pushViewController(viewController, animated: true)
+        if reportMode == .request {
+            guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+            viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
+            self.navigationController?.pushViewController(viewController, animated: true)
+        } else if reportMode == .find {
+            guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
+            viewController.findId = getMarker?.userInfo["BoardId"] as? Int
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     @IBAction func changeSearchLocationButtonTapped(_ sender: Any) {
@@ -597,7 +617,9 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
 
 
 extension EmergencyRescueViewController: goldenTimeAlarmProtocol {
-    func dataSend(alarm: Alarm) {
+    func alarmSend(alarm: Alarm) {
+        print("골든 알람 데이터 받음")
         self.goldenAlarm = alarm
+        print("골든 알람 데이터", self.goldenAlarm)
     }
 }

@@ -43,7 +43,7 @@ class DetectDetailViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         guard let data = userDefaults.object(forKey: "petUserPhoneN") as? String else { return }
         self.viewerPhoneN = data
-        if(self.posterPhoneN! != self.viewerPhoneN){
+        if(self.posterPhoneN != self.viewerPhoneN){
             self.myPostStackBtn.isHidden = true
         }
     }

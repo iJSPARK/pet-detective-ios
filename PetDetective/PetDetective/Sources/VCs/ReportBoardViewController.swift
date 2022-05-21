@@ -80,14 +80,13 @@ class ReportBoardViewController: UIViewController {
         print("게시판 아이디 \(alarm.boardId)")
         
 //        guard let stringBoardID = boardId as? String else { return }
-
-        delegate?.dataSend(alarm: alarm)
+//        delegate?.alarmSend(alarm: alarm)
         
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
         
         guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-        
+        EV.goldenAlarm = alarm
         print("스토리보드 이동")
         
         self.navigationController?.pushViewController(EV, animated: true)
@@ -105,12 +104,14 @@ class ReportBoardViewController: UIViewController {
         
 //        guard let stringBoardID = boardId as? String else { return }
 
-        delegate?.dataSend(alarm: alarm)
+//        delegate?.alarmSend(alarm: alarm)
         
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
         
         guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+        
+        EV.goldenAlarm = alarm
         
         print("스토리보드 이동")
         
