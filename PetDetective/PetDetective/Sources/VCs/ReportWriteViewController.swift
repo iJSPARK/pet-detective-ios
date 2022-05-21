@@ -83,6 +83,7 @@ class ReportWriteViewController: UIViewController {
     private func configureDatePicker(){
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
+        datePicker.locale = Locale(identifier: "ko-KR")
         datePicker.addTarget(self, action: #selector(dateChange(datePikcer:)), for: UIControl.Event.valueChanged)
         datePicker.frame.size = CGSize(width: 0, height: 300)
         datePicker.preferredDatePickerStyle = .wheels

@@ -179,7 +179,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                             NotificationCenter.default.post(name: NSNotification.Name("newDetect"), object: boardId)
                         }
                     }
-                    else{
+                    else if(mode == "골든타임"){
                         if(type == "의뢰"){
                             let alarm = Alarm(alarmMode: "골든타임", boardType: "의뢰", boardId: Int(boardId)!)
                             alarms.append(alarm)

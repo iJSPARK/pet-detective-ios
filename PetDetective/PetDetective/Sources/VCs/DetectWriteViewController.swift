@@ -71,6 +71,7 @@ class DetectWriteViewController: UIViewController {
     private func configureDatePicker(){
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .dateAndTime
+        datePicker.locale = Locale(identifier: "ko-KR")
         datePicker.addTarget(self, action: #selector(dateChange(datePikcer:)), for: UIControl.Event.valueChanged)
         datePicker.frame.size = CGSize(width: 0, height: 300)
         datePicker.preferredDatePickerStyle = .wheels
@@ -87,6 +88,7 @@ class DetectWriteViewController: UIViewController {
     
     @objc func dateChange(datePikcer: UIDatePicker){
         dateTextField.text = formatDate(date: datePikcer.date)
+        
         self.findDate = datePikcer.date
     }
     
