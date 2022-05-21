@@ -1946,7 +1946,7 @@
                                     <constraint firstAttribute="height" constant="30" id="664-qJ-r2R"/>
                                     <constraint firstAttribute="width" constant="280" id="KDO-xt-nTc"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1983,7 +1983,7 @@
         <!--긴급구조-->
         <scene sceneID="1l4-ni-5Lw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6b2-3N-49j" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="GoldenTimeNavigation" automaticallyAdjustsScrollViewInsets="NO" id="6b2-3N-49j" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="긴급구조" image="mappin.and.ellipse" catalog="system" id="O6I-LO-vOI"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="q29-E5-Dgs">
