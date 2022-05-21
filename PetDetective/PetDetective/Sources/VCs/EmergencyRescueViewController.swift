@@ -511,7 +511,7 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
         
         
         // POST 로 보낼 정보
-        let parameter: [String: Any] = ["phoneNumber": phoneNumber, "loadAddress": location, "latitude": latitude, "longitude": longitude]
+        let parameter = ["phoneNumber": phoneNumber, "loadAddress": location, "latitude": latitude, "longitude": longitude] as Dictionary
 
         
 //        {
@@ -548,6 +548,7 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
                 print("PUT 성공")
                 debugPrint(response)
             case let .failure(error):
+                print(response)
                 print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
             }
         }
