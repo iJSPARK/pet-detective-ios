@@ -162,6 +162,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                     print(mode)
                     print(type)
                     print(boardId)
+                    
                     if(mode == "게시글 작성"){
                         if(type == "의뢰"){
                             let alarm = Alarm(alarmMode: "게시글 작성", boardType: "의뢰", boardId: Int(boardId)!)
@@ -183,17 +184,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
                         if(type == "의뢰"){
                             let alarm = Alarm(alarmMode: "골든타임", boardType: "의뢰", boardId: Int(boardId)!)
                             alarms.append(alarm)
-                            NotificationCenter.default.post(name: NSNotification.Name("newReportGolden"), object: boardId)
+                            NotificationCenter.default.post(name: NSNotification.Name("newReportGolden"), object: alarm)
                         }
                         else if(type == "보관"){
                             let alarm = Alarm(alarmMode: "골든타임", boardType: "보호", boardId: Int(boardId)!)
                             alarms.append(alarm)
-                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: boardId)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: alarm)
                         }
                         else{
                             let alarm = Alarm(alarmMode: "골든타임", boardType: "발견", boardId: Int(boardId)!)
                             alarms.append(alarm)
-                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: boardId)
+                            NotificationCenter.default.post(name: NSNotification.Name("newDetectGolden"), object: alarm)
                         }
                     }
                  }

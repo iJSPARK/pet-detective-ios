@@ -22,7 +22,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     let emergencyRescuePetInfoController = EmergencyRescuePetInfoController()
     var naverMap = MapView().naverMapView!
-    
+    var goldenAlarm: Alarm?
     var markers = [NMFMarker]()
     var getMarker: NMFMarker?
     var secondTimer: Timer?
@@ -32,6 +32,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var count = 0
     var searchLatitude: Double?
     var searchLongitude: Double?
+    
+    var alarmBoardId: Int?
     
     @IBOutlet weak var changedSearchLocationButton: UIButton!
     @IBOutlet weak var rescueMapView: UIView!
@@ -65,6 +67,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
 //            name: NSNotification.Name("newReportGolden"),
 //            object: nil
 //        )
+        
+        if "의뢰" == goldenAlarm?.boardType {
+            reportSegment.selectedSegmentIndex = 0
+            reportMode = .request
+        }
+        else if "발견" == goldenAlarm?.boardType {
+            reportSegment.selectedSegmentIndex = 1
+            reportMode = .find
+        }
         
         setLocationManager()
         
@@ -189,7 +200,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     guard let missingTime = missingPet.time else { return }
                     
                     print("String type 실종 날짜 시간 \(missingTime)")
-                    guard let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() else { return } // "yyyy-MM-dd HH:mm:ss"
+                    guard let currentDate = "YYYY-MM-dd HH:mm:ss".currentKorDate().stringToDate() else { return } // "yyyy-MM-dd HH:mm:ss" // yyyy-MM-dd HH:mm:ss
                     print("현재 날짜 시간 \(currentDate)")
                     guard let missingTime = missingTime.stringToDate() else { return }
                     print("Date type 실종 날짜 시간 \(missingTime)")
@@ -224,7 +235,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     guard let findLocation = findPet.location else { return }
                     
                     print("String type 발견 날짜 시간 \(findTime)")
-                    guard let currentDate = "yyyy-MM-dd HH:mm:ss".currentKorDate().stringToDate() else { return } // "yyyy-MM-dd HH:mm:ss"
+                    guard let currentDate = "YYYY-MM-dd HH:mm:ss".currentKorDate().stringToDate() else { return } // "yyyy-MM-dd HH:mm:ss"
                     print("현재 날짜 시간 \(currentDate)")
                     guard let findTime = findTime.stringToDate() else { return }
                     print("Date type 발견 날짜 시간 \(findTime)")
@@ -248,19 +259,27 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             }
             DispatchQueue.main.async { [self] in
                 // 메인 스레드 (오버레이 객체 맵에 올림)
+                print("마커 개수\(markers.count)")
                 for marker in markers {
                     
                     marker.mapView = self.naverMap.mapView
                     
-                    getMarker = marker
-                    
-                    // 마커 초기값
-                    if getMarker == markers.first {
+                    if alarmBoardId == marker.userInfo["BoardId"] as? Int {
+                        print(alarmBoardId)
+                        getMarker = marker
                         createMarkerInfoView(self.reportMode)
+                    } else {
+                        // 마커 초기값
+                        if marker == markers.first {
+                            getMarker = marker
+                            createMarkerInfoView(self.reportMode)
+                        }
                     }
                     
                     marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
                         print("마커 터치")
+                        self.getMarker?.captionText = ""
+                        self.getMarker = marker
                         self.createMarkerInfoView(self.reportMode)
                         return true
                     }
@@ -330,15 +349,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     // 뷰가 업데이트 할때마다 네트워크 요청
     //타이머가 호출하는 콜백함수
     @objc func timerCallback() {
-        print("timer call back") // 현재시간 - 실종시간
+//        print("timer call back") // 현재시간 - 실종시간
         count += 1
-        print("남은 시간 \(timeGap - count)")
+//        print("남은 시간 \(timeGap - count)")
         goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
     }
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        markerInfoView.isHidden = true
         self.getMarker?.captionText = ""
+        markerInfoView.isHidden = true
         print("지도 탭")
     }
     
@@ -375,6 +394,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         print("마커개수 \(markers.count)")
         
         print(markers)
+        
+        if "의뢰" == goldenAlarm?.boardType {
+            reportSegment.selectedSegmentIndex = 0
+        }
+        else if "발견" == goldenAlarm?.boardType {
+            reportSegment.selectedSegmentIndex = 1
+        }
         
         if reportSegment.selectedSegmentIndex == 0 {
             reportMode = .request
@@ -468,7 +494,7 @@ extension String {
     
     func stringToDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000"
+        dateFormatter.dateFormat = "YYYY-MM-dd HH:mm:ss +0000" // yyyy-MM-dd HH:mm:ss
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         return dateFormatter.date(from: self)
     }
@@ -566,5 +592,12 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
                 print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
             }
         }
+    }
+}
+
+
+extension EmergencyRescueViewController: goldenTimeAlarmProtocol {
+    func dataSend(alarm: Alarm) {
+        self.goldenAlarm = alarm
     }
 }
