@@ -58,13 +58,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         naverMap.heightAnchor.constraint(equalTo: self.rescueMapView.heightAnchor, multiplier: 1).isActive = true
         naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(goldenTimeNotification(_:)),
-            name: NSNotification.Name("newReportGolden"),
-            object: nil
-        )
+
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(goldenTimeNotification(_:)),
+//            name: NSNotification.Name("newReportGolden"),
+//            object: nil
+//        )
         
         setLocationManager()
         
@@ -86,53 +86,53 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         changedSearchLocationButton.layer.shadowOpacity = 0.4
     }
     
-    @objc func goldenTimeNotification(_ notification: Notification) {
-        
-        print("외부에서 골든타임 탭")
-        
-        guard let boardId = notification.object else { return }
-        
-        print("게시판 아이디 \(boardId)")
-        
-        self.navigationController?.popToRootViewController(animated: true)
-        print("루트뷰까지 팝")
-        
-        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-        
-        print("스토리보드 이동")
-        
-        self.navigationController?.pushViewController(EV, animated: true)
-        
-//        viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
-//        self.navigationController?.pushViewController(viewController, animated: true)
-        
-//        self.performSegue(withIdentifier: "EmergencyRescueViewController", sender: self)
-//        guard let tabVC = storyboard.instantiateViewControllerWithIdentifier("TheAssignedID") as? TabViewController
-        
-//        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-        
-//        let ERVC = EmergencyRescueViewController()
-        
-//        self.view.window?.rootViewController?.dismiss(animated: false, completion: {
-//            let ERVC = EmergencyRescueViewController()
+//    @objc func goldenTimeNotification(_ notification: Notification) {
 //
-////          let homeVC = HomeViewController()
-//            ERVC.modalPresentationStyle = .fullScreen
-//          let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//            appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
-////          appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
+//        print("외부에서 골든타임 탭")
 //
-//        })
-//        self.navigationController.pus
-//        guard let ERVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-//        self.tabBarController.push
-//        guard let reportId = boardId as? String else { return }
-////        print("변환 완료")
-//        print(reportId)
-//        viewController.reportId = Int(reportId)
-//        viewController.posterPhoneN = "00000000000"
-//        self.navigationController?.pushViewController(viewController, animated: true)
-    }
+//        guard let boardId = notification.object else { return }
+//
+//        print("게시판 아이디 \(boardId)")
+//
+//        self.navigationController?.popToRootViewController(animated: true)
+//        print("루트뷰까지 팝")
+//
+//        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+//
+//        print("스토리보드 이동")
+//
+//        self.navigationController?.pushViewController(EV, animated: true)
+//
+////        viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
+////        self.navigationController?.pushViewController(viewController, animated: true)
+//
+////        self.performSegue(withIdentifier: "EmergencyRescueViewController", sender: self)
+////        guard let tabVC = storyboard.instantiateViewControllerWithIdentifier("TheAssignedID") as? TabViewController
+//
+////        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+//
+////        let ERVC = EmergencyRescueViewController()
+//
+////        self.view.window?.rootViewController?.dismiss(animated: false, completion: {
+////            let ERVC = EmergencyRescueViewController()
+////
+//////          let homeVC = HomeViewController()
+////            ERVC.modalPresentationStyle = .fullScreen
+////          let appDelegate = UIApplication.shared.delegate as! AppDelegate
+////            appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
+//////          appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
+////
+////        })
+////        self.navigationController.pus
+////        guard let ERVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
+////        self.tabBarController.push
+////        guard let reportId = boardId as? String else { return }
+//////        print("변환 완료")
+////        print(reportId)
+////        viewController.reportId = Int(reportId)
+////        viewController.posterPhoneN = "00000000000"
+////        self.navigationController?.pushViewController(viewController, animated: true)
+//    }
     
     private func updateReportUI(mode: ReportMode?) {
         self.markerInfoView.isHidden = true

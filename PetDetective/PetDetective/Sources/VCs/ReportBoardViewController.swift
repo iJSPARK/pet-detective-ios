@@ -54,6 +54,30 @@ class ReportBoardViewController: UIViewController {
             name: NSNotification.Name("searchReportCancle"),
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goldenTimeNotification(_:)),
+            name: NSNotification.Name("newReportGolden"),
+            object: nil
+        )
+    }
+    
+    @objc func goldenTimeNotification(_ notification: Notification) {
+        
+        print("외부에서 골든타임 탭")
+        
+        guard let boardId = notification.object else { return }
+        
+        print("게시판 아이디 \(boardId)")
+        
+        self.navigationController?.popToRootViewController(animated: true)
+        print("루트뷰까지 팝")
+        
+        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+        
+        print("스토리보드 이동")
+        
+        self.navigationController?.pushViewController(EV, animated: true)
     }
     
     @objc func goToDetailNotification(_ notification: Notification){
