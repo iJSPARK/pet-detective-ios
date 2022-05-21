@@ -88,7 +88,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="위치 정보 가져오기"/>
                                 <connections>
-                                    <segue destination="cqY-5R-Oy5" kind="show" identifier="ChooseUserSearchLocation" id="e0B-iJ-w0V"/>
+                                    <action selector="locationButtonTapped:" destination="YLD-fZ-hC9" eventType="touchUpInside" id="yBr-Ji-Y2E"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="87" translatesAutoresizingMaskIntoConstraints="NO" id="QJa-ix-Zpj">
@@ -1862,6 +1862,19 @@
                                     <action selector="viewBoardButtonTapped:" destination="YvZ-Bj-eIZ" eventType="touchUpInside" id="Fp2-e0-Z3T"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YBU-vq-c4y">
+                                <rect key="frame" x="14" y="667" width="46" height="46"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="KGy-Lk-a2J"/>
+                                    <constraint firstAttribute="height" constant="46" id="NAQ-8D-G87"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="SearchPointButton" title=""/>
+                                <connections>
+                                    <action selector="changeSearchLocationButtonTapped:" destination="YvZ-Bj-eIZ" eventType="touchUpInside" id="5DX-2q-Nlz"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fJN-5L-JDI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1871,10 +1884,12 @@
                             <constraint firstItem="j52-uH-x4p" firstAttribute="trailing" secondItem="fJN-5L-JDI" secondAttribute="trailing" id="VDl-6Z-sDm"/>
                             <constraint firstItem="3t5-6X-OyH" firstAttribute="centerX" secondItem="3eI-9I-iCb" secondAttribute="centerX" id="aA9-eR-2BU"/>
                             <constraint firstItem="vRk-RV-mUq" firstAttribute="leading" secondItem="fJN-5L-JDI" secondAttribute="leading" id="cDD-5M-lZT"/>
+                            <constraint firstItem="YBU-vq-c4y" firstAttribute="leading" secondItem="fJN-5L-JDI" secondAttribute="leading" constant="14" id="fam-qD-R2W"/>
                             <constraint firstItem="j52-uH-x4p" firstAttribute="top" secondItem="3eI-9I-iCb" secondAttribute="top" id="h9t-NW-ilT"/>
                             <constraint firstItem="fJN-5L-JDI" firstAttribute="bottom" secondItem="VPJ-Fx-Gni" secondAttribute="bottom" constant="20" id="huP-dd-0EZ"/>
                             <constraint firstItem="vRk-RV-mUq" firstAttribute="trailing" secondItem="fJN-5L-JDI" secondAttribute="trailing" id="nqB-G4-fN7"/>
                             <constraint firstItem="vRk-RV-mUq" firstAttribute="bottom" secondItem="fJN-5L-JDI" secondAttribute="bottom" id="oyf-sU-UeB"/>
+                            <constraint firstItem="fJN-5L-JDI" firstAttribute="bottom" secondItem="YBU-vq-c4y" secondAttribute="bottom" constant="100" id="taG-om-eSw"/>
                             <constraint firstItem="3t5-6X-OyH" firstAttribute="top" secondItem="j52-uH-x4p" secondAttribute="bottom" constant="30" id="unW-Fd-jGN"/>
                             <constraint firstItem="vRk-RV-mUq" firstAttribute="top" secondItem="j52-uH-x4p" secondAttribute="bottom" id="yZa-ON-jd0"/>
                         </constraints>
@@ -1883,6 +1898,7 @@
                     <connections>
                         <outlet property="addDetailLabel" destination="oRo-pL-JaK" id="r6C-DI-6A9"/>
                         <outlet property="boardButton" destination="VPJ-Fx-Gni" id="OLl-Uj-aew"/>
+                        <outlet property="changedSearchLocationButton" destination="YBU-vq-c4y" id="Gch-fA-nax"/>
                         <outlet property="goldenTimeLabel" destination="WnU-t0-419" id="wHv-3x-Bch"/>
                         <outlet property="markerInfoView" destination="3t5-6X-OyH" id="V55-do-Egw"/>
                         <outlet property="reportSegment" destination="kPu-WP-z11" id="Jr9-lR-dps"/>
@@ -1894,52 +1910,10 @@
             </objects>
             <point key="canvasLocation" x="1371.0144927536232" y="1441.7410714285713"/>
         </scene>
-        <!--Find Location View Controller-->
-        <scene sceneID="0JP-DB-Py5">
-            <objects>
-                <viewController id="cqY-5R-Oy5" customClass="FindLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="1AP-3x-mUo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EAk-hH-Fva">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FindPoint" translatesAutoresizingMaskIntoConstraints="NO" id="Pnp-wt-c86">
-                                <rect key="frame" x="163" y="295.5" width="88" height="88.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="88" id="DJE-vu-HKB"/>
-                                    <constraint firstAttribute="height" constant="88.400000000000006" id="x63-3V-8xC"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="GnE-oM-dY7"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="bottom" secondItem="EAk-hH-Fva" secondAttribute="bottom" id="3R3-et-qvW"/>
-                            <constraint firstItem="EAk-hH-Fva" firstAttribute="leading" secondItem="GnE-oM-dY7" secondAttribute="leading" id="E7a-vB-ddT"/>
-                            <constraint firstItem="EAk-hH-Fva" firstAttribute="trailing" secondItem="GnE-oM-dY7" secondAttribute="trailing" id="GFn-tL-zgC"/>
-                            <constraint firstItem="Pnp-wt-c86" firstAttribute="centerX" secondItem="1AP-3x-mUo" secondAttribute="centerX" id="Q8x-uE-7h2"/>
-                            <constraint firstItem="Pnp-wt-c86" firstAttribute="centerY" secondItem="1AP-3x-mUo" secondAttribute="centerY" constant="-108.15000000000001" id="WjF-5b-JIc"/>
-                            <constraint firstItem="EAk-hH-Fva" firstAttribute="top" secondItem="1AP-3x-mUo" secondAttribute="top" id="tBq-PU-o3s"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="C7F-33-xpD"/>
-                    <connections>
-                        <outlet property="findMapView" destination="EAk-hH-Fva" id="NSo-ys-l98"/>
-                        <segue destination="PgM-1b-wB4" kind="unwind" identifier="unwindFromFindLocation" unwindAction="unwindToLoginView:" id="HwS-OI-lQw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="z5e-Xe-ebK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="PgM-1b-wB4" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-1712" y="592"/>
-        </scene>
-        <!--Selection Missing Location View Controller-->
+        <!--Selection Location View Controller-->
         <scene sceneID="AcB-6R-xDq">
             <objects>
-                <viewController storyboardIdentifier="SelectionMissingLocationViewController" hidesBottomBarWhenPushed="YES" id="Yh0-YW-Czh" customClass="SelectionMissingLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SelectionLocationViewController" hidesBottomBarWhenPushed="YES" id="Yh0-YW-Czh" customClass="SelectionLocationViewController" customModule="PetDetective" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uWx-JD-5Gb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1948,13 +1922,34 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MissingPoint2" translatesAutoresizingMaskIntoConstraints="NO" id="lGI-cs-Tdp">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MissingPoint" translatesAutoresizingMaskIntoConstraints="NO" id="lGI-cs-Tdp">
                                 <rect key="frame" x="180" y="326" width="54" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="54" id="O1v-yO-aFf"/>
                                     <constraint firstAttribute="height" constant="50" id="eIF-sX-3ot"/>
                                 </constraints>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotiForPin" translatesAutoresizingMaskIntoConstraints="NO" id="E3H-pq-hfS">
+                                <rect key="frame" x="67" y="64" width="280" height="30"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1p5-W7-IS0">
+                                <rect key="frame" x="207" y="333" width="0.0" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="VfZ-2m-Oab"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RV5-fA-sTQ">
+                                <rect key="frame" x="67" y="64" width="280" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="664-qJ-r2R"/>
+                                    <constraint firstAttribute="width" constant="280" id="KDO-xt-nTc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="NAy-PC-Bp3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1963,19 +1958,27 @@
                             <constraint firstAttribute="bottom" secondItem="gGZ-bI-EGV" secondAttribute="bottom" id="4X7-W4-3Xm"/>
                             <constraint firstItem="gGZ-bI-EGV" firstAttribute="top" secondItem="uWx-JD-5Gb" secondAttribute="top" id="55b-1a-eDs"/>
                             <constraint firstItem="lGI-cs-Tdp" firstAttribute="centerY" secondItem="uWx-JD-5Gb" secondAttribute="centerY" constant="-97" id="Ccb-q9-M9p"/>
+                            <constraint firstItem="1p5-W7-IS0" firstAttribute="centerX" secondItem="uWx-JD-5Gb" secondAttribute="centerX" id="Dw1-sl-XSU"/>
+                            <constraint firstItem="RV5-fA-sTQ" firstAttribute="centerX" secondItem="uWx-JD-5Gb" secondAttribute="centerX" id="F6k-Pa-9Mg"/>
                             <constraint firstItem="lGI-cs-Tdp" firstAttribute="centerX" secondItem="uWx-JD-5Gb" secondAttribute="centerX" id="JVL-Nc-bp8"/>
+                            <constraint firstItem="RV5-fA-sTQ" firstAttribute="top" secondItem="NAy-PC-Bp3" secondAttribute="top" constant="20" id="Qoq-aw-tj1"/>
+                            <constraint firstItem="1p5-W7-IS0" firstAttribute="centerY" secondItem="uWx-JD-5Gb" secondAttribute="centerY" constant="-105" id="Qt9-AU-Dcz"/>
                             <constraint firstItem="gGZ-bI-EGV" firstAttribute="trailing" secondItem="NAy-PC-Bp3" secondAttribute="trailing" id="TN9-DZ-61r"/>
+                            <constraint firstItem="E3H-pq-hfS" firstAttribute="top" secondItem="NAy-PC-Bp3" secondAttribute="top" constant="20" id="Z7e-fC-u1Q"/>
+                            <constraint firstItem="E3H-pq-hfS" firstAttribute="centerX" secondItem="uWx-JD-5Gb" secondAttribute="centerX" id="z0H-fH-Mju"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="s2D-p8-F81"/>
                     <connections>
+                        <outlet property="locationPointLabel" destination="1p5-W7-IS0" id="pJd-Od-drC"/>
                         <outlet property="missingMapView" destination="gGZ-bI-EGV" id="4nv-ag-LUb"/>
+                        <outlet property="nofiForPinLabel" destination="RV5-fA-sTQ" id="UDB-9q-C3A"/>
                         <outlet property="pointImageView" destination="lGI-cs-Tdp" id="0lC-pF-ZD4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r1m-lm-Lp3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3043" y="-1590"/>
+            <point key="canvasLocation" x="3042.0289855072465" y="-1590.4017857142856"/>
         </scene>
         <!--긴급구조-->
         <scene sceneID="1l4-ni-5Lw">
@@ -1999,10 +2002,11 @@
     </scenes>
     <resources>
         <image name="Dog" width="53" height="48"/>
-        <image name="FindPoint" width="880" height="884"/>
         <image name="Logo" width="112" height="30.5"/>
         <image name="MarkerInfoImage" width="240" height="120"/>
-        <image name="MissingPoint2" width="54" height="50"/>
+        <image name="MissingPoint" width="54" height="50"/>
+        <image name="NotiForPin" width="280" height="30"/>
+        <image name="SearchPointButton" width="44" height="44"/>
         <image name="bell" catalog="system" width="128" height="124"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>

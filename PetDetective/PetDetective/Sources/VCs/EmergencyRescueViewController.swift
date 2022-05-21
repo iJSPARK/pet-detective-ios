@@ -5,6 +5,7 @@
 //  Created by Junseo Park on 3/19/22.
 //
 
+import Alamofire
 import NMapsMap
 import UIKit
 
@@ -29,7 +30,10 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var reportMode: ReportMode?
     var timeGap = 0
     var count = 0
+    var searchLatitude: Double?
+    var searchLongitude: Double?
     
+    @IBOutlet weak var changedSearchLocationButton: UIButton!
     @IBOutlet weak var rescueMapView: UIView!
     @IBOutlet weak var markerInfoView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -38,7 +42,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     @IBOutlet weak var boardButton: UIButton!
     @IBOutlet weak var reportSegment: UISegmentedControl!
     
-    override var isAuthorized: Bool {
+    override var isAuthorized: Bool? {
         didSet {
             updateUIFromMode(isAuthorized: isAuthorized, naverMapView: naverMap, nil, nil)
         }
@@ -55,13 +59,11 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
         
-        naverMap.mapView.touchDelegate = self
-        
         setLocationManager()
         
-        naverMap.showLocationButton = true
-        
         naverMap.mapView.addCameraDelegate(delegate: self)
+        
+        naverMap.mapView.touchDelegate = self
         
         timerRun()
 //        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
@@ -69,6 +71,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
        
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
+        
+        changedSearchLocationButton.layer.cornerRadius = 2
+        changedSearchLocationButton.layer.shadowColor = UIColor.black.cgColor
+        changedSearchLocationButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        changedSearchLocationButton.layer.shadowRadius = 1
+        changedSearchLocationButton.layer.shadowOpacity = 0.4
     }
     
     private func updateReportUI(mode: ReportMode?) {
@@ -330,6 +338,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         self.navigationController?.pushViewController(viewController, animated: true)
     }
     
+    @IBAction func changeSearchLocationButtonTapped(_ sender: Any) {
+        guard let SMLVC = self.storyboard?.instantiateViewController(withIdentifier: "SelectionLocationViewController") as? SelectionLocationViewController else { return }
+        SMLVC.reportBoardMode = .search
+        SMLVC.delegate = self
+        self.navigationController?.pushViewController(SMLVC, animated: true)
+    }
     
 //    func reSize(imageString: String?) -> UIImage {
 ////        let url = URL(string: imageString!)!
@@ -438,3 +452,63 @@ extension UIImage {
     }
 }
 
+extension EmergencyRescueViewController: SelectionLocationProtocol {    
+    func dataSend(location: String, latitude: Double, longitude: Double) {
+//        self.searchLatitude = latitude
+//        self.searchLongitude = longitude
+//        self.
+        // get 요청
+        
+        let url = "https://iospring.herokuapp.com/user/update-point"
+        var request = URLRequest(url: URL(string: url)!)
+        request.httpMethod = "PUT"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.timeoutInterval = 10
+        
+        let phoneNumber = UserDefaults.standard.object(forKey: "petUserPhoneN") as! String
+        print("핸드폰 번호 \(phoneNumber)")
+        
+        
+        // POST 로 보낼 정보
+        let parameter: [String: Any] = ["phoneNumber": phoneNumber, "loadAddress": location, "latitude": latitude, "longitude": longitude]
+
+        
+//        {
+//            "userLocationDto":
+//            "phoneNumber": phoneNumber
+//            "loadAddress": location
+//            "latitude": latitude
+//            "longitude": longitude
+//        }
+
+        // httpBody 에 parameters 추가
+        do {
+            try request.httpBody = JSONSerialization.data(withJSONObject: parameter, options: [])
+        } catch {
+            print("http Body Error")
+        }
+        
+//        AF.request(url,
+//                   method: .post,
+//                   parameters: login,
+//                   encoder: JSONParameterEncoder.default).response { (response) in
+//            switch response.result {
+//            case .success:
+//                print("POST 성공")
+//                debugPrint(response)
+//            case .failure(let error):
+//                print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
+//            }
+//        }
+//
+        AF.request(request).responseString { (response) in
+            switch response.result {
+            case .success:
+                print("PUT 성공")
+                debugPrint(response)
+            case let .failure(error):
+                print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
+            }
+        }
+    }
+}

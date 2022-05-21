@@ -10,13 +10,14 @@ import NMapsMap
 enum ReportBoardMode {
     case request
     case find
+    case search
 }
 
 protocol SelectionLocationProtocol {
     func dataSend(location: String, latitude: Double, longitude: Double)
 }
 
-class SelectionMissingLocationViewController: MapViewController {
+class SelectionLocationViewController: MapViewController {
     
     let customMapView = MapView()
     var reportBoardMode: ReportBoardMode?
@@ -29,11 +30,13 @@ class SelectionMissingLocationViewController: MapViewController {
         }
     }
     
+    @IBOutlet weak var nofiForPinLabel: UILabel!
+    @IBOutlet weak var locationPointLabel: UILabel!
     @IBOutlet weak var missingMapView: UIView!
     
     @IBOutlet weak var pointImageView: UIImageView!
     
-    override var isAuthorized: Bool {
+    override var isAuthorized: Bool? {
         didSet {
             updateUIFromMode(isAuthorized: isAuthorized, naverMapView: customMapView.naverMapView, customMapView.addressLabel, customMapView.setLocationButton)
         }
@@ -62,19 +65,39 @@ class SelectionMissingLocationViewController: MapViewController {
     }
     
     func updateReportModeUI() {
+        
         if reportBoardMode == .request {
             customMapView.setLocationButton.setTitle("실종 위치 설정", for: .normal)
             
+            locationPointLabel.text = "실종"
+            
             customMapView.setLocationButton.backgroundColor = .systemRed
             
-            pointImageView.image = UIImage(named: "MissingPoint2")
+            pointImageView.image = UIImage(named: "MissingPoint")
+            
+            nofiForPinLabel.text = "실종 위치로 부터 3km 이내의 탐정단들에게 알림이 갑니다."
         }
         else if reportBoardMode == .find {
             customMapView.setLocationButton.setTitle("발견 위치 설정", for: .normal)
             
+            locationPointLabel.text = "발견"
+            
+            customMapView.setLocationButton.backgroundColor = .systemRed
+            
+            pointImageView.image = UIImage(named: "MissingPoint")
+            
+            nofiForPinLabel.text = "목격 위치로 3km 이내의 실종 견주들에게 알림이 갑니다."
+        }
+        else if reportBoardMode == .search {
+            customMapView.setLocationButton.setTitle("탐색 위치 설정", for: .normal)
+            
+            locationPointLabel.text = "탐색 위치"
+            
             customMapView.setLocationButton.backgroundColor = .systemGreen
             
-            pointImageView.image = UIImage(named: "FindPoint-1")
+            pointImageView.image = UIImage(named: "SearchPoint")
+            
+            nofiForPinLabel.text = "탐색 위치로부터 3km 이내의 실종견에 대한 알림이 옵니다."
         }
     }
     
@@ -84,7 +107,6 @@ class SelectionMissingLocationViewController: MapViewController {
         guard let longitude = missingLongtitude else { return }
         delegate?.dataSend(location: location, latitude: latitude, longitude: longitude)
         self.navigationController?.popViewController(animated: true)
-
     }
     
 
@@ -100,7 +122,7 @@ class SelectionMissingLocationViewController: MapViewController {
 
 }
 
-extension SelectionMissingLocationViewController {
+extension SelectionLocationViewController {
     // 카메라 움직임 종료시 실행
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         
