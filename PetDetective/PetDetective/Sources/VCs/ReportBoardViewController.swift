@@ -236,6 +236,7 @@ extension ReportBoardViewController: UICollectionViewDataSource {
             cell.petImg.image = UIImage(data: data!)
         }
         cell.petLocation.text = boardList[indexPath.row].missingLocation!
+        cell.money.text = String(boardList[indexPath.row].money!) ?? "0"
 //        cell.date.text = self.dateToString(date: report.date) // date->String
         return cell
     }

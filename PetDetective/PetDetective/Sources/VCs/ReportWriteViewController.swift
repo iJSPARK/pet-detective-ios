@@ -47,8 +47,6 @@ class ReportWriteViewController: UIViewController {
     @IBOutlet weak var confirmBtn: UIBarButtonItem!
     @IBOutlet weak var locationButton: UIButton!
     var reportEditMode: ReportEditorMode = .new
-    //    var fCurTextfieldBottom: CGFloat = 0.0
-    //    var keyHeight: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,13 +97,6 @@ class ReportWriteViewController: UIViewController {
         case .edit:
             self.getInfo(id: self.reportId!)
             break
-            //        case let .edit(_, report):
-            //            self.boardId = report.boardId
-            //            self.userId = report.userId
-            //            self.petId = report.petId
-            //            self.dateTextField.text = self.formatDate(date: report.missingTime)
-            //            self.locationTextField.text = report.missingLocation
-            //            //            self.moneyTextField.text = report.money
         }
     }
     
@@ -123,7 +114,7 @@ class ReportWriteViewController: UIViewController {
         let operationArray = ["유", "무", "모름"]
         let operation = operationArray[self.neuteringSegControl.selectedSegmentIndex]
         guard let disease = self.diseaseTextField.text else { return }
-        guard let ageStr = self.ageTextField.text else { return }
+        let ageStr = self.ageTextField.text ?? "0"
         guard let age = Int(ageStr) else { return }
         guard let etc = self.etcTextView.text else { return }
         print("등록")
