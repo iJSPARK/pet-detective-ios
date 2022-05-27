@@ -14,6 +14,7 @@ class ReportBoardViewController: UIViewController {
     var totalPage = 3
     var currentPage = 1
     
+    var delegate: sendAlarmProtocol?
     var searchCurrentPage = 1
     var searchTotalPage = 1
     var searchFlag = 0
@@ -79,13 +80,13 @@ class ReportBoardViewController: UIViewController {
         print("게시판 아이디 \(alarm.boardId)")
         
 //        guard let stringBoardID = boardId as? String else { return }
-//        delegate?.alarmSend(alarm: alarm)
         
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
         
-        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-        EV.goldenAlarm = alarm
+        delegate?.alarmSend(alarm: alarm)
+//        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+//        EV.goldenAlarm = alarm
         
         self.tabBarController?.selectedIndex = 1
 //        self.navigationController?.pushViewController(EV, animated: true)
@@ -108,11 +109,12 @@ class ReportBoardViewController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
         
-        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+        delegate?.alarmSend(alarm: alarm)
         
-        EV.goldenAlarm = alarm
+//        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+//
+//        EV.goldenAlarm = alarm
         
-        print("알람 리스트에서 전달된 골든타임 boardID=\(alarm.boardId)")
         self.tabBarController?.selectedIndex = 1
 //        self.navigationController?.pushViewController(EV, animated: true)
     }

@@ -77,8 +77,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         
-        checkAlarm(alarm: goldenAlarm)
-        
         checkMode()
 
         updateReportUI(mode: reportMode)
@@ -560,6 +558,13 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
                 print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
             }
         }
+    }
+}
+
+extension EmergencyRescueViewController: sendAlarmProtocol {
+    func alarmSend(alarm: Alarm) {
+        goldenAlarm = alarm
+        checkAlarm(alarm: goldenAlarm)
     }
 }
 

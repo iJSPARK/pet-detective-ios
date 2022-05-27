@@ -10,6 +10,7 @@ import UIKit
 class AlarmBoardViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    var delegate: sendAlarmProtocol?
     var alarms = [Alarm]() {
         didSet {
             self.saveTasks()
@@ -126,15 +127,13 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
         }
         else if(alarm.alarmMode == "골든타임"){
             print("알림 탭에서 골든타임")
-            
-            print("게시판 아이디 \(alarm.boardId)")
            
-//            delegate?.alarmSend(alarm: alarm)
+            delegate?.alarmSend(alarm: alarm)
 //            delegate?.dataSend(boardId: alarm.boardId, mode: alarm.alarmMode, type: alarm.boardType)
             
-            guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-            
-            EV.goldenAlarm = alarm
+//            guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
+//
+//            EV.goldenAlarm = alarm
             
             self.tabBarController?.selectedIndex = 1
 //            self.navigationController?.pushViewController(EV, animated: true)
