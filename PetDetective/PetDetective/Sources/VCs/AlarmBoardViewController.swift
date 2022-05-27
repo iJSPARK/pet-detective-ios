@@ -128,13 +128,15 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
         else if(alarm.alarmMode == "골든타임"){
             print("알림 탭에서 골든타임")
            
-            delegate?.alarmSend(alarm: alarm)
+//            delegate?.alarmSend(alarm: alarm)
+            
+            
+            NotificationCenter.default.post(name: NSNotification.Name("NotiGoldenTimeAlrm"), object: alarm)
 //            delegate?.dataSend(boardId: alarm.boardId, mode: alarm.alarmMode, type: alarm.boardType)
             
 //            guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
 //
 //            EV.goldenAlarm = alarm
-            
             self.tabBarController?.selectedIndex = 1
 //            self.navigationController?.pushViewController(EV, animated: true)
         }

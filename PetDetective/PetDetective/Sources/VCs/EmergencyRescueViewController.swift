@@ -77,6 +77,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goldenTimeNotification(_:)),
+            name: NSNotification.Name("NotiGoldenTimeAlrm"),
+            object: nil
+        )
+        
         checkMode()
 
         updateReportUI(mode: reportMode)
@@ -89,6 +96,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     override func viewWillDisappear(_ animated: Bool) {
         timerQuit()
         deleteMarker()
+    }
+    
+    @objc func goldenTimeNotification(_ notification: Notification) {
+        guard let alarm = notification.object as? Alarm else { return }
+        goldenAlarm = alarm
+        checkAlarm(alarm: goldenAlarm)
     }
     
     private func updateReportUI(mode: ReportMode?) {
@@ -562,9 +575,9 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
 }
 
 extension EmergencyRescueViewController: sendAlarmProtocol {
-    func alarmSend(alarm: Alarm) {
-        goldenAlarm = alarm
-        checkAlarm(alarm: goldenAlarm)
-    }
+//    func alarmSend(alarm: Alarm) {
+//        goldenAlarm = alarm
+//        checkAlarm(alarm: goldenAlarm)
+//    }
 }
 

@@ -84,7 +84,10 @@ class ReportBoardViewController: UIViewController {
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
         
-        delegate?.alarmSend(alarm: alarm)
+//        delegate?.alarmSend(alarm: alarm)
+        
+        NotificationCenter.default.post(name: NSNotification.Name("NotiGoldenTimeAlrm"), object: alarm)
+
 //        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
 //        EV.goldenAlarm = alarm
         
@@ -108,6 +111,8 @@ class ReportBoardViewController: UIViewController {
         
         self.navigationController?.popToRootViewController(animated: true)
         print("루트뷰까지 팝")
+        
+        NotificationCenter.default.post(name: NSNotification.Name("NotiGoldenTimeAlrm"), object: alarm)
         
         delegate?.alarmSend(alarm: alarm)
         
