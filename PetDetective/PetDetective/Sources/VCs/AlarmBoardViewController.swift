@@ -136,8 +136,6 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
             
             EV.goldenAlarm = alarm
             
-            print("알람 리스트에서 전달된 골든타임 boardID=\(alarm.boardId)")
-            
             self.tabBarController?.selectedIndex = 1
 //            self.navigationController?.pushViewController(EV, animated: true)
         }
