@@ -28,8 +28,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var secondTimer: Timer?
 //    var isGet: Bool = false
     var reportMode: ReportMode?
-    var timeGap = 0
-    var count = 0
+    var timeGap: Int = 0
+    var count: Int = 0
     var searchLatitude: Double?
     var searchLongitude: Double?
     
@@ -61,8 +61,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         setLocationManager()
         
-        reportSegment.addTarget(self, action: #selector(didChangeSegmentValue(segment:)), for: .valueChanged)
-        
         naverMap.mapView.addCameraDelegate(delegate: self)
         
         naverMap.mapView.touchDelegate = self
@@ -79,8 +77,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         
-        deleteMarker()
-        
         checkAlarm(alarm: goldenAlarm)
         
         checkMode()
@@ -94,6 +90,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     override func viewWillDisappear(_ animated: Bool) {
         timerQuit()
+        deleteMarker()
     }
     
     private func updateReportUI(mode: ReportMode?) {
@@ -294,6 +291,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             // 1초마다 timerCallback함수를 호출하는 타이머
             secondTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         }
+        timeGap = 0
+        count = 0
     }
     
     private func timerQuit() {
@@ -309,13 +308,14 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     @objc func timerCallback() {
 //        print("timer call back") // 현재시간 - 실종시간
         
-        if (timeGap - count) < 0 { // 시간 다되면 리 로드
-            timerQuit()
-            viewWillAppear(true)
-        } else {
-            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
-        }
-        
+        goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+//        if (timeGap - count) < 0 { // 시간 다되면 리 로드
+//            timerQuit()
+//            viewWillAppear(true)
+//        } else {
+//            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+//        }
+//
         count += 1
     }
     
@@ -375,20 +375,21 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         print("마커개수 \(markers.count)")
     }
     
-    @objc private func didChangeSegmentValue(segment: UISegmentedControl) {
+    
+    @IBAction func switchMode(_ sender: Any) {
         print("Switch Mode")
         
         deleteMarker()
         
-        if segment.selectedSegmentIndex == 0 {
+        if reportSegment.selectedSegmentIndex == 0 {
             reportMode = .request
-        } else if segment.selectedSegmentIndex == 1 {
+        } else if reportSegment.selectedSegmentIndex == 1 {
             reportMode = .find
         }
         
         updateReportUI(mode: reportMode)
     }
-    
+
     @IBAction func viewBoardButtonTapped(_ sender: Any) {
         // 게시글 보기
         if reportMode == .request {
