@@ -344,10 +344,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     func checkAlarm(alarm :Alarm?) {
         if "의뢰" == alarm?.boardType {
+            print("넘어온 알림 boardId = \(goldenAlarm?.boardId)")
             reportMode = .request
         }
         else if "발견" == alarm?.boardType {
+            print("넘어온 알림 boardId = \(goldenAlarm?.boardId)")
             reportMode = .find
+        }
+        else {
+            print("알림 데이터 넘어오지 않음")
         }
     }
     
