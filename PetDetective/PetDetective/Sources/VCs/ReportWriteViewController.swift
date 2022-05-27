@@ -56,6 +56,12 @@ class ReportWriteViewController: UIViewController {
         self.configureTextField()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if(self.reportEditMode == .edit){
+            self.getInfo(id: self.reportId!)
+        }
+    }
+    
     private func configureTextField(){
         self.breedTextField.delegate = self
         self.furColorTextField.delegate = self
@@ -126,6 +132,7 @@ class ReportWriteViewController: UIViewController {
     }
     
     private func getInfo(id: Int){
+        print("get info for edit")
         guard let url = URL(string: "https://iospring.herokuapp.com/detect/\(id)") else {
             return
         }

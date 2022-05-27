@@ -148,8 +148,8 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
             EV.goldenAlarm = alarm
             
             print("스토리보드 이동")
-            
-            self.navigationController?.pushViewController(EV, animated: true)
+            self.tabBarController?.selectedIndex = 1
+//            self.navigationController?.pushViewController(EV, animated: true)
         }
     }
 }

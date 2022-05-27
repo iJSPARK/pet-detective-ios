@@ -88,8 +88,8 @@ class ReportBoardViewController: UIViewController {
         guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
         EV.goldenAlarm = alarm
         print("스토리보드 이동")
-        
-        self.navigationController?.pushViewController(EV, animated: true)
+        self.tabBarController?.selectedIndex = 1
+//        self.navigationController?.pushViewController(EV, animated: true)
     }
     
     @objc func goldenTimeDetectNotification(_ notification: Notification) {
@@ -114,8 +114,8 @@ class ReportBoardViewController: UIViewController {
         EV.goldenAlarm = alarm
         
         print("스토리보드 이동")
-        
-        self.navigationController?.pushViewController(EV, animated: true)
+        self.tabBarController?.selectedIndex = 1
+//        self.navigationController?.pushViewController(EV, animated: true)
     }
     
     @objc func goToDetailNotification(_ notification: Notification){
