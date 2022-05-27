@@ -28,8 +28,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var secondTimer: Timer?
 //    var isGet: Bool = false
     var reportMode: ReportMode?
-    var timeGap: Int = 0
-    var count: Int = 0
+    var timeGap: Int?
+    var count: Int?
     var searchLatitude: Double?
     var searchLongitude: Double?
     
@@ -61,6 +61,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         
         setLocationManager()
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(goldenTimeNotification(_:)),
+            name: NSNotification.Name("NotiGoldenTimeAlarm"),
+            object: nil
+        )
+        
         naverMap.mapView.addCameraDelegate(delegate: self)
         
         naverMap.mapView.touchDelegate = self
@@ -76,35 +83,24 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(goldenTimeNotification(_:)),
-            name: NSNotification.Name("NotiGoldenTimeAlrm"),
-            object: nil
-        )
-        
-        checkMode()
-
         updateReportUI(mode: reportMode)
-        
         timerRun()
-        
-        print("viewWillAppear 작동 ")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         timerQuit()
-        deleteMarker()
     }
     
     @objc func goldenTimeNotification(_ notification: Notification) {
         guard let alarm = notification.object as? Alarm else { return }
         goldenAlarm = alarm
         checkAlarm(alarm: goldenAlarm)
+        viewWillAppear(false)
     }
     
     private func updateReportUI(mode: ReportMode?) {
+        checkMode()
+        deleteMarker()
         self.markerInfoView.isHidden = true
         self.boardButton.isHidden = true
         emergencyRescuePetInfoController.fetchedGoldenUserTimeInfo { (userGoldenTimePetInfo) in
@@ -291,6 +287,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     private func timerRun() {
         print("timerRun")
+        timeGap = 0
+        count = 0
         if let timer = secondTimer {
             //timer 객체가 nil 이 아닌경우에는 invalid 상태에만 시작한다
             if !timer.isValid {
@@ -302,8 +300,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             // 1초마다 timerCallback함수를 호출하는 타이머
             secondTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(timerCallback), userInfo: nil, repeats: true)
         }
-        timeGap = 0
-        count = 0
     }
     
     private func timerQuit() {
@@ -381,7 +377,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     func deleteMarker() {
-        print("마커개수 \(markers.count)")
+        
         if markers != [] {
             for marker in markers {
                 marker.mapView = nil
@@ -389,14 +385,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             markers.removeAll()
         }
         
-        print("마커개수 \(markers.count)")
+        print("삭제 후 마커개수 \(markers.count)")
     }
     
     
     @IBAction func switchMode(_ sender: Any) {
         print("Switch Mode")
-        
-        deleteMarker()
         
         if reportSegment.selectedSegmentIndex == 0 {
             reportMode = .request
@@ -574,10 +568,10 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
     }
 }
 
-extension EmergencyRescueViewController: sendAlarmProtocol {
-//    func alarmSend(alarm: Alarm) {
-//        goldenAlarm = alarm
-//        checkAlarm(alarm: goldenAlarm)
-//    }
-}
+//extension EmergencyRescueViewController: sendAlarmProtocol {
+////    func alarmSend(alarm: Alarm) {
+////        goldenAlarm = alarm
+////        checkAlarm(alarm: goldenAlarm)
+////    }
+//}
 
