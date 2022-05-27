@@ -28,8 +28,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var secondTimer: Timer?
 //    var isGet: Bool = false
     var reportMode: ReportMode?
-    var timeGap: Int?
-    var count: Int?
+    var timeGap = 0
+    var count = 0
     var searchLatitude: Double?
     var searchLongitude: Double?
     
