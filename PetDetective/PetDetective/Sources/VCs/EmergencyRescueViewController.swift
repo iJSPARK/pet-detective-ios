@@ -362,13 +362,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    func deleteMarker(markers :[NMFMarker]) {
+    func deleteMarker() {
         if markers != [] {
             for marker in markers {
                 marker.mapView = nil
             }
         }
-        self.markers.removeAll()
+        markers.removeAll()
         
         print("마커개수 \(markers.count)")
     }
@@ -376,7 +376,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     @objc private func didChangeSegmentValue(segment: UISegmentedControl) {
         print("Switch Mode")
         
-        deleteMarker(markers: markers)
+        deleteMarker()
         
         if segment.selectedSegmentIndex == 0 {
             reportMode = .request
