@@ -239,6 +239,7 @@ extension ReportBoardViewController: UICollectionViewDataSource {
 //        cell.date.text = self.dateToString(date: report.date) // date->String
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if(self.searchFlag == 0){
             if currentPage < totalPage && indexPath.row == self.boardList.count - 1 {
@@ -292,6 +293,5 @@ extension ReportBoardViewController: UICollectionViewDelegate {
         print(reportId)
         print(posterPhoneN)
         self.navigationController?.pushViewController(viewController, animated: true)
-        
     }
 }

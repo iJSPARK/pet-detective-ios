@@ -79,6 +79,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     
     override func viewWillAppear(_ animated: Bool) {
         
+        deleteMarker()
+        
         checkAlarm(alarm: goldenAlarm)
         
         checkMode()
