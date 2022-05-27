@@ -26,7 +26,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var markers = [NMFMarker]()
     var getMarker: NMFMarker?
     var secondTimer: Timer?
-//    var isGet: Bool = false
     var reportMode: ReportMode?
     var timeGap = 0
     var count = 0
@@ -108,11 +107,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             
             if mode == .find {
                 print("find mode")
-                guard let findPets = userGoldenTimePetInfo.findPetInfos else {
-                    // 목격신고한 유저 없으면
-                    self.alertOk( title: "실종 신고한 이력이 없습니다.", message: "실종 신고한 이력이 없습니다.\n실종 신고한 애완동물과 같은 종의 동물이 지도에 표시됩니다.", viewController: self)
+                if userGoldenTimePetInfo.userMissingPetLatitude == nil {
+                    self.alertOk( title: "실종 신고한 이력이 없습니다.", message: "실종 신고한 이력이 없습니다.\n실종 신고한 애완동물과 같은 종의 동물이 지도에 표시됩니다.", viewController: self) // 목격신고한 유저 없으면
                     return
                 }
+                
+                guard let findPets = userGoldenTimePetInfo.findPetInfos else { return }
                 self.updateMapUI(with: findPets)
                 guard let userMissingPetLatitude = userGoldenTimePetInfo.userMissingPetLatitude else { return }
                 guard let userMissingPetLongitude = userGoldenTimePetInfo.userMissingPetLongitude else { return }
