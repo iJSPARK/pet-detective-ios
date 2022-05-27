@@ -369,8 +369,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             for marker in markers {
                 marker.mapView = nil
             }
+            markers.removeAll()
         }
-        markers.removeAll()
         
         print("마커개수 \(markers.count)")
     }
