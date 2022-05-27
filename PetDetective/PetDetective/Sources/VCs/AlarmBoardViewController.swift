@@ -130,18 +130,14 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
             print("게시판 아이디 \(alarm.boardId)")
            
 //            delegate?.alarmSend(alarm: alarm)
-            
-            
-            print("알람 데이터 \(alarm)")
 //            delegate?.dataSend(boardId: alarm.boardId, mode: alarm.alarmMode, type: alarm.boardType)
-            
-            print("알람 데이터 전송")
             
             guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
             
             EV.goldenAlarm = alarm
             
-            print("스토리보드 이동")
+            print("알람 리스트에서 전달된 골든타임 boardID=\(alarm.boardId)")
+            
             self.tabBarController?.selectedIndex = 1
 //            self.navigationController?.pushViewController(EV, animated: true)
         }

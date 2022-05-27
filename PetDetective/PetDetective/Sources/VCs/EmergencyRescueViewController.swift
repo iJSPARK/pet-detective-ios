@@ -216,13 +216,13 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     
                     if goldenAlarm?.boardId == markerID  {
                         print("알람 마커 추가")
-                        print("😀 같음 markID\(markerID) goldenAlarm Id \(goldenAlarm?.boardId)")
+                        print("😀 일치 - 마커 boardId=\(markerID) goldenAlarmBoardId=\(goldenAlarm?.boardId)")
                         
                         getMarker = marker
                         createMarkerInfoView(self.reportMode)
                     } else {
                         // 마커 초기값
-                        print("😂 다름 markID\(markerID) goldenAlarm Id \(goldenAlarm?.boardId)")
+                        print("😂 불일치 - 마커 boardId=\(markerID) goldenAlarmBoardId=\(goldenAlarm?.boardId)")
                         if goldenAlarm == nil {
                             if marker == markers.first {
                                 getMarker = marker
@@ -365,6 +365,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     func deleteMarker() {
+        print("마커개수 \(markers.count)")
         if markers != [] {
             for marker in markers {
                 marker.mapView = nil

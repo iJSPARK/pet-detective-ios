@@ -86,7 +86,7 @@ class ReportBoardViewController: UIViewController {
         
         guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
         EV.goldenAlarm = alarm
-        print("스토리보드 이동")
+        print("알람 리스트에서 전달된 골든타임 boardID=\(alarm.boardId)")
         self.tabBarController?.selectedIndex = 1
 //        self.navigationController?.pushViewController(EV, animated: true)
     }
@@ -112,7 +112,7 @@ class ReportBoardViewController: UIViewController {
         
         EV.goldenAlarm = alarm
         
-        print("스토리보드 이동")
+        print("알람 리스트에서 전달된 골든타임 boardID=\(alarm.boardId)")
         self.tabBarController?.selectedIndex = 1
 //        self.navigationController?.pushViewController(EV, animated: true)
     }
