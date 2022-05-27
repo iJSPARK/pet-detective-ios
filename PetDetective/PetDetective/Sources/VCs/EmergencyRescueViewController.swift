@@ -58,33 +58,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         naverMap.heightAnchor.constraint(equalTo: self.rescueMapView.heightAnchor, multiplier: 1).isActive = true
         naverMap.centerXAnchor.constraint(equalTo: self.rescueMapView.centerXAnchor).isActive = true
         naverMap.centerYAnchor.constraint(equalTo: self.rescueMapView.centerYAnchor).isActive = true
-
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(goldenTimeNotification(_:)),
-//            name: NSNotification.Name("newReportGolden"),
-//            object: nil
-//        )
-        
-        if "의뢰" == goldenAlarm?.boardType {
-            reportSegment.selectedSegmentIndex = 0
-            reportMode = .request
-        }
-        else if "발견" == goldenAlarm?.boardType {
-            reportSegment.selectedSegmentIndex = 1
-            reportMode = .find
-        }
         
         setLocationManager()
+        
+        reportSegment.addTarget(self, action: #selector(didChangeSegmentValue(segment:)), for: .valueChanged)
         
         naverMap.mapView.addCameraDelegate(delegate: self)
         
         naverMap.mapView.touchDelegate = self
         
-        timerRun()
-//        reportMode = .request // report mode를 초기값으로 (알림으로 들어오면 board값으로 request, find)
-        updateReportUI(mode: reportMode) 
-       
         boardButton.layer.cornerRadius = 6
         boardButton.tintColor = .white
         
@@ -95,53 +77,22 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         changedSearchLocationButton.layer.shadowOpacity = 0.4
     }
     
-//    @objc func goldenTimeNotification(_ notification: Notification) {
-//
-//        print("외부에서 골든타임 탭")
-//
-//        guard let boardId = notification.object else { return }
-//
-//        print("게시판 아이디 \(boardId)")
-//
-//        self.navigationController?.popToRootViewController(animated: true)
-//        print("루트뷰까지 팝")
-//
-//        guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-//
-//        print("스토리보드 이동")
-//
-//        self.navigationController?.pushViewController(EV, animated: true)
-//
-////        viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
-////        self.navigationController?.pushViewController(viewController, animated: true)
-//
-////        self.performSegue(withIdentifier: "EmergencyRescueViewController", sender: self)
-////        guard let tabVC = storyboard.instantiateViewControllerWithIdentifier("TheAssignedID") as? TabViewController
-//
-////        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
-//
-////        let ERVC = EmergencyRescueViewController()
-//
-////        self.view.window?.rootViewController?.dismiss(animated: false, completion: {
-////            let ERVC = EmergencyRescueViewController()
-////
-//////          let homeVC = HomeViewController()
-////            ERVC.modalPresentationStyle = .fullScreen
-////          let appDelegate = UIApplication.shared.delegate as! AppDelegate
-////            appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
-//////          appDelegate.window?.rootViewController?.present(ERVC, animated: true, completion: nil)
-////
-////        })
-////        self.navigationController.pus
-////        guard let ERVC = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-////        self.tabBarController.push
-////        guard let reportId = boardId as? String else { return }
-//////        print("변환 완료")
-////        print(reportId)
-////        viewController.reportId = Int(reportId)
-////        viewController.posterPhoneN = "00000000000"
-////        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        
+        checkAlarm(alarm: goldenAlarm)
+        
+        checkMode()
+
+        updateReportUI(mode: reportMode)
+        
+        timerRun()
+        
+        print("viewWillAppear 작동 ")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timerQuit()
+    }
     
     private func updateReportUI(mode: ReportMode?) {
         self.markerInfoView.isHidden = true
@@ -161,11 +112,9 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 guard let userMissingPetLongitude = userGoldenTimePetInfo.userMissingPetLongitude else { return }
                 self.moveCameraFirstRun(self.naverMap, latitude: userMissingPetLatitude, longitude: userMissingPetLongitude)
                 
-            } else { // mode request 이거나 nil 일때
-                print("request or nil mode")
-                if mode == nil {
-                    self.reportMode = .request
-                }
+            }
+            else if mode == .request { // mode request 이거나 nil 일때
+                
                 guard let missingPets = userGoldenTimePetInfo.missingPetInfos else { return }
                 self.updateMapUI(with: missingPets)
                 guard let userLatitude = userGoldenTimePetInfo.userLatitude else { return }
@@ -357,16 +306,15 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     //타이머가 호출하는 콜백함수
     @objc func timerCallback() {
 //        print("timer call back") // 현재시간 - 실종시간
+        
+        if (timeGap - count) < 0 { // 시간 다되면 리 로드
+            timerQuit()
+            viewWillAppear(true)
+        } else {
+            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+        }
+        
         count += 1
-//        print("남은 시간 \(timeGap - count)")
-        
-        goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
-        
-//        if timeGap <= 0 {
-//            goldenTimeLabel.text = "🛎 골든 타임 0시간 0분 0초"
-//        } else {
-//            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
-//        }
     }
     
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
@@ -392,38 +340,51 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
 //        self.navigationController?.pushViewController(viewController, animated: true)
 //    }
     
+    func checkAlarm(alarm :Alarm?) {
+        if "의뢰" == alarm?.boardType {
+            reportMode = .request
+        }
+        else if "발견" == alarm?.boardType {
+            reportMode = .find
+        }
+    }
     
+    func checkMode() {
+        if reportMode == .request {
+            reportSegment.selectedSegmentIndex = 0
+        }
+        else if reportMode == .find {
+            reportSegment.selectedSegmentIndex = 1
+        }
+        else if reportMode == .none {
+            reportMode = .request
+            reportSegment.selectedSegmentIndex = 0
+        }
+    }
     
-    @IBAction func switchView(_ sender: Any) {
-        print("Switch Mode")
-        
+    func deleteMarker(markers :[NMFMarker]) {
         if markers != [] {
             for marker in markers {
                 marker.mapView = nil
             }
         }
-        
-        markers.removeAll()
+        self.markers.removeAll()
         
         print("마커개수 \(markers.count)")
+    }
+    
+    @objc private func didChangeSegmentValue(segment: UISegmentedControl) {
+        print("Switch Mode")
         
-        print(markers)
+        deleteMarker(markers: markers)
         
-        if "의뢰" == goldenAlarm?.boardType {
-            reportSegment.selectedSegmentIndex = 0
-        }
-        else if "발견" == goldenAlarm?.boardType {
-            reportSegment.selectedSegmentIndex = 1
-        }
-        
-        if reportSegment.selectedSegmentIndex == 0 {
+        if segment.selectedSegmentIndex == 0 {
             reportMode = .request
-        } else if reportSegment.selectedSegmentIndex == 1 {
+        } else if segment.selectedSegmentIndex == 1 {
             reportMode = .find
         }
         
         updateReportUI(mode: reportMode)
-    
     }
     
     @IBAction func viewBoardButtonTapped(_ sender: Any) {
@@ -573,15 +534,6 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
         // POST 로 보낼 정보
         let parameter = ["phoneNumber": phoneNumber, "loadAddress": location, "latitude": latitude, "longitude": longitude] as Dictionary
 
-        
-//        {
-//            "userLocationDto":
-//            "phoneNumber": phoneNumber
-//            "loadAddress": location
-//            "latitude": latitude
-//            "longitude": longitude
-//        }
-
         // httpBody 에 parameters 추가
         do {
             try request.httpBody = JSONSerialization.data(withJSONObject: parameter, options: [])
@@ -589,19 +541,6 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
             print("http Body Error")
         }
         
-//        AF.request(url,
-//                   method: .post,
-//                   parameters: login,
-//                   encoder: JSONParameterEncoder.default).response { (response) in
-//            switch response.result {
-//            case .success:
-//                print("POST 성공")
-//                debugPrint(response)
-//            case .failure(let error):
-//                print("🚫 Alamofire Request Error\nCode:\(error._code), Message: \(error.errorDescription!)")
-//            }
-//        }
-//
         AF.request(request).responseString { (response) in
             switch response.result {
             case .success:
@@ -615,11 +554,3 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
     }
 }
 
-
-extension EmergencyRescueViewController: goldenTimeAlarmProtocol {
-    func alarmSend(alarm: Alarm) {
-        print("골든 알람 데이터 받음")
-        self.goldenAlarm = alarm
-        print("골든 알람 데이터", self.goldenAlarm)
-    }
-}

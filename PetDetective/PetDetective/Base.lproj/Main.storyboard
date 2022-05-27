@@ -1835,9 +1835,6 @@
                                             <segment title="목격"/>
                                         </segments>
                                         <color key="selectedSegmentTintColor" red="0.84313726430000002" green="0.72430546659999995" blue="0.54717105840000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <connections>
-                                            <action selector="switchView:" destination="YvZ-Bj-eIZ" eventType="valueChanged" id="LIr-gy-xSd"/>
-                                        </connections>
                                     </segmentedControl>
                                 </subviews>
                                 <constraints>

@@ -19,7 +19,6 @@ class ReportBoardViewController: UIViewController {
     var searchFlag = 0
     var category = ""
     var condition = ""
-    var delegate: goldenTimeAlarmProtocol?
     
     @IBOutlet weak var reportWriteBtn: UIButton!
     private var refreshControl = UIRefreshControl()

@@ -7,15 +7,9 @@
 
 import UIKit
 
-protocol goldenTimeAlarmProtocol {
-    func alarmSend(alarm: Alarm)
-    // boardId: Int, mode: String, type: String
-}
-
 class AlarmBoardViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var delegate: goldenTimeAlarmProtocol?
     var alarms = [Alarm]() {
         didSet {
             self.saveTasks()
