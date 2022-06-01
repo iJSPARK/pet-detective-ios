@@ -14,7 +14,6 @@ class ReportBoardViewController: UIViewController {
     var totalPage = 3
     var currentPage = 1
     
-    var delegate: sendAlarmProtocol?
     var searchCurrentPage = 1
     var searchTotalPage = 1
     var searchFlag = 0

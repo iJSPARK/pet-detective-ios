@@ -29,6 +29,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var reportMode: ReportMode?
     var timeGap = 0
     var count = 0
+    var fromBoardDetail = false
     var searchLatitude: Double?
     var searchLongitude: Double?
     
@@ -80,31 +81,40 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         changedSearchLocationButton.layer.shadowRadius = 1
         changedSearchLocationButton.layer.shadowOpacity = 0.4
     }
-    
+   
     override func viewWillAppear(_ animated: Bool) {
-        updateReportUI(mode: reportMode)
-        timerRun()
+        getControl(fromBoardDetail, mode: reportMode)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        timerQuit()
+        timerQuit(fromBoardDetail)
     }
     
     @objc func goldenTimeNotification(_ notification: Notification) {
         guard let alarm = notification.object as? Alarm else { return }
         goldenAlarm = alarm
         checkAlarm(alarm: goldenAlarm)
-        viewWillAppear(false)
+        viewWillAppear(true) // 해당 화면에서 알림 탭시 viewWillAppear 실행 안됨
     }
     
-    private func updateReportUI(mode: ReportMode?) {
+    func getControl(_ isBoardDetail: Bool, mode: ReportMode?) {
+        
+        if isBoardDetail {
+            self.fromBoardDetail = false
+        } else {
+            updateReportUI(reportMode)
+            timerRun()
+        }
+    }
+    
+    private func updateReportUI(_ mode: ReportMode?) {
         checkMode()
         deleteMarker()
         self.markerInfoView.isHidden = true
         self.boardButton.isHidden = true
         emergencyRescuePetInfoController.fetchedGoldenUserTimeInfo { (userGoldenTimePetInfo) in
             guard let userGoldenTimePetInfo = userGoldenTimePetInfo else { return }
-            
+
             if mode == .find {
                 print("find mode")
                 if userGoldenTimePetInfo.userMissingPetLatitude == nil {
@@ -112,7 +122,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     return
                 }
                 
-                guard let findPets = userGoldenTimePetInfo.findPetInfos else { return }
+                guard let findPets = userGoldenTimePetInfo.findPetInfos else {
+                    return }
                 self.updateMapUI(with: findPets)
                 guard let userMissingPetLatitude = userGoldenTimePetInfo.userMissingPetLatitude else { return }
                 guard let userMissingPetLongitude = userGoldenTimePetInfo.userMissingPetLongitude else { return }
@@ -120,7 +131,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 
             }
             else if mode == .request { // mode request 이거나 nil 일때
-                
+                print("request mode")
                 guard let missingPets = userGoldenTimePetInfo.missingPetInfos else { return }
                 self.updateMapUI(with: missingPets)
                 guard let userLatitude = userGoldenTimePetInfo.userLatitude else { return }
@@ -302,27 +313,28 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    private func timerQuit() {
-        if let timer = secondTimer {
-            if(timer.isValid){
-                timer.invalidate()
+    private func timerQuit(_ isBoardDetail: Bool) {
+        if isBoardDetail {
+            self.fromBoardDetail = false
+        } else {
+            if let timer = secondTimer {
+                if(timer.isValid){
+                    timer.invalidate()
+                }
             }
         }
     }
     
-    // 뷰가 업데이트 할때마다 네트워크 요청
-    //타이머가 호출하는 콜백함수
+
     @objc func timerCallback() {
 //        print("timer call back") // 현재시간 - 실종시간
         
-        goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
-//        if (timeGap - count) < 0 { // 시간 다되면 리 로드
-//            timerQuit()
-//            viewWillAppear(true)
-//        } else {
-//            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
-//        }
-//
+        if (timeGap - count) < 0 { // 시간 다되면 리 로드
+            getControl(fromBoardDetail, mode: reportMode)
+        } else {
+            goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
+        }
+
         count += 1
     }
     
@@ -340,14 +352,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         alert.addAction(okAction)
         
         viewController.present( alert, animated: false, completion: nil )
-
     }
     
-//    func reportView(_ boardId: Int) {
-//        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-//        print(boardId)
-//        self.navigationController?.pushViewController(viewController, animated: true)
-//    }
     
     func checkAlarm(alarm :Alarm?) {
         if "의뢰" == alarm?.boardType {
@@ -397,8 +403,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         } else if reportSegment.selectedSegmentIndex == 1 {
             reportMode = .find
         }
-        
-        updateReportUI(mode: reportMode)
+        getControl(fromBoardDetail, mode: reportMode)
+//        updateReportUI(reportMode)
     }
 
     @IBAction func viewBoardButtonTapped(_ sender: Any) {
@@ -412,6 +418,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
             viewController.findId = getMarker?.userInfo["BoardId"] as? Int
             self.navigationController?.pushViewController(viewController, animated: true)
         }
+        fromBoardDetail = true
     }
     
     @IBAction func changeSearchLocationButtonTapped(_ sender: Any) {
@@ -420,50 +427,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         SMLVC.delegate = self
         self.navigationController?.pushViewController(SMLVC, animated: true)
     }
-    
-//    func reSize(imageString: String?) -> UIImage {
-////        let url = URL(string: imageString!)!
-////        let data = try? Data(contentsOf: url)
-////        let image = UIImage(data: data!)
-//        let newWidth = 36
-//        let newHeight = 36
-//        let newImageRect = CGRect(x: 0, y: 0, width: newWidth, height: newHeight)
-////        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
-//
-//        UIGraphicsBeginImageContextWithOptions(CGSize(width: newWidth, height: newHeight), false, 0.0)
-//
-//        UIBezierPath(roundedRect: newImageRect, cornerRadius: 50).addClip()
-//
-//        image?.draw(in: newImageRect)
-//        let newImage = UIGraphicsGetImageFromCurrentImageContext()?.withRenderingMode(.alwaysOriginal)
-//        UIGraphicsEndImageContext()
-//        return newImage!
-//    }
-    
-//    func makeRounded() {
-//
-//        self.layer.borderWidth = 1
-//        self.layer.masksToBounds = false
-//        self.layer.borderColor = UIColor.black.cgColor
-//        self.layer.cornerRadius = self.frame.height / 2
-//        self.clipsToBounds = true
-//    }
-        
-//    // 위치 정보 계속 업데이트 -> 위도 경도 받아옴
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        print("didUpdateLocations")
-//        if let location = locations.first {
-//            let latitude = location.coordinate.latitude
-//            let longtitude = location.coordinate.longitude
-//            print("위도 \(latitude), 경도 \(longtitude)")
-//        }
-//    }
-   
-//    // 위도 경도 받아오기 실패
-//    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-//        print("error")
-//    }
-
 }
 
 extension String {
@@ -530,10 +493,6 @@ extension UIImage {
 
 extension EmergencyRescueViewController: SelectionLocationProtocol {    
     func dataSend(location: String, latitude: Double, longitude: Double) {
-//        self.searchLatitude = latitude
-//        self.searchLongitude = longitude
-//        self.
-        // get 요청
         
         let url = "https://iospring.herokuapp.com/user/update-point"
         var request = URLRequest(url: URL(string: url)!)
@@ -567,11 +526,4 @@ extension EmergencyRescueViewController: SelectionLocationProtocol {
         }
     }
 }
-
-//extension EmergencyRescueViewController: sendAlarmProtocol {
-////    func alarmSend(alarm: Alarm) {
-////        goldenAlarm = alarm
-////        checkAlarm(alarm: goldenAlarm)
-////    }
-//}
 

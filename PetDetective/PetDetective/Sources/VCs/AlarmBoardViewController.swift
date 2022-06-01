@@ -10,7 +10,6 @@ import UIKit
 class AlarmBoardViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    var delegate: sendAlarmProtocol?
     var alarms = [Alarm]() {
         didSet {
             self.saveTasks()
@@ -111,7 +110,7 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
         let alarm = self.alarms[indexPath.row] // 선택된 셀의 인덱스 값을 알려줌
         if( alarm.alarmMode == "게시글 작성"){
             if( alarm.boardType == "의뢰"){
-//                print("게시글 작성 의뢰")
+
                 guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
                 viewController.reportId = alarm.boardId
                 viewController.posterPhoneN = "0000000000"
@@ -128,17 +127,10 @@ extension AlarmBoardViewController: UITableViewDelegate { // delegate property �
         else if(alarm.alarmMode == "골든타임"){
             print("알림 탭에서 골든타임")
            
-//            delegate?.alarmSend(alarm: alarm)
-            
-            
             NotificationCenter.default.post(name: NSNotification.Name("NotiGoldenTimeAlrm"), object: alarm)
-//            delegate?.dataSend(boardId: alarm.boardId, mode: alarm.alarmMode, type: alarm.boardType)
             
-//            guard let EV = self.storyboard?.instantiateViewController(withIdentifier: "EmergencyRescueViewController") as? EmergencyRescueViewController else { return }
-//
-//            EV.goldenAlarm = alarm
             self.tabBarController?.selectedIndex = 1
-//            self.navigationController?.pushViewController(EV, animated: true)
+
         }
     }
 }

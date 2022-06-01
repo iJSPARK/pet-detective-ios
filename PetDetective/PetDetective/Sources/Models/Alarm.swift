@@ -13,9 +13,9 @@ struct Alarm{
     var boardId: Int
 }
 
-protocol sendAlarmProtocol {
-    func alarmSend(alarm:Alarm)
-}
+//protocol sendAlarmProtocol {
+//    func alarmSend(alarm:Alarm)
+//}
 
 
 //{
