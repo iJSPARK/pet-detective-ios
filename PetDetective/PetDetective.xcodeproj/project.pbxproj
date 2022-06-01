@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		1830DE57CCDA8AD9C6E34E79 /* Pods_PetDetective.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A88AD3A9CF440D491D48551E /* Pods_PetDetective.framework */; };
 		637D1F7DCEC077194A7631B8 /* Pods_PetDetectiveTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DAB1A1C35CF7D3E2A22A0BD /* Pods_PetDetectiveTests.framework */; };
-		793448E82837784100FD9C09 /* SearchLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793448E72837784100FD9C09 /* SearchLocation.swift */; };
-		793448EA28377C7B00FD9C09 /* SearchLocationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793448E928377C7B00FD9C09 /* SearchLocationController.swift */; };
 		7948392227E5F20F004B04FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392127E5F20F004B04FD /* AppDelegate.swift */; };
 		7948392427E5F20F004B04FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7948392327E5F20F004B04FD /* SceneDelegate.swift */; };
 		7948392927E5F20F004B04FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7948392727E5F20F004B04FD /* Main.storyboard */; };
@@ -71,8 +69,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		793448E72837784100FD9C09 /* SearchLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocation.swift; sourceTree = "<group>"; };
-		793448E928377C7B00FD9C09 /* SearchLocationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationController.swift; sourceTree = "<group>"; };
 		7948391E27E5F20F004B04FD /* PetDetective.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDetective.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7948392127E5F20F004B04FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7948392327E5F20F004B04FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -269,8 +265,6 @@
 				8E13966A27F318E100DA2D4D /* Report.swift */,
 				8EDB01E228103875008C9F2F /* Find.swift */,
 				8E8F4C5F28190FCB00393F2B /* Alarm.swift */,
-				793448E72837784100FD9C09 /* SearchLocation.swift */,
-				793448E928377C7B00FD9C09 /* SearchLocationController.swift */,
 				79E49B862828F3F200E8D34D /* EmergencyRescuePetInfoController.swift */,
 				79E49B802828F3F100E8D34D /* EmergencyResquePetInfo.swift */,
 				79E49B7E2828F3F100E8D34D /* LocationController.swift */,
@@ -562,7 +556,6 @@
 				8E13966927F2BE9D00DA2D4D /* Pet.swift in Sources */,
 				79E49B942828F56600E8D34D /* MapViewController.swift in Sources */,
 				8E13966B27F318E100DA2D4D /* Report.swift in Sources */,
-				793448EA28377C7B00FD9C09 /* SearchLocationController.swift in Sources */,
 				8E8F4C66281F903D00393F2B /* LoginViewController.swift in Sources */,
 				8E43395427FAB666008D611B /* APICodable.swift in Sources */,
 				8E24337A280BE78A00573F9E /* DetectWriteViewController.swift in Sources */,
@@ -577,7 +570,6 @@
 				8EFF6E1E27F6E76200E8A63F /* ReportDetailViewController.swift in Sources */,
 				8E494A9E27EB13C100884379 /* ReportBoardViewController.swift in Sources */,
 				79E49B8C2828F3F200E8D34D /* EmergencyResquePetInfo.swift in Sources */,
-				793448E82837784100FD9C09 /* SearchLocation.swift in Sources */,
 				8EDB01EA281267AF008C9F2F /* ReportCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
