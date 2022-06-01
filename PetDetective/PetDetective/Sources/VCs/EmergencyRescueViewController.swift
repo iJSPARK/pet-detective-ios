@@ -93,6 +93,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         guard let alarm = notification.object as? Alarm else { return }
         goldenAlarm = alarm
         checkAlarm(alarm: goldenAlarm)
+        goldenAlarm?.boardType == "의뢰" ? (reportMode = .request) : (reportMode = .find)
         viewWillAppear(true) // 해당 화면에서 알림 탭시 viewWillAppear 실행 안됨
     }
     
