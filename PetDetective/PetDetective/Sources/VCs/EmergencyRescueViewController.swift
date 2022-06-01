@@ -329,7 +329,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     @objc func timerCallback() {
 //        print("timer call back") // 현재시간 - 실종시간
         
-        if (timeGap - count) < 0 { // 시간 다되면 리 로드
+        
+        if (timeGap - count) < -5 { // 시간 다되면 리 로드
             getControl(fromBoardDetail, mode: reportMode)
         } else {
             goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
