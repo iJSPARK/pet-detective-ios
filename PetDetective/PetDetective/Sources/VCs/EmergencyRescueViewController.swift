@@ -28,7 +28,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     var reportMode: ReportMode?
     var timeGap = 0
     var count = 0
-    var fromBoardDetail = false
+    var toBoardDetail: Int?
     var searchLatitude: Double?
     var searchLongitude: Double?
     
@@ -82,29 +82,26 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
    
     override func viewWillAppear(_ animated: Bool) {
-        getControl(fromBoardDetail, mode: reportMode)
+        print("ViewWillAppear")
+        getControl(mode: reportMode)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        timerQuit(fromBoardDetail)
+        timerQuit()
     }
     
     @objc func goldenTimeNotification(_ notification: Notification) {
         guard let alarm = notification.object as? Alarm else { return }
         goldenAlarm = alarm
         checkAlarm(alarm: goldenAlarm)
-        goldenAlarm?.boardType == "의뢰" ? (reportMode = .request) : (reportMode = .find)
+//        goldenAlarm?.boardType == "의뢰" ? (reportMode = .request) : (reportMode = .find)
         viewWillAppear(true) // 해당 화면에서 알림 탭시 viewWillAppear 실행 안됨
     }
     
-    func getControl(_ isBoardDetail: Bool, mode: ReportMode?) {
-        
-        if isBoardDetail {
-            self.fromBoardDetail = false
-        } else {
-            updateReportUI(reportMode)
-            timerRun()
-        }
+    func getControl(mode: ReportMode?) {
+        print("toBoardDetail \(toBoardDetail)")
+        updateReportUI(reportMode)
+        timerRun()
     }
     
     private func updateReportUI(_ mode: ReportMode?) {
@@ -241,7 +238,16 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                         // 마커 초기값
                         print("😂 불일치 - 마커 boardId=\(markerID) goldenAlarmBoardId=\(goldenAlarm?.boardId)")
                         if goldenAlarm == nil {
-                            if marker == markers.first {
+                            if toBoardDetail != nil {
+                                if toBoardDetail == markerID {
+                                    print("게시글 보기 후 toBoardID == markerID 표시")
+                                    getMarker = marker
+                                    createMarkerInfoView(self.reportMode)
+                                    toBoardDetail = nil
+                                }
+                            }
+                            else if marker == markers.first {
+                                print("첫번째 마커 표시")
                                 getMarker = marker
                                 createMarkerInfoView(self.reportMode)
                             }
@@ -312,14 +318,10 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         }
     }
     
-    private func timerQuit(_ isBoardDetail: Bool) {
-        if isBoardDetail {
-            self.fromBoardDetail = false
-        } else {
-            if let timer = secondTimer {
-                if(timer.isValid){
-                    timer.invalidate()
-                }
+    private func timerQuit() {
+        if let timer = secondTimer {
+            if(timer.isValid){
+                timer.invalidate()
             }
         }
     }
@@ -329,8 +331,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
 //        print("timer call back") // 현재시간 - 실종시간
         
         
-        if (timeGap - count) < 0 { // 시간 다되면 리 로드
-            getControl(fromBoardDetail, mode: reportMode)
+        if (timeGap - count) < -5 { // 시간 다되면 리 로드
+            getControl(mode: reportMode)
         } else {
             goldenTimeLabel.text = "🛎 골든 타임 \((timeGap - count).hour)시간 \((timeGap - count).minute)분 \((timeGap - count).second)초"
         }
@@ -376,7 +378,7 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         else if reportMode == .find {
             reportSegment.selectedSegmentIndex = 1
         }
-        else if reportMode == .none {
+        else {
             reportMode = .request
             reportSegment.selectedSegmentIndex = 0
         }
@@ -403,22 +405,22 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         } else if reportSegment.selectedSegmentIndex == 1 {
             reportMode = .find
         }
-        getControl(fromBoardDetail, mode: reportMode)
+        getControl(mode: reportMode)
 //        updateReportUI(reportMode)
     }
 
     @IBAction func viewBoardButtonTapped(_ sender: Any) {
         // 게시글 보기
+        toBoardDetail = getMarker?.userInfo["BoardId"] as? Int
         if reportMode == .request {
             guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ReportDetailViewController") as? ReportDetailViewController else { return }
-            viewController.reportId = getMarker?.userInfo["BoardId"] as? Int
+            viewController.reportId = toBoardDetail
             self.navigationController?.pushViewController(viewController, animated: true)
         } else if reportMode == .find {
             guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "DetectDetailViewController") as? DetectDetailViewController else { return }
-            viewController.findId = getMarker?.userInfo["BoardId"] as? Int
+            viewController.findId = toBoardDetail
             self.navigationController?.pushViewController(viewController, animated: true)
         }
-        fromBoardDetail = true
     }
     
     @IBAction func changeSearchLocationButtonTapped(_ sender: Any) {

@@ -197,7 +197,6 @@
         <scene sceneID="6EF-Jv-s0s">
             <objects>
                 <tabBarController storyboardIdentifier="ServiceTabBarController" title="ServiceTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O8T-3c-FAE" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="HQF-y5-qTG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1983,7 +1982,7 @@
         <!--긴급구조-->
         <scene sceneID="1l4-ni-5Lw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6b2-3N-49j" sceneMemberID="viewController">
+                <navigationController id="6b2-3N-49j" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="긴급구조" image="mappin.and.ellipse" catalog="system" id="O6I-LO-vOI"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="q29-E5-Dgs">
