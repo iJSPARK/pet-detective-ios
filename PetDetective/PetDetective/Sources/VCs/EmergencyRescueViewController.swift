@@ -291,8 +291,10 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 self.titleLabel.text = "🚨 목격된 같은 종의 애완동물"
                 self.boardButton.setTitle("목격글 보기", for: .normal) // 버튼 이름 변경
             }
-            self.markerInfoView.isHidden = false
-            self.boardButton.isHidden = false
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
+                self.markerInfoView.isHidden = false
+                self.boardButton.isHidden = false
+            }
         }
         else {
             self.getMarker?.captionText = ""
