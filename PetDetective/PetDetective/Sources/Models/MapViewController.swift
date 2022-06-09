@@ -27,7 +27,6 @@ class MapViewController: LocationController, NMFMapViewCameraDelegate {
     // 위치 추적 모드에 따른 UIView update
     func updateUIFromMode(isAuthorized: Bool?, naverMapView: NMFNaverMapView, _ addressLabel: UILabel?, _ setLocationButton: UIButton?) {
         print("----updateUIFromMode-----")
-        print("updateUIFromMode isAuthorized \(isAuthorized)")
         guard let isAuthorized = isAuthorized else {
             return
         }

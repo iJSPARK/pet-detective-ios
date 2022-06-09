@@ -104,7 +104,6 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
     
     func getControl(mode: ReportMode?) {
-        print("toBoardDetail \(toBoardDetail)")
         updateReportUI(reportMode)
         timerRun()
     }
@@ -235,13 +234,10 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                     
                     if goldenAlarm?.boardId == markerID  {
                         print("알람 마커 추가")
-                        print("😀 일치 - 마커 boardId=\(markerID) goldenAlarmBoardId=\(goldenAlarm?.boardId)")
-                        
                         getMarker = marker
                         createMarkerInfoView(self.reportMode)
                     } else {
                         // 마커 초기값
-                        print("😂 불일치 - 마커 boardId=\(markerID) goldenAlarmBoardId=\(goldenAlarm?.boardId)")
                         if goldenAlarm == nil {
                             if toBoardDetail != nil {
                                 if toBoardDetail == markerID {

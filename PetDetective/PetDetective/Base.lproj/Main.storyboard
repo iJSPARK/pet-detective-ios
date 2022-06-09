@@ -1776,13 +1776,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3t5-6X-OyH">
-                                <rect key="frame" x="87" y="166" width="240" height="120"/>
+                                <rect key="frame" x="77" y="166" width="260" height="120"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MarkerInfoImage" translatesAutoresizingMaskIntoConstraints="NO" id="6y4-dS-vRJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="120"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiP-dR-KEm">
-                                        <rect key="frame" x="103.5" y="10" width="33" height="18"/>
+                                        <rect key="frame" x="113.5" y="10" width="33" height="18"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1802,9 +1802,10 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="WnU-t0-419" firstAttribute="leading" secondItem="3t5-6X-OyH" secondAttribute="leading" constant="10" id="1f5-eS-rP2"/>
-                                    <constraint firstAttribute="width" constant="240" id="217-a4-S3H"/>
+                                    <constraint firstAttribute="width" constant="260" id="217-a4-S3H"/>
                                     <constraint firstItem="GiP-dR-KEm" firstAttribute="top" secondItem="3t5-6X-OyH" secondAttribute="top" constant="10" id="23C-1K-Uxj"/>
                                     <constraint firstItem="oRo-pL-JaK" firstAttribute="leading" secondItem="3t5-6X-OyH" secondAttribute="leading" constant="10" id="4Ny-hM-c5G"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="oRo-pL-JaK" secondAttribute="trailing" constant="20" symbolic="YES" id="67I-dj-US2"/>
                                     <constraint firstAttribute="trailing" secondItem="6y4-dS-vRJ" secondAttribute="trailing" id="BQy-xz-wrs"/>
                                     <constraint firstItem="6y4-dS-vRJ" firstAttribute="leading" secondItem="3t5-6X-OyH" secondAttribute="leading" id="SYc-aU-SnI"/>
                                     <constraint firstItem="WnU-t0-419" firstAttribute="top" secondItem="GiP-dR-KEm" secondAttribute="bottom" constant="20" id="b9N-DS-IL9"/>
@@ -1813,6 +1814,7 @@
                                     <constraint firstItem="oRo-pL-JaK" firstAttribute="top" secondItem="WnU-t0-419" secondAttribute="bottom" constant="16" id="nJe-me-JIr"/>
                                     <constraint firstAttribute="bottom" secondItem="6y4-dS-vRJ" secondAttribute="bottom" id="uV8-sw-FHM"/>
                                     <constraint firstItem="6y4-dS-vRJ" firstAttribute="top" secondItem="3t5-6X-OyH" secondAttribute="top" id="xfl-Uo-wRI"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="WnU-t0-419" secondAttribute="trailing" constant="20" symbolic="YES" id="zJN-fz-5x0"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j52-uH-x4p">
