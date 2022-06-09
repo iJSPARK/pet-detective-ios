@@ -7,24 +7,6 @@
 
 import Foundation
 
-//struct MissingPet: Codable {
-//    let missingPetInfos: [MissingPetInfo]?
-//    let totalPage: Int?
-//
-//    // key 대칭
-//    enum Codingkeys: String, CodingKey {
-//        case missingPetInfos = "detectBoardDTOList"
-//        case totalPage
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        // valueContainer: 중간단계 값,
-//        let valueContainer = try decoder.container(keyedBy: Codingkeys.self) // enum 타입을 넣어줌
-//        self.missingPetInfos = try? valueContainer.decode([MissingPetInfo].self, forKey: Codingkeys.missingPetInfos)
-//        self.totalPage = try? valueContainer.decode(Int.self, forKey: Codingkeys.totalPage)
-//    }
-//}
-
 struct MissingPetInfo: Codable, Equatable {
     let boardId: Int?
     let imageString: String?
@@ -63,24 +45,6 @@ struct MissingPetInfo: Codable, Equatable {
     }
     
 }
-
-//struct FindPet: Codable {
-//    let findPetInfos: [FindPetInfo]?
-//
-//    // key 대칭
-//    enum Codingkeys: String, CodingKey {
-//        case findPetInfos = "findRequestDto"
-////        case totalPage
-//    }
-//
-//    init(from decoder: Decoder) throws {
-//        // valueContainer: 중간단계 값,
-//        let valueContainer = try decoder.container(keyedBy: Codingkeys.self) // enum 타입을 넣어줌
-//        self.findPetInfos = try? valueContainer.decode([FindPetInfo].self, forKey: Codingkeys.findPetInfos)
-////        self.totalPage = try? valueContainer.decode(Int.self, forKey: Codingkeys.totalPage)
-//    }
-//}
-
 
 struct FindPetInfo: Codable, Equatable {
     let boardId: Int?
