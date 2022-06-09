@@ -82,8 +82,12 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
     }
    
     override func viewWillAppear(_ animated: Bool) {
-        print("ViewWillAppear")
-        getControl(mode: reportMode)
+        if goldenAlarm == nil {
+            print("ViewWillAppear - getControl")
+            getControl(mode: reportMode)
+        } else {
+            print("ViewWillAppear - not getControl")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -94,8 +98,9 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
         guard let alarm = notification.object as? Alarm else { return }
         goldenAlarm = alarm
         checkAlarm(alarm: goldenAlarm)
-//        goldenAlarm?.boardType == "의뢰" ? (reportMode = .request) : (reportMode = .find)
-        viewWillAppear(true) // 해당 화면에서 알림 탭시 viewWillAppear 실행 안됨
+        //        goldenAlarm?.boardType == "의뢰" ? (reportMode = .request) : (reportMode = .find)
+        getControl(mode: reportMode)
+        print("goldenTimeNotification - getControl")
     }
     
     func getControl(mode: ReportMode?) {
@@ -291,10 +296,8 @@ class EmergencyRescueViewController: MapViewController, NMFMapViewTouchDelegate 
                 self.titleLabel.text = "🚨 목격된 같은 종의 애완동물"
                 self.boardButton.setTitle("목격글 보기", for: .normal) // 버튼 이름 변경
             }
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
-                self.markerInfoView.isHidden = false
-                self.boardButton.isHidden = false
-            }
+            self.markerInfoView.isHidden = false
+            self.boardButton.isHidden = false
         }
         else {
             self.getMarker?.captionText = ""

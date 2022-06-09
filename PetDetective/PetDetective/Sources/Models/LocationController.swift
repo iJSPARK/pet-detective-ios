@@ -26,6 +26,9 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
         // 위치 권한 요청
         locationManager.requestWhenInUseAuthorization()
         
+        // 권환 저장
+        isAuthorized = UserDefaults.standard.object(forKey: "LocationAuthorization") as? Bool
+        
         // GPS 위치 정보 받아오기
         locationManager.startUpdatingLocation()
     }
@@ -65,6 +68,8 @@ class LocationController: UIViewController, CLLocationManagerDelegate {
         @unknown default:
             break
         }
+        // 권한 유저 디폴트에 저장
+        UserDefaults.standard.set(isAuthorized, forKey: "LocationAuthorization");
     }
     
     // 좌표 주소 반환
